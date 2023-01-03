@@ -1,0 +1,78 @@
+﻿@using ProjectsManagement.Web.Startup
+@{
+    ViewBag.Title = L("ProjectSupervisor");
+    ViewBag.CurrentPageName = PageNames.ProjectSupervisor;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/ProjectSupervisor/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/ProjectSupervisor/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("ProjectSupervisor")</h1>
+            </div>
+            <div class="col-sm-6">
+                    <button type="button" class="btn bg-blue float-sm-right create-projectSupervisor" data-toggle="modal" data-target="#ProjectSupervisorCreateModal">
+                        <i class="fa fa-plus-square"></i>
+                        @L("Create")
+                    </button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Use for bulk actions-->
+                            </div>
+                            <div class="col-md-6">
+                                @await Html.PartialAsync("~/Views/ProjectSupervisor/Index.AdvancedSearch.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="ProjectSupervisorTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                            <th>@L("SupervisorUserName")</th>
+                                            <th>@L("ProjectName")</th>
+                                        <th style="width: 150px">@L("Actions")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="ProjectSupervisorEditModal" tabindex="-1" role="dialog" aria-labelledby="ProjectSupervisorEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ProjectSupervisorCreateModal" tabindex="-1" role="dialog" aria-labelledby="ProjectSupervisorCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

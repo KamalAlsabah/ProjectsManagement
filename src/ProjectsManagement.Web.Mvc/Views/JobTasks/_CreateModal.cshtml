@@ -1,0 +1,37 @@
+﻿@using ProjectsManagement.ProjectDatabase.Enums
+@using ProjectsManagement.Web.Models.Common.Modals
+@using ProjectsManagement.Web.Models.JobTasks
+@model CreateJobTasksModalViewModel
+@{
+    Layout = null;
+    
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateJobTasks")))
+<form name="JobTasksCreateForm" jobTasks="form" class="form-horizontal">
+    <input id="JobId" class="form-control" type="hidden" name="JobId" asp-for="CreateJobTasksDto.JobId">
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="NameL">@L("NameL")</label>
+            <div class="col-md-9">
+                <input id="NameL" class="form-control" type="text" name="NameL" asp-for="CreateJobTasksDto.NameL">
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="NameF">@L("NameF")</label>
+            <div class="col-md-9">
+                <input id="NameF" type="text" class="form-control" name="NameF" asp-for="CreateJobTasksDto.NameF">
+            </div>
+        </div>
+      
+      
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="Description">@L("Description")</label>
+            <div class="col-md-9">
+                <textarea id="Description" class="form-control" name="Description" asp-for="CreateJobTasksDto.Description"></textarea>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/JobTasks/_CreateModal.js" asp-append-version="true"></script>

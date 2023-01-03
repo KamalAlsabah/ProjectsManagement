@@ -1,0 +1,80 @@
+﻿@using ProjectsManagement.Web.Startup
+@{
+    ViewBag.Title = L("Suggestions");
+    ViewBag.CurrentPageName = PageNames.Suggestions;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Suggestions/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Suggestions/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("Suggestions")</h1>
+            </div>
+            <div class="col-sm-6">
+                    <button type="button" class="btn bg-blue float-sm-right create-suggestions" data-toggle="modal" data-target="#SuggestionsCreateModal">
+                        <i class="fa fa-plus-square"></i>
+                        @L("Create")
+                    </button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Use for bulk actions-->
+                            </div>
+                            <div class="col-md-6">
+                                @await Html.PartialAsync("~/Views/Suggestions/Index.AdvancedSearch.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="SuggestionsTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@L("ProjectName")</th>
+                                        <th>@L("SupervisorName")</th>
+                                        <th>@L("Description")</th>
+                                        <th>@L("Status")</th>
+                                        <th style="width: 150px">@L("Actions")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="SuggestionsEditModal" tabindex="-1" suggestions="dialog" aria-labelledby="SuggestionsEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" suggestions="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="SuggestionsCreateModal" tabindex="-1" suggestions="dialog" aria-labelledby="SuggestionsCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" suggestions="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@using ProjectsManagement.ProjectDatabase.Enums
+@using ProjectsManagement.Web.Models.Common.Modals
+@using ProjectsManagement.Web.Models.ProjectSuprevisor
+@model CreateProjectSupervisorModalViewModel
+@{
+    Layout = null;
+    
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateProjectSupervisor")))
+<form name="ProjectSupervisorCreateForm" role="form" class="form-horizontal">
+    <input id="ProjectId" class="form-control" type="hidden" name="ProjectId" asp-for="projectSupervisorCreateDto.ProjectId">
+    <div class="modal-body">
+        <div class="form-group row required">
+            @if (Model.Supervisors.Any())
+            {
+                <label class="col-md-3 col-form-label" for="SupervisorId">@L("SupervisorName")</label>
+                <div class="col-md-9">
+                    <select id="SupervisorId" type="text" class="form-control" name="SupervisorId" asp-items="Model.Supervisors" >
+
+                </select>
+            </div>
+            }else
+            {
+                <h4 class="text-center">@L("ThereIsNoSupervisor")</h4>
+            }
+        </div>
+    </div>
+    @if (Model.Supervisors.Any())
+    {
+        @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+    }
+</form>
+
+<script src="~/view-resources/Views/ProjectSupervisor/_CreateModal.js" asp-append-version="true"></script>

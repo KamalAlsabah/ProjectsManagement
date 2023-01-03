@@ -1,0 +1,30 @@
+﻿@using ProjectsManagement.Web.Models.Common.Modals
+@using ProjectsManagement.Web.Models.ProjectWorkers
+@model EditProjectWorkerModalViewModel
+@{
+    Layout = null;
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditProjectWorkers")))
+<form name="ProjectWorkersEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" asp-for="EditProjectWorkerDto.Id" />
+    
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="NameL">@L("ProjectId")</label>
+            <div class="col-md-9">
+                <select id="ProjectId" class="form-control" type="text" name="ProjectId" asp-items='new SelectList( Model.Projects,"Value","Name")' asp-for="EditProjectWorkerDto.ProjectId">
+                </select>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="WorkerId">@L("WorkerId")</label>
+            <div class="col-md-9">
+                <select id="WorkerId" class="form-control" type="text" name="WorkerId" asp-items='new SelectList( Model.Users,"Value","Name")' asp-for="EditProjectWorkerDto.WorkerId">
+                </select>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/ProjectWorkers/_EditModal.js" asp-append-version="true"></script>

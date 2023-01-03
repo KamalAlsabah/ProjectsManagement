@@ -1,0 +1,83 @@
+﻿@using ProjectsManagement.Web.Startup
+
+@{
+    ViewBag.Title = L("Projects");
+    ViewBag.CurrentPageName = PageNames.Projects;
+}
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Projects/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Projects/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("Projects")</h1>
+            </div>
+            @if(IsGranted("Pages.Projects.CreateProject")){
+                 <div class="col-sm-6">
+                <a href="javascript:;" data-toggle="modal" data-target="#ProjectsCreateModal" class="btn bg-blue float-sm-right">
+                    <i class="fa fa-plus-square"></i>
+                    @L("Create")
+                </a>
+            </div>
+            }
+           
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Use for bulk actions-->
+                            </div>
+                            <div class="col-md-6">
+                                @await Html.PartialAsync("~/Views/Projects/Index.AdvancedSearch.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="ProjectsTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@L("Name")</th>
+                                        <th>@L("Description")</th>
+                                         <th>@L("StartDate")</th>
+                                         <th>@L("EndDate")</th>
+                                         <th>@L("Status")</th>
+                                         <th>@L("TestUrl")</th>
+                                        <th style="width: 150px">@L("Actions")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("~/Views/Projects/_CreateModal.cshtml")
+
+<div class="modal fade" id="ProjectsEditModal" tabindex="-1" projects="dialog" aria-labelledby="ProjectsEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" projects="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

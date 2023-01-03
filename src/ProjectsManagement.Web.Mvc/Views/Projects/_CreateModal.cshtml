@@ -1,0 +1,62 @@
+﻿@using ProjectsManagement.ProjectDatabase.Enums
+@using ProjectsManagement.Web.Models.Common.Modals
+
+@{
+    Layout = null;
+}
+<div class="modal fade" id="ProjectsCreateModal" tabindex="-1" projects="dialog" aria-labelledby="ProjectsCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" projects="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateNewProjects")))
+            <form name="projectsCreateForm" projects="form" class="form-horizontal">
+                <div class="modal-body">
+                     <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="NameL">@L("NameL")</label>
+            <div class="col-md-9">
+                <input id="NameL" class="form-control" type="text" name="NameL"  required />
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="NameF">@L("NameF")</label>
+            <div class="col-md-9">
+                <input id="NameF" type="text" class="form-control" name="NameF"  required />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="Description">@L("Description")</label>
+            <div class="col-md-9">
+                <textarea id="Description" class="form-control" name="Description" rows="5">Description</textarea>
+            </div>
+        </div>
+
+         <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="StartDate">@L("StartDate")</label>
+            <div class="col-md-9">
+                <input id="StartDate" type="date" class="form-control" name="StartDate"  required />
+            </div>
+        </div>
+         <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="EndDate">@L("EndDate")</label>
+            <div class="col-md-9">
+                <input id="EndDate" type="date" class="form-control" name="EndDate" required />
+            </div>
+        </div>
+          <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Status">@L("Status")</label>
+            <div class="col-md-9">
+                <select id="Status" type="text" name="Status"    asp-items="@Html.GetEnumSelectList<ProjectStatus>()" class="form-control" required></select>
+            </div>
+         </div>
+
+         <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="TestUrl">@L("TestUrl")</label>
+            <div class="col-md-9">
+                <input id="TestUrl" type="text" class="form-control" name="TestUrl"  required />
+            </div>
+        </div>
+                </div>
+                @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+            </form>
+        </div>
+    </div>
+</div>

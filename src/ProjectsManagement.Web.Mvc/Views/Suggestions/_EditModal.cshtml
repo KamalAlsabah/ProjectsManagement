@@ -1,0 +1,55 @@
+﻿@using ProjectsManagement.ProjectDatabase.Enums
+@using ProjectsManagement.Web.Models.Common.Modals
+@using ProjectsManagement.Web.Models.Suggestions
+@model EditSuggestionsModalViewModel
+@{
+    Layout = null;
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditSuggestions")))
+<form name="SuggestionsEditForm" jobTasks="form" class="form-horizontal">
+    <input type="hidden" name="Id" asp-for="EditSuggestionsDto.Id" />
+    <div class="modal-body">
+       
+       
+          <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="ProjectId">@L("Projects")</label>
+            <div class="col-md-9">
+                <select id="ProjectId" class="form-control" name="ProjectId" asp-for="EditSuggestionsDto.ProjectId" asp-items='new SelectList(Model.Projects,"Value","Name")'>
+                    <option disabled value="">@L("Projects")</option>
+
+                </select>
+            </div>
+        </div>
+        @{
+            if (User.IsInRole("Admin"))
+            {
+                 <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="Status">@L("Status")</label>
+                    <div class="col-md-9">
+                        <select id="Status" type="text" name="Status"asp-items="@Html.GetEnumSelectList<SuggestionStatus>()" class="form-control" required></select>
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                 <div class="form-group row required">
+                    <label class="col-md-3 col-form-label" for="Status">@L("Status")</label>
+                    <div class="col-md-9">
+                        <select  id="Status" type="hidden" name="Status"asp-items="@Html.GetEnumSelectList<SuggestionStatus>()" class="form-control" required></select>
+                    </div>
+                </div>    
+
+            }
+        }
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="Description">@L("Description")</label>
+            <div class="col-md-9">
+                <textarea id="Description" class="form-control" name="Description" asp-for="EditSuggestionsDto.Description"></textarea>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/Suggestions/_EditModal.js" asp-append-version="true"></script>

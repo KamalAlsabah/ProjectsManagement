@@ -1,0 +1,23 @@
+﻿@using ProjectsManagement.ProjectDatabase.Enums
+@using ProjectsManagement.Web.Models.Common.Modals
+@using ProjectsManagement.Web.Models.SupervisorNotes
+@model CreateSupervisorNotesModalViewModel
+@{
+    Layout = null;
+    
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateSupervisorNotes")))
+<form name="SupervisorNotesCreateForm" supervisorNotes="form" class="form-horizontal">
+    <input id="JobId" class="form-control" type="hidden" name="JobId" asp-for="CreateSupervisorNotesDto.JobId">
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="NameL">@L("Note")</label>
+            <div class="col-md-9">
+                <input id="Note" class="form-control" type="text" name="Note" asp-for="CreateSupervisorNotesDto.Note">
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/SupervisorNotes/_CreateModal.js" asp-append-version="true"></script>

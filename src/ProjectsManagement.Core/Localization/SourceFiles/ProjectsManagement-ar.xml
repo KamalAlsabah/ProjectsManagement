@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="ar">
+	<texts>
+		<text name="HomePage" value="الصفحة الرئيسية" />
+		<text name="About" value="حول الموقع" />
+		<text name="WelcomeMessage" value="مرحبا في برنامج ادارة المشاريع" />
+		<text name="FormIsNotValidMessage" value="النموذج غير صالح. يرجى التحقق من الأخطاء وإصلاحها." />
+		<text name="TenantNameCanNotBeEmpty" value="لا يمكن أن يكون اسم المستأجر فارغًا" />
+		<text name="InvalidUserNameOrPassword" value="خطأ في اسم المستخدم أو كلمة مرور" />
+		<text name="ThereIsNoTenantDefinedWithName{0}" value="لا يوجد مستأجر محدد بالاسم {0}" />
+		<text name="TenantIsNotActive" value="المستأجر {0} غير نشط." />
+		<text name="UserIsNotActiveAndCanNotLogin" value="المستخدم {0} غير نشط ولا يمكنه تسجيل الدخول." />
+		<text name="UserEmailIsNotConfirmedAndCanNotLogin">لم يتم تأكيد عنوان بريدك الإلكتروني. لا يمكنك تسجيل الدخول.</text>
+		<text name="UserLockedOutMessage">تم قفل حساب المستخدم. الرجاء معاودة المحاولة في وقت لاحق.</text>
+		<text name="PleaseEnterLoginInformation" value="الرجاء إدخال معلومات تسجيل الدخول" />
+		<text name="TenancyName" value="اسم الإيجار" />
+		<text name="UserNameOrEmail" value="اسم المستخدم أو البريد الالكتروني" />
+		<text name="Password" value="كلمة المرور" />
+		<text name="ResetPassword" value="إعادة تعيين كلمة المرور" />
+		<text name="UpdatePassword" value="تحديث كلمة السر" />
+		<text name="RememberMe" value="تذكرنى" />
+		<text name="LogIn" value="تسجيل الدخول" />
+		<text name="LoginFailed" value="فشل عملية الدخول!" />
+		<text name="NameSurname" value="اللقب" />
+		<text name="UserName" value="اسم المستخدم" />
+		<text name="Name" value="الاسم" />
+		<text name="Surname" value="اللقب" />
+		<text name="EmailAddress" value="البريد الالكترونى" />
+		<text name="Tenants" value="المستأجرين" />
+		<text name="SavedSuccessfully" value="تم الحفظ بنجاح" />
+		<text name="CreateNewTenant" value="إنشاء مستأجر جديد" />
+		<text name="AdminEmailAddress" value="عنوان البريد الإلكتروني للمسؤول" />
+		<text name="AdminPassword" value="كلمة سر المسؤول" />
+		<text name="Save" value="حفظ" />
+		<text name="Cancel" value="إلغاء" />
+		<text name="TenantName_Regex_Description" value="يجب أن يتكون اسم المستأجر من حرفين على الأقل ، ويبدأ بحرف ويستمر بحرف أو رقم أو شرطة أو شرطة سفلية." />
+		<text name="DefaultPasswordIs" value="كلمة المرور الافتراضية هي {0}" />
+		<text name="CanBeEmptyToLoginAsHost" value="يمكن أن تكون فارغة لتسجيل الدخول كمضيف." />
+		<text name="Register" value="تسجيل" />
+		<text name="OrLoginWith" value="أو تسجيل الدخول باستخدام" />
+		<text name="WaitingForActivationMessage" value="حسابك في انتظار التفعيل من قبل مسؤول النظام." />
+		<text name="TenantSelection" value="اختيار المستأجر" />
+		<text name="TenantSelection_Detail" value="الرجاء تحديد أحد المستأجرين التاليين." />
+		<text name="Logout" value="تسجيل خروج" />
+		<text name="RegisterFormUserNameInvalidMessage">الرجاء عدم إدخال عنوان بريد إلكتروني لاسم المستخدم.</text>
+		<text name="DatabaseConnectionString" value="سلسلة اتصال قاعدة البيانات" />
+		<text name="Users" value="المستخدمون" />
+		<text name="IsActive" value="نشط" />
+		<text name="FullName" value="الاسم الكامل" />
+		<text name="CreateNewUser" value="إنشاء مستخدم جديد" />
+		<text name="Yes" value="نعم" />
+		<text name="No" value="لا" />
+		<text name="Optional" value="اختياري" />
+		<text name="LeaveEmptyToSwitchToHost">اتركه فارغا للتبديل إلى المضيف</text>
+		<text name="CurrentTenant">المستأجر الحالي</text>
+		<text name="NotSelected">لم يتم اختياره</text>
+		<text name="Change">تغيير</text>
+		<text name="ChangeTenant">تغيير المستأجر</text>
+		<text name="MultiLevelMenu">قائمة متعددة المستويات</text>
+		<text name="Back">عودة</text>
+		<text name="SuccessfullyRegistered">سجلت بنجاح</text>
+		<text name="WaitingForEmailActivation">يجب تفعيل عنوان البريد الإلكتروني الخاص بك</text>
+		<text name="Roles">الأدوار</text>
+		<text name="DisplayName">اسم العرض</text>
+		<text name="Edit">تعديل</text>
+		<text name="Delete">حذف</text>
+		<text name="CreateNewRole">أنشئ دورًا جديدًا</text>
+		<text name="RoleName">اسم الدور</text>
+		<text name="Actions">أجراءات</text>
+		<text name="CouldNotCompleteLoginOperation">تعذر إكمال عملية تسجيل الدخول. الرجاء معاودة المحاولة في وقت لاحق.</text>
+		<text name="CouldNotValidateExternalUser">تعذر التحقق من صحة المستخدم الخارجي</text>
+		<text name="EditRole">تعديل الدور</text>
+		<text name="EditTenant">تعديل المستأجر</text>
+		<text name="EditUser">تعديل المستخدم</text>
+		<text name="TenantIdIsNotActive{0}">TenantId {0} غير نشط</text>
+		<text name="UnknownTenantId{0}">معرف مستأجر غير معروف {0}</text>
+		<text name="ThisFieldIsRequired">هذه الخانة مطلوبه</text>
+		<text name="PleaseWait">أرجو الإنتظار...</text>
+		<text name="Administration">الادارة</text>
+		<text name="ClearAll">امسح الكل</text>
+		<text name="ClearOthers">امسح الآخرين</text>
+		<text name="LabelOptions">خيارات التسمية</text>
+		<text name="Permissions">أذونات</text>
+		<text name="RoleDescription">وصف الدور</text>
+		<text name="Refresh">تحديث</text>
+		<text name="Create">إنشاء</text>
+		<text name="UserDetails">بيانات المستخدم</text>
+		<text name="UserRoles">أدوار المستخدمين</text>
+		<text name="ConfirmPassword">تأكيد كلمة المرور</text>
+		<text name="Version">إصدار</text>
+		<text name="On">فعال</text>
+		<text name="Off">غير فعال</text>
+		<text name="AreYouSureWantToDelete">هل أنت متأكد من أنك تريد حذف {0}؟</text>
+		<text name="SuccessfullyDeleted">تم الحذف بنجاح</text>
+		<text name="StartTyping">ابدأ الطباعة</text>
+		<text name="Skins">ثيمات</text>
+		<text name="Settings">إعدادات</text>
+		<text name="Filter">بحث</text>
+		<text name="CurrentPassword">كلمة المرور الحالية</text>
+		<text name="NewPassword">كلمة السر الجديدة</text>
+		<text name="ConfirmNewPassword">تأكيد كلمة المرور الجديدة</text>
+		<text name="PasswordsDoNotMatch">كلمة المرور غير مطابقة</text>
+		<text name="PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber">يجب أن تتكون كلمات المرور من 8 أحرف على الأقل ، وأن تحتوي على أحرف صغيرة وأحرف كبيرة ورقم</text>
+		<text name="UserDeleteWarningMessage">سيتم حذف المستخدم {0}.</text>
+		<text name="RoleDeleteWarningMessage">سيتم حذف الدور {0} وإلغاء تعيينه من جميع المستخدمين المعينين.</text>
+		<text name="TenantDeleteWarningMessage">سيتم حذف المستأجر {0}.</text>
+		<text name="SearchWithThreeDot">يبحث...</text>
+		<text name="PleaseEnterAtLeastNCharacter">الرجاء إدخال {0} حرف على الأقل</text>
+		<text name="PleaseEnterNoMoreThanNCharacter">الرجاء إدخال ما لا يزيد عن {0} حرف</text>
+		<text name="InvalidEmailAddress">عنوان البريد الإلكتروني غير صالح</text>
+		<text name="InvalidPattern">غير صالح</text>
+		<text name="PairsDoNotMatch">لا تتطابق</text>
+		<text name="All">الجميع</text>
+		<text name="TotalRecordsCount">الإجمالي: {0}</text>
+		<text name="Search">بحث</text>
+		<text name="Clear">مسح</text>
+		<text name="ResetPasswordStepOneInfo">1. أدخل كلمة مرور المسؤول</text>
+		<text name="ResetPasswordStepTwoInfo">2. انسخ كلمة المرور العشوائية هذه حتى تتمكن من إرسالها إلى المستخدم</text>
+		<text name="UsersActivation">تفعيل المستخدمين</text>
+	</texts>
+</localizationDictionary>

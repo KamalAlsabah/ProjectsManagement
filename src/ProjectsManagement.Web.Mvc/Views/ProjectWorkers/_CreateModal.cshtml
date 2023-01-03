@@ -1,0 +1,37 @@
+﻿@using ProjectsManagement.ProjectDatabase.Enums
+@using ProjectsManagement.Web.Models.Common.Modals
+@using ProjectsManagement.Web.Models.ProjectWorkers
+@model CreateProjectWorkerModalViewModel
+@{
+    Layout = null;
+    
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateProjectWorkers")))
+<form name="ProjectWorkersCreateForm" role="form" class="form-horizontal">
+    <div class="modal-body">
+        <input type="hidden" id="ProjectId" name="ProjectId" asp-for="CreateProjectWorkerDto.ProjectId" />
+        <div class="form-group row required">
+            @if(Model.Users.Any()){
+
+            <label class="col-md-3 col-form-label" for="WorkerId">@L("WorkerId")</label>
+            <div class="col-md-9">
+                <select id="WorkerId" class="form-control" type="text" name="WorkerId" asp-items='new SelectList( Model.Users,"Value","Name")' asp-for="CreateProjectWorkerDto.WorkerId">
+
+                </select>
+            </div>
+            }
+            else
+            {
+                <h4 class="text-center">@L("ThereIsNoWorkers")</h4>
+
+            }
+        </div>
+       
+    </div>
+    @if (Model.Users.Any())
+    {
+        @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+    }
+</form>
+
+<script src="~/view-resources/Views/ProjectWorkers/_CreateModal.js" asp-append-version="true"></script>

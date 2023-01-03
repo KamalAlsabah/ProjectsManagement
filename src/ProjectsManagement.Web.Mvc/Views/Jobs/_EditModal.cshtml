@@ -1,0 +1,65 @@
+﻿@using ProjectsManagement.ProjectDatabase.Enums
+@using ProjectsManagement.Web.Models.Common.Modals
+@using ProjectsManagement.Web.Models.Jobs
+@model EditJobModalViewModel
+@{
+    Layout = null;
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditJobs")))
+<form name="JobsEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" asp-for="EditJobDto.Id" />
+    
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="NameL">@L("NameL")</label>
+            <div class="col-md-9">
+                <input id="NameL" class="form-control" type="text" name="NameL" asp-for="EditJobDto.NameL">
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="NameF">@L("NameF")</label>
+            <div class="col-md-9">
+                <input id="NameF" type="text" class="form-control" name="NameF" asp-for="EditJobDto.NameF">
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="ExpectedNoOfHours">@L("ExpectedNoOfHours")</label>
+            <div class="col-md-9">
+                <input id="ExpectedNoOfHours" type="number" class="form-control" name="ExpectedNoOfHours" asp-for="EditJobDto.ExpectedNoOfHours">
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Status">@L("Status")</label>
+            <div class="col-md-9">
+                <select id="Status" class="form-control" name="Status" asp-for="EditJobDto.Status" asp-items="Html.GetEnumSelectList<JobStatus>()">
+                </select>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="UserId">@L("Users")</label>
+            <div class="col-md-9">
+                <select id="WorkerId" class="form-control" name="WorkerId" asp-for="EditJobDto.WorkerId" asp-items='new SelectList(Model.Users,"Value","Name")'>
+                    <option  value="">@L("WithoutUser")</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="SprintId">@L("Sprints")</label>
+            <div class="col-md-9">
+                <select id="SprintId" class="form-control" name="SprintId" asp-for="EditJobDto.SprintId" asp-items='new SelectList(Model.Sprints,"Value","Name")'>
+                    <option value="">@L("WithoutSprint")</option>
+
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="Description">@L("Description")</label>
+            <div class="col-md-9">
+                <textarea id="Description" class="form-control" name="Description" asp-for="EditJobDto.Description"></textarea>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/Jobs/_EditModal.js" asp-append-version="true"></script>
