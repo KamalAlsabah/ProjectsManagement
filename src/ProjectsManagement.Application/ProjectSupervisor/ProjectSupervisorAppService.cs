@@ -87,6 +87,7 @@ namespace ProjectsManagement.ProjectSupervisor
              List<ProjectSupervisors> listProjectSupervisors = await repository.GetAll()
                .Include(x => x.Project)
                .Include(x => x.Supervisor)
+               .Where(x=>x.ProjectId == input.ProjectId)
                .Where(x =>
                x.Project.Name.Contains(input.KeyWord) ||
                x.Supervisor.UserName.Contains(input.KeyWord) ||

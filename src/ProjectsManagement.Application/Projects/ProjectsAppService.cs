@@ -4,6 +4,7 @@ using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Runtime.Session;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ProjectsManagement.Authorization;
 using ProjectsManagement.Authorization.Users;
 using ProjectsManagement.Project.Dto;
@@ -18,21 +19,152 @@ namespace ProjectsManagement.Project
     public class ProjectsAppService : AsyncCrudAppService<Projects, ProjectsDto, long, PagedProjectsResultRequestDto, CreateProjectsDto, ListProjectsDto>, IProjectsAppService
     {
         private readonly IRepository<Projects, long> _projectsrepository;
-         private readonly  UserManager _userManager;
+        private readonly IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> _projectWorkersrepository;
+        private readonly IRepository<ProjectDatabase.ProjectSupervisor.ProjectSupervisors, long> _projectSupervisorsrepository;
+        private readonly UserManager _userManager;
         public ProjectsAppService(
             IRepository<Projects, long> repository,
+            IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> projectWorkersrepository,
+            IRepository<ProjectDatabase.ProjectSupervisor.ProjectSupervisors, long> projectSupervisorsrepository,
               UserManager userManager) : base(repository)
         {
             _projectsrepository = repository;
+            _projectWorkersrepository = projectWorkersrepository;
+            _projectSupervisorsrepository = projectSupervisorsrepository;
             _userManager = userManager;
         }
 
         public override async Task<PagedResultDto<ProjectsDto>> GetAllAsync(PagedProjectsResultRequestDto input)
         {
+            var listStudy = _projectsrepository.GetAll();
             var user = await _userManager.FindByIdAsync(AbpSession.GetUserId().ToString());
             var roles = await _userManager.GetRolesAsync(user);
 
-            var listStudy = _projectsrepository.GetAll();
+            if (roles.Count != 0 && roles.Count == 1)
+            {
+                if (roles.FirstOrDefault() == "Admin")
+                {
+                    return new PagedResultDto<ProjectsDto>()
+                    {
+                        Items = ObjectMapper.Map<List<ProjectsDto>>(listStudy
+                          .Skip(input.SkipCount)
+                           .Take(input.MaxResultCount).ToList()),
+                            TotalCount = listStudy.Count()
+
+
+                    };
+                }
+                else if (roles.FirstOrDefault() == "Worker")
+                {
+                    List<Projects> WorkerProjectList = new List<Projects>();
+                    var WorkersProject = await _projectWorkersrepository.GetAll().Where(x => x.WorkerId == user.Id).Select(x => x.ProjectId).ToListAsync();
+
+                    foreach (var projectId in WorkersProject)
+                    {
+                        foreach (var project in listStudy)
+                        {
+                            if (projectId == project.Id)
+                            {
+                                WorkerProjectList.Add(project);
+                            }
+                        }
+                    }
+
+                    return new PagedResultDto<ProjectsDto>()
+                    {
+                        Items = ObjectMapper.Map<List<ProjectsDto>>(WorkerProjectList
+                         .Skip(input.SkipCount)
+                          .Take(input.MaxResultCount).ToList()),
+                        TotalCount = WorkerProjectList.Count()
+
+
+                    };
+                }
+                else
+                {
+                    List<Projects> SupervisorProjectList = new List<Projects>();
+                    var WorkersProject =await _projectSupervisorsrepository.GetAll().Where(x => x.SupervisorId == user.Id).Select(x => x.ProjectId).ToListAsync();
+
+                    foreach (var projectId in WorkersProject)
+                    {
+                        foreach (var project in listStudy)
+                        {
+                            if (projectId == project.Id)
+                            {
+                                SupervisorProjectList.Add(project);
+                            }
+                        }
+                    }
+
+                    return new PagedResultDto<ProjectsDto>()
+                    {
+                        Items = ObjectMapper.Map<List<ProjectsDto>>(SupervisorProjectList
+                         .Skip(input.SkipCount)
+                          .Take(input.MaxResultCount).ToList()),
+                        TotalCount = SupervisorProjectList.Count()
+
+
+                    };
+                }
+
+            }
+
+            if (roles.Count>1)
+            {
+                foreach (var role in roles)
+                {
+                    if(role=="Admin")
+                    {
+                        return new PagedResultDto<ProjectsDto>()
+                        {
+                            Items = ObjectMapper.Map<List<ProjectsDto>>(listStudy
+                         .Skip(input.SkipCount)
+                          .Take(input.MaxResultCount).ToList()),
+                            TotalCount = listStudy.Count()
+
+
+                        };
+                    }
+                }
+                if((roles[1]=="Worker" && roles[0]== "Supervisor") || (roles[0] == "Worker" && roles[1] == "Supervisor"))
+                {
+                    List<Projects> SupervisorProjectList = new List<Projects>();
+                    var SupervisorsProject = await _projectSupervisorsrepository.GetAll().Where(x => x.SupervisorId == user.Id).Select(x => x.ProjectId).ToListAsync();
+                    var WorkersProject = await _projectWorkersrepository.GetAll().Where(x => x.WorkerId == user.Id).Select(x => x.ProjectId).ToListAsync();
+
+                    foreach (var projectId in SupervisorsProject)
+                    {
+                        foreach (var project in listStudy)
+                        {
+                            if (projectId == project.Id)
+                            {
+                                SupervisorProjectList.Add(project);
+                            }
+                        }
+                    }
+                    foreach (var projectId in WorkersProject)
+                    {
+                        foreach (var project in listStudy)
+                        {
+                            if (projectId == project.Id)
+                            {
+                                SupervisorProjectList.Add(project);
+                            }
+                        }
+                    }
+
+                    return new PagedResultDto<ProjectsDto>()
+                    {
+                        Items = ObjectMapper.Map<List<ProjectsDto>>(SupervisorProjectList
+                         .Skip(input.SkipCount)
+                          .Take(input.MaxResultCount).ToList()),
+                        TotalCount = SupervisorProjectList.Count()
+
+
+                    };
+                }
+
+            }
 
             return new PagedResultDto<ProjectsDto>()
             {

@@ -20,6 +20,12 @@ namespace ProjectsManagement.Authorization
             context.CreatePermission(PermissionNames.Pages_Projects_DeleteProject, L("DeleteProject"));
             context.CreatePermission(PermissionNames.Pages_Projects_EditProject, L("EditProject"));
 
+            //For Project worker
+            context.CreatePermission(PermissionNames.Pages_ProjectsWorkers, L("ProjectsWorkers"));
+
+            //For Project supervisor
+            context.CreatePermission(PermissionNames.Pages_ProjectsSupervisors, L("ProjectsSupervisors"));
+
 
         }
 

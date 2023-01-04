@@ -13,6 +13,8 @@ using Abp;
 using ProjectsManagement.Authorization.Users;
 using ProjectsManagement.ProjectDatabase.Enums;
 using Abp.UI;
+using Abp.Authorization;
+using ProjectsManagement.Authorization;
 
 namespace ProjectWorkerManagement.ProjectWorkers
 {
@@ -30,11 +32,12 @@ namespace ProjectWorkerManagement.ProjectWorkers
             this.userManager = userManager;
             this.projectRepo = projectRepo;
         }
-
+        [AbpAuthorize(PermissionNames.Pages_ProjectsWorkers)]
         public override async Task<PagedResultDto<ProjectWorkersDto>> GetAllAsync(PagedProjectWorkerResultRequestDto input)
         {
 
             var listProjectWorkers = _ProjectWorkerrepository.GetAll().Include(x=>x.Project).Include(x=>x.Worker)
+                .WhereIf(input.ProjectId>0,x=>x.ProjectId == input.ProjectId)
                 .OrderBy(x=>x.CreationTime)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.Keyword) ,x =>x.Worker.FullName.Contains(input.Keyword)
                 || x.Project.NameL.Contains(input.Keyword) 

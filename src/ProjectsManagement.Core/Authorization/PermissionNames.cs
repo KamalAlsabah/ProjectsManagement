@@ -10,5 +10,8 @@
         public const string Pages_Projects_EditProject = "Pages.Projects.EditProject";
         public const string Pages_Projects_DeleteProject = "Pages.Projects.DeleteProject ";
         public const string Pages_Projects = "Pages.Projects";
+        public const string Pages_ProjectsWorkers = "Pages.ProjectsWorkers";
+        public const string Pages_ProjectsSupervisors = "Pages.ProjectsSupervisors";
+
     }
 }
