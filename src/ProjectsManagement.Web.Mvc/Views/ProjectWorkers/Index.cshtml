@@ -20,12 +20,16 @@
             <div class="col-sm-6">
                 <h1>@L("ProjectWorkers")</h1>
             </div>
-            <div class="col-sm-6">
+            @if (IsGranted("Pages.ProjectsWorkers.CreateProjectsWorkers"))
+            {
+                 <div class="col-sm-6">
                     <button type="button" class="btn bg-blue float-sm-right create-projectWorkers" data-toggle="modal" data-target="#ProjectWorkersCreateModal">
                         <i class="fa fa-plus-square"></i>
                         @L("Create")
                     </button>
             </div>
+            }
+           
         </div>
     </div>
 </section>

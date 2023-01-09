@@ -33,7 +33,7 @@ namespace ProjectsManagement.Project
             _projectSupervisorsrepository = projectSupervisorsrepository;
             _userManager = userManager;
         }
-
+        [AbpAuthorize(PermissionNames.Pages_Projects)]
         public override async Task<PagedResultDto<ProjectsDto>> GetAllAsync(PagedProjectsResultRequestDto input)
         {
             var listStudy = _projectsrepository.GetAll();
@@ -191,7 +191,7 @@ namespace ProjectsManagement.Project
             return model;
         }
 
-
+        [AbpAuthorize(PermissionNames.Pages_Projects_EditProject)]
         public override Task<ProjectsDto> UpdateAsync(ListProjectsDto input)
         {
             return base.UpdateAsync(input);

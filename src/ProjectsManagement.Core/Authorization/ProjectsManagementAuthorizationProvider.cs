@@ -22,10 +22,27 @@ namespace ProjectsManagement.Authorization
 
             //For Project worker
             context.CreatePermission(PermissionNames.Pages_ProjectsWorkers, L("ProjectsWorkers"));
+            context.CreatePermission(PermissionNames.Pages_ProjectsWorkers_CreateProjectsWorkers, L("CreateProjectsWorkers"));
+            context.CreatePermission(PermissionNames.Pages_ProjectsWorkers_EditProjectsWorkers, L("EditProjectsWorkers"));
+            context.CreatePermission(PermissionNames.Pages_ProjectsWorkers_DeleteProjectsWorkers, L("DeleteProjectsWorkers"));
 
             //For Project supervisor
             context.CreatePermission(PermissionNames.Pages_ProjectsSupervisors, L("ProjectsSupervisors"));
+            context.CreatePermission(PermissionNames.Pages_ProjectsSupervisors_CreateProjectSupervisors, L("CreateProjectSupervisors"));
+            context.CreatePermission(PermissionNames.Pages_ProjectsSupervisors_EditProjectSupervisors, L("EditProjectSupervisors"));
+            context.CreatePermission(PermissionNames.Pages_ProjectsSupervisors_DeleteProjectSupervisors, L("DeleteProjectSupervisors"));
 
+            //For Jobs (Show & CUD)
+            context.CreatePermission(PermissionNames.Pages_Jobs, L("Jobs"));
+            context.CreatePermission(PermissionNames.Pages_Jobs_CreateJob, L("CreateJob"));
+            context.CreatePermission(PermissionNames.Pages_Jobs_EditJob, L("EditJob"));
+            context.CreatePermission(PermissionNames.Pages_Jobs_DeleteJob, L("DeleteJob"));
+
+            //For Sprints (Show & CUD)
+            context.CreatePermission(PermissionNames.Pages_Sprints, L("Sprint"));
+            context.CreatePermission(PermissionNames.Pages_Sprints_CreateSprints, L("CreateSprint"));
+            context.CreatePermission(PermissionNames.Pages_Sprints_EditSprints, L("EditSprint"));
+            context.CreatePermission(PermissionNames.Pages_Sprints_DeleteSprints, L("DeleteSprint"));
 
         }
 

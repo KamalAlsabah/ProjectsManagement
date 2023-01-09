@@ -29,16 +29,28 @@ namespace ProjectsManagement.Web.Controllers
 
         public async Task<IActionResult> Index(long ProjectId)
         {
-            ViewData["ProjectId"] = ProjectId;
-            return View();
+            IndexJobModalViewModel model =new IndexJobModalViewModel() { ProjectId=ProjectId};
+            return View(model);
         }
 
         public async Task<ActionResult> CreateModal(int ProjectId)
         {
             var model = new CreateJobModalViewModel();
+
+            if (PermissionChecker.IsGranted("Pages.Jobs.CreateJob"))
+            {
+
+                
+            }
             model.CreateJobDto = new () { ProjectId = ProjectId }; 
-            model.Users =await projectWorkersRepository.GetAll().Where(x => x.ProjectId == ProjectId).Select(x => new NameValue<long> { Name = x.Worker.FullName, Value = x.WorkerId }).ToListAsync();
-            model.Sprints = await repositorySprints.GetAll().Where(x => x.ProjectId == ProjectId).Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
+            model.Users =await projectWorkersRepository.GetAll()
+                .Where(x => x.ProjectId == ProjectId)
+                .Select(x => new NameValue<long> { Name = x.Worker.FullName, Value = x.WorkerId })
+                .ToListAsync();
+            model.Sprints = await repositorySprints.GetAll()
+                .Where(x => x.ProjectId == ProjectId)
+                .Select(x => new NameValue<long> { Name = x.Name, Value = x.Id })
+                .ToListAsync();
             return PartialView("_CreateModal", model);
         }
         public async Task<ActionResult> EditModal(int jobsId)
@@ -46,8 +58,14 @@ namespace ProjectsManagement.Web.Controllers
             var output = await _jobsAppService.GetJobForEdit(new EntityDto(jobsId));
             var model = new EditJobModalViewModel();
             model.EditJobDto = output;
-            model.Users = await projectWorkersRepository.GetAll().Where(x => x.ProjectId == output.ProjectId).Include(x => x.Worker).Select(x => new NameValue<long> { Name = x.Worker.FullName, Value = x.WorkerId }).ToListAsync();
-            model.Sprints = await repositorySprints.GetAll().Where(x => x.ProjectId == output.ProjectId).Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
+            model.Users = await projectWorkersRepository.GetAll()
+                .Where(x => x.ProjectId == output.ProjectId)
+                .Include(x => x.Worker)
+                .Select(x => new NameValue<long> { Name = x.Worker.FullName, Value = x.WorkerId })
+                .ToListAsync();
+            model.Sprints = await repositorySprints.GetAll()
+                .Where(x => x.ProjectId == output.ProjectId)
+                .Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
             return PartialView("_EditModal", model);
         }
     }

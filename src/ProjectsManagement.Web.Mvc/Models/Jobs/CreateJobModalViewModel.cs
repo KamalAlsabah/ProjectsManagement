@@ -10,5 +10,6 @@ namespace ProjectsManagement.Web.Models.Jobs
         public CreateJobDto CreateJobDto { get; set; }
         public List<NameValue<long>> Users { get; set; }
         public List<NameValue<long>> Sprints { get; set; }
+        public long UserId { get; set; }
     }
 }

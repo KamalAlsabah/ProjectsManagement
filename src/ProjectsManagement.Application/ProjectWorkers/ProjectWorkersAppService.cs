@@ -51,6 +51,7 @@ namespace ProjectWorkerManagement.ProjectWorkers
             };
         }
 
+        [AbpAuthorize(PermissionNames.Pages_ProjectsWorkers_CreateProjectsWorkers)]
 
         public override async Task<ProjectWorkersDto> CreateAsync(CreateProjectWorkerDto input)
         {
@@ -79,6 +80,8 @@ namespace ProjectWorkerManagement.ProjectWorkers
                 .Select(x => new NameValue<long> { Name = x.FullName, Value = x.Id }).ToList();
             return Users;
         }
+        [AbpAuthorize(PermissionNames.Pages_ProjectsWorkers_EditProjectsWorkers)]
+
         public override async Task<ProjectWorkersDto> UpdateAsync(UpdateInputDto input)
         {
             var projectClosed = await _ProjectWorkerrepository.GetAll().Where(x => x.ProjectId == input.ProjectId).Select(x => x.Project.Status).FirstOrDefaultAsync();
@@ -88,6 +91,8 @@ namespace ProjectWorkerManagement.ProjectWorkers
             }
             return await base.UpdateAsync(input);
         }
+        [AbpAuthorize(PermissionNames.Pages_ProjectsWorkers_DeleteProjectsWorkers)]
+
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _ProjectWorkerrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();

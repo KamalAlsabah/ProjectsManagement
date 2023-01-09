@@ -1,9 +1,11 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.UI;
 using Microsoft.EntityFrameworkCore;
+using ProjectsManagement.Authorization;
 using ProjectsManagement.Jobs.Dto;
 using ProjectsManagement.ProjectDatabase.Enums;
 using ProjectsManagement.ProjectDatabase.Sprint;
@@ -25,6 +27,7 @@ namespace JobManagement.Jobs
             _Jobrepository = repository;
             this.projectRepo = projectRepo;
         }
+        [AbpAuthorize(PermissionNames.Pages_Jobs)]
 
         public override async Task<PagedResultDto<JobsDto>> GetAllAsync(PagedJobResultRequestDto input)
         {
@@ -44,6 +47,7 @@ namespace JobManagement.Jobs
             };
         }
 
+        [AbpAuthorize(PermissionNames.Pages_Jobs_CreateJob)]
 
         public override async Task<JobsDto> CreateAsync(CreateJobDto input)
         {
@@ -67,6 +71,7 @@ namespace JobManagement.Jobs
             return model;
         }
 
+        [AbpAuthorize(PermissionNames.Pages_Jobs_EditJob)]
 
         public override async Task<JobsDto> UpdateAsync(UpdateInputDto input)
         {
@@ -79,6 +84,7 @@ namespace JobManagement.Jobs
             if (input.SprintId == 0) input.SprintId = null;
             return await base.UpdateAsync(input);
         }
+        [AbpAuthorize(PermissionNames.Pages_Jobs_DeleteJob)]
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _Jobrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();

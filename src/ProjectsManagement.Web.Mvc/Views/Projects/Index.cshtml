@@ -1,4 +1,6 @@
-﻿@using ProjectsManagement.Web.Startup
+﻿@using ProjectsManagement.Authorization
+@using ProjectsManagement.Authorization.Roles
+@using ProjectsManagement.Web.Startup
 
 @{
     ViewBag.Title = L("Projects");
@@ -6,6 +8,14 @@
 }
 @section scripts
 {
+    <script>
+        var CreatePermession="@PermissionNames.Pages_Projects_CreateProject";
+        var EditPermession="@PermissionNames.Pages_Projects_EditProject";
+        var DeletePermession="@PermissionNames.Pages_Projects_DeleteProject";
+        var IsAdmin="@User.IsInRole(StaticRoleNames.Host.Admin)".toLowerCase()=="true";
+        var IsWorker="@User.IsInRole(StaticRoleNames.Host.Worker)".toLowerCase()=="true";
+        var IsSupervisor="@User.IsInRole(StaticRoleNames.Host.Supervisor)".toLowerCase()=="true";
+    </script>
     <environment names="Development">
         <script src="~/view-resources/Views/Projects/Index.js" asp-append-version="true"></script>
     </environment>

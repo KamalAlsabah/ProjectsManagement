@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 using Abp.UI;
 using ProjectsManagement.ProjectDatabase.Enums;
+using Abp.Authorization;
+using ProjectsManagement.Authorization;
 
 namespace SprintManagement.Sprints
 {
@@ -25,6 +27,7 @@ namespace SprintManagement.Sprints
             _Sprintrepository = repository;
             this.projectRepo = projectRepo;
         }
+        [AbpAuthorize(PermissionNames.Pages_Sprints)]
 
         public override async Task<PagedResultDto<SprintsDto>> GetAllAsync(PagedSprintResultRequestDto input)
         {
@@ -43,8 +46,7 @@ namespace SprintManagement.Sprints
                 TotalCount = listSprints.Count()
             };
         }
-
-
+        [AbpAuthorize(PermissionNames.Pages_Sprints_CreateSprints)]
         public override async Task<SprintsDto> CreateAsync(CreateSprintDto input)
         {
             var projectClosed = await projectRepo.GetAll().Where(x => x.Id == input.ProjectId).Select(x => x.Status).FirstOrDefaultAsync();
@@ -54,9 +56,6 @@ namespace SprintManagement.Sprints
             }
             return await base.CreateAsync(input);
         }
-
-       
-
         public async Task<EditSprintDto> GetSprintForEdit(EntityDto input)
         {
             var sprint =await _Sprintrepository.GetAll().Where(x=>x.Id== input.Id).FirstOrDefaultAsync();
@@ -64,7 +63,7 @@ namespace SprintManagement.Sprints
 
             return model;
         }
-
+        [AbpAuthorize(PermissionNames.Pages_Sprints_EditSprints)]
 
         public override async Task<SprintsDto> UpdateAsync(UpdateInputDto input)
         {
@@ -75,6 +74,7 @@ namespace SprintManagement.Sprints
             }
             return await base.UpdateAsync(input);
         }
+        [AbpAuthorize(PermissionNames.Pages_Sprints_DeleteSprints)]
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _Sprintrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();

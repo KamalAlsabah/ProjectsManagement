@@ -77,7 +77,8 @@
                 width: "200px",
                 className: "text-center",
                 render: (data, type, row, meta) => {
-                    return `
+                    if (IsAdmin) {
+                        return `
                         <div class="dropdown">
                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-cog"></i>
@@ -116,6 +117,49 @@
                           </ul>
                         </div>
                     `
+                    }
+                    else if(IsWorker){
+                        return `
+                        <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-cog"></i>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a href="/Jobs/Index?projectId=${row.id}" class=" dropdown-item" title="Jobs" >
+                                    <i class="fas fa-list"></i>  Jobs
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/ProjectWorkers/Index?projectId=${row.id}" class="dropdown-item" title="Workers">
+                                    <i class="fas fa-user"></i> Workers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/ProjectSupervisor?projectid=${row.id}" class="dropdown-item" title="Supervisor">
+                                  <i class="fas fa-users"></i> Supervisor
+                                </a>
+                            </li>
+                          </ul>
+                        </div>
+                    `
+                    }
+                    else if (IsSupervisor) {
+                        return `
+                        <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-cog"></i>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a href="/Jobs/Index?projectId=${row.id}" class=" dropdown-item" title="Jobs" >
+                                    <i class="fas fa-list"></i>  Jobs
+                                </a>
+                            </li>
+                          </ul>
+                        </div>
+                    `
+                    }
                 }
             }
         ]

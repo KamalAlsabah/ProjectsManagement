@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using ProjectsManagement.Authorization.Roles;
 using Abp.UI;
 using ProjectsManagement.ProjectDatabase.Enums;
+using Abp.Authorization;
+using ProjectsManagement.Authorization;
 
 namespace ProjectsManagement.ProjectSupervisor
 {
@@ -48,6 +50,8 @@ namespace ProjectsManagement.ProjectSupervisor
                 Projects.Select(p => new ComboboxItemDto(p.Id.ToString("D"), p.Name)).ToList()
             );
         }
+
+        [AbpAuthorize(PermissionNames.Pages_ProjectsSupervisors_CreateProjectSupervisors)]
         public override async Task<ProjectSupervisorListDto> CreateAsync(ProjectSupervisorCreateDto input)
         {
             var projectClosed = await repositoryProjects.GetAll().Where(x => x.Id == input.ProjectId).Select(x => x.Status).FirstOrDefaultAsync();
@@ -57,6 +61,8 @@ namespace ProjectsManagement.ProjectSupervisor
             }
             return await base.CreateAsync(input);
         }
+
+        [AbpAuthorize(PermissionNames.Pages_ProjectsSupervisors_EditProjectSupervisors)]
         public override async Task<ProjectSupervisorListDto> UpdateAsync(UpDateInputProjectSupervisorDto input)
         {
             var projectClosed = await repository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();
@@ -66,6 +72,8 @@ namespace ProjectsManagement.ProjectSupervisor
             }
             return await base.UpdateAsync(input);
         }
+
+        [AbpAuthorize(PermissionNames.Pages_ProjectsSupervisors_DeleteProjectSupervisors)]
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await repository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();
@@ -82,6 +90,8 @@ namespace ProjectsManagement.ProjectSupervisor
 
             return ProjectSupervisors;
         }
+
+        [AbpAuthorize(PermissionNames.Pages_ProjectsSupervisors)]
         public override async Task<PagedResultDto<ProjectSupervisorListDto>> GetAllAsync(ProjectSupervisorPagedDto input)
         {
              List<ProjectSupervisors> listProjectSupervisors = await repository.GetAll()
