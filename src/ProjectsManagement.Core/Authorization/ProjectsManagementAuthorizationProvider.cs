@@ -44,6 +44,12 @@ namespace ProjectsManagement.Authorization
             context.CreatePermission(PermissionNames.Pages_Sprints_EditSprints, L("EditSprint"));
             context.CreatePermission(PermissionNames.Pages_Sprints_DeleteSprints, L("DeleteSprint"));
 
+            //JobTask (Show & CUD)
+            context.CreatePermission(PermissionNames.Pages_JobTasks, L("JobTasks"));
+            context.CreatePermission(PermissionNames.Pages_JobTasks_CreateJobTasks, L("CreateJobTasks"));
+            context.CreatePermission(PermissionNames.Pages_JobTasks_EditJobTasks, L("EditJobTasks"));
+            context.CreatePermission(PermissionNames.Pages_JobTasks_DeleteJobTasks, L("DeleteJobTasks"));
+
         }
 
         private static ILocalizableString L(string name)

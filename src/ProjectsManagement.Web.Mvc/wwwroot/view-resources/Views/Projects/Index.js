@@ -135,11 +135,6 @@
                                     <i class="fas fa-user"></i> Workers
                                 </a>
                             </li>
-                            <li>
-                                <a href="/ProjectSupervisor?projectid=${row.id}" class="dropdown-item" title="Supervisor">
-                                  <i class="fas fa-users"></i> Supervisor
-                                </a>
-                            </li>
                           </ul>
                         </div>
                     `

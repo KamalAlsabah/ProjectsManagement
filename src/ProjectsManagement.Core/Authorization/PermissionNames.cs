@@ -36,7 +36,11 @@
         public const string Pages_Sprints_EditSprints = "Pages.Sprints.EditSprints";
         public const string Pages_Sprints_DeleteSprints = "Pages.Sprints.DeleteSprints";
 
-
+        //JobTask (Show & CUD)
+        public const string Pages_JobTasks = "Pages.JobTasks";
+        public const string Pages_JobTasks_CreateJobTasks = "Pages.JobTasks.CreateJobTasks";
+        public const string Pages_JobTasks_EditJobTasks = "Pages.JobTasks.EditJobTasks";
+        public const string Pages_JobTasks_DeleteJobTasks = "Pages.JobTasks.DeleteJobTasks";
 
     }
 }

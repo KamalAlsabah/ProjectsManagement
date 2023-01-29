@@ -1,4 +1,5 @@
-﻿@using ProjectsManagement.Web.Models.Jobs
+﻿@using ProjectsManagement.Authorization.Roles
+@using ProjectsManagement.Web.Models.Jobs
 @using ProjectsManagement.Web.Startup
 @model IndexJobModalViewModel
 @{
@@ -7,6 +8,9 @@
 }
 @section scripts
 {
+    <script>
+             var IsSupervisor="@User.IsInRole(StaticRoleNames.Host.Supervisor)".toLowerCase()=="true";
+    </script>
     <environment names="Development">
         <script src="~/view-resources/Views/Jobs/Index.js" asp-append-version="true"></script>
     </environment>

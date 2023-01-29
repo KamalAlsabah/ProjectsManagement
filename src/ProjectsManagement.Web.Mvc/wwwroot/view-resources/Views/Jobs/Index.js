@@ -100,7 +100,23 @@
                 className:"text-center",
                 defaultContent: '',
                 render: (data, type, row, meta) => {
-                    return `
+                    if (IsSupervisor) {
+                        return `
+                        <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-cog"></i>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li>
+                                <a type="button" class="dropdown-item edit-jobs" data-jobs-id="${row.id}" data-toggle="modal" data-target="#JobsEditModal" title="Edit">
+                                    <i class="fas fa-pencil-alt"></i> Edit
+                                </a>
+                            </li>
+                          </ul>
+                        </div>
+                    `
+                    } else {
+                        return `
                         <div class="dropdown">
                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-cog"></i>
@@ -124,6 +140,8 @@
                           </ul>
                         </div>
                     `
+                    }
+                  
 
                 }
             }

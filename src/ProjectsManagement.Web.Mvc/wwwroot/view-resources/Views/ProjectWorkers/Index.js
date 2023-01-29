@@ -52,14 +52,17 @@
                 autoWidth: false,
                 defaultContent: '',
                 render: (data, type, row, meta) => {
-                    return [
-                        //`   <button type="button" class="btn btn-sm bg-secondary edit-projectWorkers" data-projectWorkers-id="${row.id}" data-toggle="modal" data-target="#ProjectWorkersEditModal">`,
-                        //`       <i class="fas fa-pencil-alt"></i>`,
-                        //'   </button>',
-                        `   <button type="button" class="btn btn-sm bg-danger delete-projectWorkers" data-projectWorkers-id="${row.id}" data-projectWorkers-name="${row.workerFullName}">`,
-                        `       <i class="fas fa-trash"></i>`,
-                        '   </button>',
-                    ].join('');
+                    if (!IsWorker) {
+                        return [
+                            //`   <button type="button" class="btn btn-sm bg-secondary edit-projectWorkers" data-projectWorkers-id="${row.id}" data-toggle="modal" data-target="#ProjectWorkersEditModal">`,
+                            //`       <i class="fas fa-pencil-alt"></i>`,
+                            //'   </button>',
+                            `   <button type="button" class="btn btn-sm bg-danger delete-projectWorkers" data-projectWorkers-id="${row.id}" data-projectWorkers-name="${row.workerFullName}">`,
+                            `       <i class="fas fa-trash"></i>`,
+                            '   </button>',
+                        ].join('');
+                    }
+                  
                 }
             }
         ]
