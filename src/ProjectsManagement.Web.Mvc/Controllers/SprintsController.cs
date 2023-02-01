@@ -18,8 +18,8 @@ namespace ProjectsManagement.Web.Controllers
 
         public async Task<IActionResult> Index(long ProjectId)
         {
-            ViewData["ProjectId"] = ProjectId;
-            return View();
+            IndexSprintsModalViewModel model = new IndexSprintsModalViewModel() {ProjectId=ProjectId };
+             return View(model);
         }
 
         public async Task<ActionResult> CreateModal(int ProjectId)
