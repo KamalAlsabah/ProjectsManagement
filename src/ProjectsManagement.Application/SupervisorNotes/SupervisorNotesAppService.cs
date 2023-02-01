@@ -20,7 +20,9 @@ namespace ProjectsManagement.SupervisorNotes
     {
         private readonly IHttpContextAccessor accessor;
         private readonly IRepository<ProjectsManagement.ProjectDatabase.SupervisorNotes.SupervisorNotes, long> _supervisorNotesrepository;
-        public SupervisorNotesAppService(IHttpContextAccessor accessor , IRepository<ProjectsManagement.ProjectDatabase.SupervisorNotes.SupervisorNotes, long> repository) : base(repository)
+        public SupervisorNotesAppService(
+            IHttpContextAccessor accessor ,
+            IRepository<ProjectsManagement.ProjectDatabase.SupervisorNotes.SupervisorNotes, long> repository) : base(repository)
         {
             this.accessor = accessor;
             _supervisorNotesrepository = repository;
@@ -59,6 +61,8 @@ namespace ProjectsManagement.SupervisorNotes
                 throw new UserFriendlyException("The Project Was Cloesd");
             }
             input.SupervisorId = long.Parse(accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            
             return await base.CreateAsync(input);
         }
 

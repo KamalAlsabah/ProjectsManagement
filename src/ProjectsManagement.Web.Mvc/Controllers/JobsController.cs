@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectsManagement.Controllers;
 using ProjectsManagement.ProjectDatabase.ProjectWorker;
 using ProjectsManagement.Web.Models.Jobs;
+using ProjectsManagement.Web.Models.SupervisorNotes;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace ProjectsManagement.Web.Controllers
 
         public async Task<IActionResult> Index(long ProjectId)
         {
-            IndexJobModalViewModel model =new IndexJobModalViewModel() { ProjectId=ProjectId};
+            IndexJobTaskModalViewModel model =new IndexJobTaskModalViewModel() { ProjectId=ProjectId};
             return View(model);
         }
 
@@ -67,6 +68,13 @@ namespace ProjectsManagement.Web.Controllers
                 .Where(x => x.ProjectId == output.ProjectId)
                 .Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
             return PartialView("_EditModal", model);
+        }
+
+        public async Task<ActionResult> SupervisorNotesCreateModal(int JobId)
+        {
+            var model = new CreateSupervisorNotesModalViewModel();
+            model.CreateSupervisorNotesDto = new() { JobId = JobId };
+            return PartialView("_SupervisorNotesCreateModal", model);
         }
     }
 }

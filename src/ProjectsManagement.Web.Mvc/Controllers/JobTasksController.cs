@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectsManagement.Controllers;
 using ProjectsManagement.JobTasks;
 using ProjectsManagement.Web.Models.JobTasks;
+using ProjectsManagement.Web.Models.SupervisorNotes;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,8 +24,9 @@ namespace ProjectsManagement.Web.Controllers
 
         public async Task<IActionResult> Index(long JobsId)
         {
-            ViewData["JobsId"] = JobsId;
-            return View();
+            IndexJobTaskModalViewModel model=new IndexJobTaskModalViewModel() { JobId=JobsId};
+            //ViewData["JobsId"] = JobsId;
+            return View(model);
         }
 
         public async Task<ActionResult> CreateModal(int JobsId)
@@ -43,6 +45,12 @@ namespace ProjectsManagement.Web.Controllers
             //model.Jobs = await jobsRepository.GetAll().Where(x => x.Id == output.JobId)
             //    .Include(x => x.Worker).Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
             return PartialView("_EditModal", model);
+        }
+        public async Task<ActionResult> SupervisorNotesCreateModal(long JobTaskId,long JobId)
+        {
+            var model = new CreateSupervisorNotesModalViewModel();
+            model.CreateSupervisorNotesDto = new() { JobTasksId = JobTaskId,JobId=JobId };
+            return PartialView("_SupervisorNotesCreateModal", model);
         }
     }
 }

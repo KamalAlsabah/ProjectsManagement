@@ -107,9 +107,14 @@
                                 <i class="fa fa-cog"></i>
                           </button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li>
-                                <a type="button" class="dropdown-item edit-jobs" data-jobs-id="${row.id}" data-toggle="modal" data-target="#JobsEditModal" title="Edit">
-                                    <i class="fas fa-pencil-alt"></i> Edit
+                             <li>
+                                <a type="button" class="dropdown-item create-jobNote" data-jobs-id="${row.id}" data-toggle="modal" data-target="#SupervisorNotesCreateModal" title="Note">
+                                    <i class="fas fa-pencil-alt"></i> Add Note
+                                </a>
+                            </li>
+ <li>
+                                <a href="/JobTasks?JobsId=${row.id}" class="dropdown-item ">
+                                    <i class="fas fa-list"></i> Sub Tasks
                                 </a>
                             </li>
                           </ul>
@@ -141,8 +146,6 @@
                         </div>
                     `
                     }
-                  
-
                 }
             }
         ]
@@ -176,6 +179,21 @@
             dataType: 'html',
             success: function (content) {
                 $('#JobsCreateModal div.modal-content').html(content);
+            },
+            error: function (e) {
+            }
+        })
+    });
+
+    $(document).on('click', '.create-jobNote', function (e) {
+        e.preventDefault();
+        var jobsId = $(this).attr("data-jobs-id");
+        abp.ajax({
+            url: abp.appPath + `Jobs/SupervisorNotesCreateModal?JobId=${jobsId}`,
+            type: 'POST',
+            dataType: 'html',
+            success: function (content) {
+                $('#SupervisorNotesCreateModal div.modal-content').html(content);
             },
             error: function (e) {
             }

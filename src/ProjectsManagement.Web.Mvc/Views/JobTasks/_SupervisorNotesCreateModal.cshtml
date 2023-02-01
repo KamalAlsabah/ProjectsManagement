@@ -9,6 +9,7 @@
 @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateSupervisorNotes")))
 <form name="SupervisorNotesCreateForm" supervisorNotes="form" class="form-horizontal">
     <input id="JobId" class="form-control" type="hidden" name="JobId" asp-for="CreateSupervisorNotesDto.JobId">
+    <input id="JobTasksId" class="form-control" type="hidden" name="JobTasksId" asp-for="CreateSupervisorNotesDto.JobTasksId">
     <div class="modal-body">
         <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="NameL">@L("Note")</label>

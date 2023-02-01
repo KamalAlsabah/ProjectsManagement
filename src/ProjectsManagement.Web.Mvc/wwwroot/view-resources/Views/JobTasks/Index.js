@@ -70,7 +70,24 @@
                 className: "text-center",
                 defaultContent: '',
                 render: (data, type, row, meta) => {
-                    return `
+                    if (IsSupervisor) {
+                        return `
+                        <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-cog"></i>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li>
+                                <a type="button" class="dropdown-item create-jobtaskNote" data-jobTasks-id="${row.id}"data-jobs-id="${row.jobId}"  data-toggle="modal" data-target="#SupervisorNotesCreateModal" title="Note">
+                                    <i class="fas fa-pencil-alt"></i> Add Note
+                                </a>
+                            </li>
+                          </ul>
+                        </div>
+                    `
+
+                    } else {
+                        return `
                         <div class="dropdown">
                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-cog"></i>
@@ -89,6 +106,9 @@
                           </ul>
                         </div>
                     `
+
+                    }
+                   
 
                 }
                 
@@ -124,6 +144,22 @@
             dataType: 'html',
             success: function (content) {
                 $('#JobTasksCreateModal div.modal-content').html(content);
+            },
+            error: function (e) {
+            }
+        })
+    });
+
+    $(document).on('click', '.create-jobtaskNote', function (e) {
+        e.preventDefault();
+        var jobTasksId = $(this).attr("data-jobTasks-id");
+        var jobId = $(this).attr("data-jobs-id");
+        abp.ajax({
+            url: abp.appPath + `JobTasks/SupervisorNotesCreateModal?JobTaskId=${jobTasksId}&JobId=${jobId}`,
+            type: 'POST',
+            dataType: 'html',
+            success: function (content) {
+                $('#SupervisorNotesCreateModal div.modal-content').html(content);
             },
             error: function (e) {
             }

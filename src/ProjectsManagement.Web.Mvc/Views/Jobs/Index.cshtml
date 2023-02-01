@@ -1,7 +1,7 @@
 ﻿@using ProjectsManagement.Authorization.Roles
 @using ProjectsManagement.Web.Models.Jobs
 @using ProjectsManagement.Web.Startup
-@model IndexJobModalViewModel
+@model IndexJobTaskModalViewModel
 @{
     ViewBag.Title = L("Jobs");
     ViewBag.CurrentPageName = PageNames.Jobs;
@@ -25,12 +25,16 @@
             <div class="col-sm-6">
                 <h1>@L("Jobs")</h1>
             </div>
-            <div class="col-sm-6">
+              @if (IsGranted("Pages.Jobs.CreateJob"))
+            {
+                 <div class="col-sm-6">
                     <button type="button" class="btn bg-blue float-sm-right create-jobs" data-toggle="modal" data-target="#JobsCreateModal">
                         <i class="fa fa-plus-square"></i>
                         @L("Create")
                     </button>
             </div>
+            }
+           
         </div>
     </div>
 </section>
@@ -91,3 +95,11 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="SupervisorNotesCreateModal" tabindex="-1" role="dialog" aria-labelledby="SupervisorNotesCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+

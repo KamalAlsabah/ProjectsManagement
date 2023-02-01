@@ -1,10 +1,16 @@
-﻿@using ProjectsManagement.Web.Startup
+﻿@using ProjectsManagement.Authorization.Roles
+@using ProjectsManagement.Web.Models.JobTasks
+@using ProjectsManagement.Web.Startup
+@model IndexJobTaskModalViewModel
 @{
     ViewBag.Title = L("JobTasks");
     ViewBag.CurrentPageName = PageNames.JobTasks;
 }
 @section scripts
 {
+     <script>
+             var IsSupervisor="@User.IsInRole(StaticRoleNames.Host.Supervisor)".toLowerCase()=="true";
+    </script>
     <environment names="Development">
         <script src="~/view-resources/Views/JobTasks/Index.js" asp-append-version="true"></script>
     </environment>
@@ -19,12 +25,16 @@
             <div class="col-sm-6">
                 <h1>@L("JobTasks")</h1>
             </div>
-            <div class="col-sm-6">
+            @if (IsGranted("Pages.JobTasks.CreateJobTasks"))
+            {
+                 <div class="col-sm-6">
                     <button type="button" class="btn bg-blue float-sm-right create-jobTasks" data-toggle="modal" data-target="#JobTasksCreateModal">
                         <i class="fa fa-plus-square"></i>
                         @L("Create")
                     </button>
             </div>
+            }
+           
         </div>
     </div>
 </section>
@@ -74,6 +84,13 @@
 </div>
 <div class="modal fade" id="JobTasksCreateModal" tabindex="-1" jobTasks="dialog" aria-labelledby="JobTasksCreateModalLabel" data-backdrop="static">
     <div class="modal-dialog modal-lg" jobTasks="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="SupervisorNotesCreateModal" tabindex="-1" role="dialog" aria-labelledby="SupervisorNotesCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         </div>
     </div>
