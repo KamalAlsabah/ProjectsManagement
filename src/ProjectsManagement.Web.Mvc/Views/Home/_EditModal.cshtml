@@ -1,0 +1,38 @@
+﻿@using ProjectsManagement.ProjectDatabase.Enums
+@using ProjectsManagement.Web.Models.Common.Modals
+@using ProjectsManagement.Web.Models.Home
+@model EditHomeStaticModalViewModel
+@{
+    Layout = null;
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditJobs")))
+<form name="JobsEditForm" role="form" class="form-horizontal">
+    <input type="hidden" name="Id" asp-for="editHomeStatisticsDto.Id" />
+    
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Name">@L("Name")</label>
+            <div class="col-md-9">
+                <input id="Name" class="form-control" type="text" name="Name" asp-for="editHomeStatisticsDto.Name">
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Icon">@L("Icon")</label>
+            <div class="col-md-9">
+                <input id="Icon" type="text" class="form-control" name="Icon" asp-for="editHomeStatisticsDto.Icon">
+            </div>
+        </div>
+
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Type">@L("Type")</label>
+            <div class="col-md-9">
+                <select id="Type" class="form-control" name="Type" asp-for="editHomeStatisticsDto.Type" asp-items="Html.GetEnumSelectList<EHomeStatistics>()">
+                </select>
+            </div>
+        </div>
+
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/Jobs/_EditModal.js" asp-append-version="true"></script>

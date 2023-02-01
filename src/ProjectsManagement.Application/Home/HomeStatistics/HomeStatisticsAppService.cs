@@ -46,6 +46,7 @@ namespace ProjectsManagement.Home.HomeStatistics
         public override async Task<HomeStatisticsDto> CreateAsync(CreateHomeStatisticsDto input)
         {
             var model = await base.CreateAsync(input);
+
             foreach (var item in input.UserTypes)
             {
                 await _HomeStatisticsUserTypesrepository.InsertAsync(new ProjectDatabase.Home.HomeStatisticsUserTypes()
