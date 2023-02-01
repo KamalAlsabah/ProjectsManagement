@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectsManagement.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using ProjectsManagement.EntityFrameworkCore;
 namespace ProjectsManagement.Migrations
 {
     [DbContext(typeof(ProjectsManagementDbContext))]
-    partial class ProjectsManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230201214947_CreateProjectHistory")]
+    partial class CreateProjectHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1953,9 +1955,6 @@ namespace ProjectsManagement.Migrations
                     b.Property<long?>("SupervisorNotesId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("JobId");
@@ -1971,8 +1970,6 @@ namespace ProjectsManagement.Migrations
                     b.HasIndex("SprintId");
 
                     b.HasIndex("SupervisorNotesId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("ProjectHistory");
                 });
@@ -2558,12 +2555,6 @@ namespace ProjectsManagement.Migrations
                         .WithMany()
                         .HasForeignKey("SupervisorNotesId");
 
-                    b.HasOne("ProjectsManagement.Authorization.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Job");
 
                     b.Navigation("JobTasks");
@@ -2577,8 +2568,6 @@ namespace ProjectsManagement.Migrations
                     b.Navigation("Sprint");
 
                     b.Navigation("SupervisorNotes");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjectsManagement.ProjectDatabase.ProjectSupervisor.ProjectSupervisors", b =>

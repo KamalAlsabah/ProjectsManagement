@@ -16,6 +16,7 @@
         public const string ProjectSupervisor = "ProjectSupervisor";
         public const string SupervisorNotes = "SupervisorNotes";
         public const string StatisticsHome = "StatisticsHome";
+        public const string ProjectHistory = "ProjectHistory";
 
     }
 }

@@ -114,6 +114,11 @@
                                   <i class="fas fa-users"></i> Supervisor
                                 </a>
                             </li>
+                            <li>
+                                <a href="/ProjectHistory?projrctId=${row.id}" class="dropdown-item" title="History">
+                                  <i class="fas fa-users"></i> ProjectHistory
+                                </a>
+                            </li>
                           </ul>
                         </div>
                     `
