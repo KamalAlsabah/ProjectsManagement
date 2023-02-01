@@ -33,7 +33,6 @@ namespace ProjectsManagement.Web.Controllers
         public async Task<IActionResult> Index(long ProjectId)
         {
             IndexProjectWorkerModalViewModel model=new IndexProjectWorkerModalViewModel() { ProjectId=ProjectId};
-        //    ViewData["ProjectId"] = ProjectId;
             return View(model);
         }
 

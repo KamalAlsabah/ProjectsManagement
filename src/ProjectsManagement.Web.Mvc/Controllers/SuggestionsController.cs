@@ -24,9 +24,11 @@ namespace ProjectsManagement.Web.Controllers
 
         public async Task<IActionResult> Index(long ProjectId)
         {
-            ViewData["ProjectId"] = ProjectId;
-            ViewData["SupervisorId"] = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View();
+            IndexSuggestionsModalViewModel model = new IndexSuggestionsModalViewModel() { ProjectId = ProjectId ,
+            SupervisorId= User.FindFirstValue(ClaimTypes.NameIdentifier)
+        };
+            
+            return View(model);
         }
 
         public async Task<ActionResult> CreateModal(int ProjectId)
