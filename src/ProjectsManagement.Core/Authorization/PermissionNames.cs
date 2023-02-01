@@ -42,5 +42,17 @@
         public const string Pages_JobTasks_EditJobTasks = "Pages.JobTasks.EditJobTasks";
         public const string Pages_JobTasks_DeleteJobTasks = "Pages.JobTasks.DeleteJobTasks";
 
+        //SupervisorNotes (Show & CUD)
+        public const string Pages_SupervisorNotes = "Pages.SupervisorNotes";
+        public const string Pages_SupervisorNotes_CreateSupervisorNotes = "Pages.SupervisorNotes.CreateSupervisorNotes";
+        public const string Pages_SupervisorNotes_EditSupervisorNotes = "Pages.SupervisorNotes.EditSupervisorNotes";
+        public const string Pages_SupervisorNotes_DeleteSupervisorNotes = "Pages.SupervisorNotes.DeleteSupervisorNotes";
+
+        //Suggestions (Show & CUD)
+        public const string Pages_Suggestions = "Pages.Suggestions";
+        public const string Pages_Suggestions_CreateSuggestions = "Pages.Suggestions.CreateSuggestions";
+        public const string Pages_Suggestions_EditSuggestions = "Pages.Suggestions.EditJobSuggestions";
+        public const string Pages_Suggestions_DeleteSuggestions = "Pages.Suggestions.DeleteSuggestions";
+
     }
 }

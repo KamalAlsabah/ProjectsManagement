@@ -1,9 +1,11 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.UI;
 using Microsoft.EntityFrameworkCore;
+using ProjectsManagement.Authorization;
 using ProjectsManagement.JobTasks.Dto;
 using ProjectsManagement.ProjectDatabase.Enums;
 using System;
@@ -23,7 +25,7 @@ namespace ProjectsManagement.JobTasks
             _jobTasksrepository = repository;
             _jobrepository = jobrepository;
         }
-
+        [AbpAuthorize(PermissionNames.Pages_JobTasks)]
         public override async Task<PagedResultDto<JobTasksDto>> GetAllAsync(PagedJobTasksResultRequestDto input)
         {
             try
@@ -47,6 +49,7 @@ namespace ProjectsManagement.JobTasks
 
         }
 
+        [AbpAuthorize(PermissionNames.Pages_JobTasks_CreateJobTasks)]
 
         public override async Task<JobTasksDto> CreateAsync(CreateJobTasksDto input)
         {
@@ -65,6 +68,7 @@ namespace ProjectsManagement.JobTasks
 
             return model;
         }
+        [AbpAuthorize(PermissionNames.Pages_JobTasks_EditJobTasks)]
 
         public override async Task<JobTasksDto> UpdateAsync(UpDateInputJobTasksDto input)
         {
@@ -75,6 +79,7 @@ namespace ProjectsManagement.JobTasks
             }
             return await base.UpdateAsync(input);
         }
+        [AbpAuthorize(PermissionNames.Pages_JobTasks_DeleteJobTasks)]
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _jobTasksrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Job.Project.Status).FirstOrDefaultAsync();

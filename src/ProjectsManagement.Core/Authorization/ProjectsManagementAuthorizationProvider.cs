@@ -50,6 +50,18 @@ namespace ProjectsManagement.Authorization
             context.CreatePermission(PermissionNames.Pages_JobTasks_EditJobTasks, L("EditJobTasks"));
             context.CreatePermission(PermissionNames.Pages_JobTasks_DeleteJobTasks, L("DeleteJobTasks"));
 
+            //SupervisorNotes (Show & CUD)
+            context.CreatePermission(PermissionNames.Pages_SupervisorNotes, L("SupervisorNotes"));
+            context.CreatePermission(PermissionNames.Pages_SupervisorNotes_CreateSupervisorNotes, L("CreateSupervisorNotes"));
+            context.CreatePermission(PermissionNames.Pages_SupervisorNotes_EditSupervisorNotes, L("EditSupervisorNotes"));
+            context.CreatePermission(PermissionNames.Pages_SupervisorNotes_DeleteSupervisorNotes, L("DeleteSupervisorNotes"));
+
+            //Suggestions (Show & CUD)
+            context.CreatePermission(PermissionNames.Pages_Suggestions, L("Suggestions"));
+            context.CreatePermission(PermissionNames.Pages_Suggestions_CreateSuggestions, L("CreateSuggestions"));
+            context.CreatePermission(PermissionNames.Pages_Suggestions_EditSuggestions, L("EditSuggestions"));
+            context.CreatePermission(PermissionNames.Pages_Suggestions_DeleteSuggestions, L("DeleteSuggestions"));
+
         }
 
         private static ILocalizableString L(string name)

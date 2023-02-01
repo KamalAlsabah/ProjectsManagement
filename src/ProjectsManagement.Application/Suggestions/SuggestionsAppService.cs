@@ -1,8 +1,10 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.UI;
 using Microsoft.EntityFrameworkCore;
+using ProjectsManagement.Authorization;
 using ProjectsManagement.ProjectDatabase.Enums;
 using ProjectsManagement.Suggestions.Dto;
 using System;
@@ -21,7 +23,7 @@ namespace ProjectsManagement.Suggestions
         {
             _suggestionsrepository = repository;
         }
-
+        [AbpAuthorize(PermissionNames.Pages_Suggestions)]
         public override async Task<PagedResultDto<SuggestionsDto>> GetAllAsync(PagedSuggestionsResultRequestDto input)
         {
             try
@@ -48,6 +50,7 @@ namespace ProjectsManagement.Suggestions
 
         }
 
+        [AbpAuthorize(PermissionNames.Pages_Suggestions_CreateSuggestions)]
 
         public override async Task<SuggestionsDto> CreateAsync(CreateSuggestionsDto input)
         {
@@ -67,6 +70,7 @@ namespace ProjectsManagement.Suggestions
 
             return model;
         }
+        [AbpAuthorize(PermissionNames.Pages_Suggestions_EditSuggestions)]
 
         public override async Task<SuggestionsDto> UpdateAsync(UpDateInputSuggestionsDto input)
         {
@@ -77,6 +81,8 @@ namespace ProjectsManagement.Suggestions
             }
             return await base.UpdateAsync(input);
         }
+        [AbpAuthorize(PermissionNames.Pages_Suggestions_DeleteSuggestions)]
+
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _suggestionsrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();

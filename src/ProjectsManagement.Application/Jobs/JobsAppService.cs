@@ -61,8 +61,6 @@ namespace JobManagement.Jobs
             return await base.CreateAsync(input);
         }
 
-       
-
         public async Task<EditJobDto> GetJobForEdit(EntityDto input)
         {
             var job =await _Jobrepository.GetAll().Where(x=>x.Id== input.Id).Include(x=>x.Sprint).FirstOrDefaultAsync();

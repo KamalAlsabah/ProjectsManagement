@@ -1,10 +1,12 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.UI;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using ProjectsManagement.Authorization;
 using ProjectsManagement.ProjectDatabase.Enums;
 using ProjectsManagement.SupervisorNotes.Dto;
 using System;
@@ -27,6 +29,7 @@ namespace ProjectsManagement.SupervisorNotes
             this.accessor = accessor;
             _supervisorNotesrepository = repository;
         }
+        [AbpAuthorize(PermissionNames.Pages_SupervisorNotes)]
 
         public override async Task<PagedResultDto<SupervisorNotesDto>> GetAllAsync(PagedSupervisorNotesResultRequestDto input)
         {
@@ -52,6 +55,7 @@ namespace ProjectsManagement.SupervisorNotes
 
         }
 
+        [AbpAuthorize(PermissionNames.Pages_SupervisorNotes_CreateSupervisorNotes)]
 
         public override async Task<SupervisorNotesDto> CreateAsync(CreateSupervisorNotesDto input)
         {
@@ -73,6 +77,7 @@ namespace ProjectsManagement.SupervisorNotes
 
             return model;
         }
+        [AbpAuthorize(PermissionNames.Pages_SupervisorNotes_EditSupervisorNotes)]
 
         public override async Task<SupervisorNotesDto> UpdateAsync(UpDateInputSupervisorNotesDto input)
         {
@@ -83,6 +88,8 @@ namespace ProjectsManagement.SupervisorNotes
             }
             return await base.UpdateAsync(input);
         }
+        [AbpAuthorize(PermissionNames.Pages_SupervisorNotes_DeleteSupervisorNotes)]
+
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _supervisorNotesrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Job.Project.Status).FirstOrDefaultAsync();
