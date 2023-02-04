@@ -47,6 +47,9 @@
                 targets:3,
                 data: 'creationTime',
                 sortable: true,
+                render: (data, type, row, meta) => {
+                    return `${data.split("T")[0]}`
+                }
             },
             {
                 targets: 4,
