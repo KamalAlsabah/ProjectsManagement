@@ -1,5 +1,6 @@
 ﻿(function ($) {
     var _jobsService = abp.services.app.jobs,
+        _projectHistoryService = abp.services.app.projectHistory,
         l = abp.localization.getSource('ProjectsManagement'),
         _$modal = $('#JobsCreateModal'),
         _$form = _$modal.find('form'),
@@ -112,8 +113,8 @@
                                     <i class="fas fa-pencil-alt"></i> Add Note
                                 </a>
                             </li>
- <li>
-                                <a href="/JobTasks?JobsId=${row.id}" class="dropdown-item ">
+                            <li>
+                                <a href="/JobTasks?JobsId=${row.id}&ProjectId=${row.projectId}" class="dropdown-item ">
                                     <i class="fas fa-list"></i> Sub Tasks
                                 </a>
                             </li>
@@ -138,7 +139,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/JobTasks?JobsId=${row.id}" class="dropdown-item ">
+                                <a href="/JobTasks?JobsId=${row.id}&ProjectId=${row.projectId}" class="dropdown-item ">
                                     <i class="fas fa-list"></i> Sub Tasks
                                 </a>
                             </li>
@@ -185,6 +186,7 @@
         })
     });
 
+    //To Create Supervisotr Note 
     $(document).on('click', '.create-jobNote', function (e) {
         e.preventDefault();
         var jobsId = $(this).attr("data-jobs-id");
@@ -194,6 +196,7 @@
             dataType: 'html',
             success: function (content) {
                 $('#SupervisorNotesCreateModal div.modal-content').html(content);
+
             },
             error: function (e) {
             }
@@ -220,6 +223,11 @@
                     }).done(() => {
                         abp.notify.info(l('SuccessfullyDeleted'));
                         _$jobsTable.ajax.reload();
+                        var projectId = $("#ProjectId").val();
+                        //Add To History 
+                        let history = { ProjectId: projectId, ProjectHistoryActions: 2, ProjectHistoryColumns: 2, JobId: jobsId };
+                        _projectHistoryService.create(history).done(function () { });
+
                     });
                 }
             }

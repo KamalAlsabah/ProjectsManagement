@@ -1,5 +1,7 @@
 ﻿(function ($) {
     var _jobTasksService = abp.services.app.jobTasks,
+        _projectHistoryService = abp.services.app.projectHistory,
+
         l = abp.localization.getSource('ProjectsManagement'),
         _$modal = $('#JobTasksCreateModal'),
         _$form = _$modal.find('form'),
@@ -186,6 +188,11 @@
                     }).done(() => {
                         abp.notify.info(l('SuccessfullyDeleted'));
                         _$jobTasksTable.ajax.reload();
+
+                        var projectId = $("#ProjectId").val();
+                        //Add To History 
+                        let history = { ProjectId: projectId, ProjectHistoryActions: 2, ProjectHistoryColumns: 3, JobTasksId: jobTasksId };
+                        _projectHistoryService.create(history).done(function () { });
                     });
                 }
             }

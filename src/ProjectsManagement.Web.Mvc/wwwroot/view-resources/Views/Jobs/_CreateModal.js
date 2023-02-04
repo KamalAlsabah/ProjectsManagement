@@ -1,5 +1,7 @@
 ﻿(function ($) {
     var _jobsService = abp.services.app.jobs,
+        _projectHistoryService = abp.services.app.projectHistory,
+
         l = abp.localization.getSource('ProjectsManagement'),
         _$modal = $('#JobsCreateModal'),
         _$form = _$modal.find('form');
@@ -10,10 +12,16 @@
         }
         var jobs = _$form.serializeFormToObject();
         abp.ui.setBusy(_$form);
-        _jobsService.create(jobs).done(function () {
+        _jobsService.create(jobs).done(function (jobs) {
             _$modal.modal('hide');
             abp.notify.info(l('SavedSuccessfully'));
             abp.event.trigger('jobs.created', jobs);
+
+            var projectId = $("#ProjectId").val();
+            //Add To History 
+            let history = { ProjectId: projectId, ProjectHistoryActions: 0, ProjectHistoryColumns: 2 ,JobId: jobs.id };
+            _projectHistoryService.create(history).done(function () { });
+
         }).always(function () {
             abp.ui.clearBusy(_$form);
         });

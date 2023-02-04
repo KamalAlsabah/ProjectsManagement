@@ -1,5 +1,7 @@
 ﻿(function ($) {
     var _projectSupervisorService = abp.services.app.projectSupervisor,
+        _projectHistoryService = abp.services.app.projectHistory,
+
         l = abp.localization.getSource('ProjectsManagement'),
         _$modal = $('#ProjectSupervisorEditModal'),
         _$form = _$modal.find('form');
@@ -13,10 +15,14 @@
         
 
         abp.ui.setBusy(_$form);
-        _projectSupervisorService.update(projectSupervisor).done(function () {
+        _projectSupervisorService.update(projectSupervisor).done(function (projectSupervisor) {
             _$modal.modal('hide');
             abp.notify.info(l('SavedSuccessfully'));
             abp.event.trigger('projectSupervisor.edited', projectSupervisor);
+            var projectId = $("#ProjectId").val();
+            //Add To History 
+            let history = { ProjectId: projectId, ProjectHistoryActions: 1, ProjectHistoryColumns: 5, ProjectSupervisorsId: projectSupervisor.id };
+            _projectHistoryService.create(history).done(function () { });
         }).always(function () {
             abp.ui.clearBusy(_$form);
         });
