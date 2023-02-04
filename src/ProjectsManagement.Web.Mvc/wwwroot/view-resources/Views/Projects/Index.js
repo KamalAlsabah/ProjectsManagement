@@ -1,5 +1,7 @@
 ﻿(function ($) {
     var _projectsService = abp.services.app.projects,
+        _projectHistoryService = abp.services.app.projectHistory,
+
         l = abp.localization.getSource('ProjectsManagement'),
         _$modal = $('#ProjectsCreateModal'),
         _$form = _$modal.find('form'),
@@ -179,11 +181,15 @@
         abp.ui.setBusy(_$modal);
         _projectsService
             .create(projects)
-            .done(function () {
+            .done(function (projects) {
                 _$modal.modal('hide');
                 _$form[0].reset();
                 abp.notify.info(l('SavedSuccessfully'));
                 _$projectssTable.ajax.reload();
+
+                 //Add To History 
+                let history = { ProjectId: projects.id, ProjectHistoryActions: 0, ProjectHistoryColumns: 0 };
+                _projectHistoryService.create(history).done(function () { });
             })
             .always(function () {
                 abp.ui.clearBusy(_$modal);
@@ -230,12 +236,14 @@
                     }).done(() => {
                         abp.notify.info(l('SuccessfullyDeleted'));
                         _$projectssTable.ajax.reload();
+                         //Add To History 
+                        let history = { ProjectId: projects.Id, ProjectHistoryActions: 0, ProjectHistoryColumns: 0 };
+                        _projectHistoryService.create(history).done(function () { });
                     });
                 }
             }
         );
     }
-
     _$modal.on('shown.bs.modal', () => {
         _$modal.find('input:not([type=hidden]):first').focus();
     }).on('hidden.bs.modal', () => {

@@ -15,8 +15,8 @@ namespace ProjectsManagement.ProjectHistory.Dto
         public string ProjectSupervisorsName { get; set; }
         public string SupervisorNotesName { get; set; }
         public DateTime CreationTime { get; set; } = DateTime.Now;
-        public ProjectHistoryActions ProjectHistoryActions { get; set; }
-        public ProjectHistoryColumns ProjectHistoryColumns { get; set; }
+        public string ProjectHistoryActions { get; set; }
+        public string ProjectHistoryColumns { get; set; }
         public string Description { get; set; }
     }
 }

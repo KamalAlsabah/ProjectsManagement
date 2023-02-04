@@ -1,5 +1,6 @@
 ﻿(function ($) {
     var _projectsService = abp.services.app.projects,
+        _projectHistoryService = abp.services.app.projectHistory,
         l = abp.localization.getSource('ProjectsManagement'),
         _$modal = $('#ProjectsEditModal'),
         _$form = _$modal.find('form');
@@ -10,13 +11,15 @@
         }
 
         var projects = _$form.serializeFormToObject();
-       
-
         abp.ui.setBusy(_$form);
         _projectsService.update(projects).done(function () {
             _$modal.modal('hide');
             abp.notify.info(l('SavedSuccessfully'));
             abp.event.trigger('projects.edited', projects);
+            //Add To History 
+            let history = { ProjectId: projects.Id, ProjectHistoryActions: 1, ProjectHistoryColumns:0 };
+            _projectHistoryService.create(history).done(function () {});
+
         }).always(function () {
             abp.ui.clearBusy(_$form);
         });

@@ -44,55 +44,12 @@
 
             },
             {
-                targets: 3,
-                data: 'sprintName',
+                targets:3,
+                data: 'creationTime',
                 sortable: true,
-
             },
             {
                 targets: 4,
-                data: 'jobTasksName',
-                sortable: true,
-
-            },
-            {
-                targets: 5,
-                data: 'projectWorkersName',
-                sortable: true,
-
-            },
-            {
-                targets: 6,
-                data: 'projectSupervisorsName',
-                sortable: true,
-
-            },
-            {
-                targets: 7,
-                data: 'supervisorNotesName',
-                sortable: true,
-               
-            },
-            {
-                targets: 8,
-                data: 'creationTime',
-                sortable: true,
-
-            },
-            {
-                targets: 9,
-                data: 'projectHistoryActions',
-                sortable: true,
-                
-            },
-            {
-                targets: 10,
-                data: 'projectHistoryColumns',
-                sortable: true,
-                
-            },
-            {
-                targets: 11,
                 data: 'description',
                 sortable: true,
 

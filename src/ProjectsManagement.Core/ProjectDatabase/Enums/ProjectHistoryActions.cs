@@ -9,13 +9,13 @@ namespace ProjectsManagement.ProjectDatabase.Enums
 {
     public enum ProjectHistoryActions
     {
-        [Display(Name = "Create")]
-        Create,
+        [Display(Name = "Created")]
+        Created,
 
-        [Display(Name = "Update")]
-        Update,
+        [Display(Name = "Updated")]
+        Updated,
 
-        [Display(Name = "Delete")]
-        Delete
+        [Display(Name = "Deleted")]
+        Deleted
     }
 }
