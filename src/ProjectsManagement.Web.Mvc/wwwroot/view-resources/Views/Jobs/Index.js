@@ -109,7 +109,7 @@
                           </button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                              <li>
-                                <a type="button" class="dropdown-item create-jobNote" data-jobs-id="${row.id}" data-toggle="modal" data-target="#SupervisorNotesCreateModal" title="Note">
+                                <a type="button" class="dropdown-item create-jobNote" data-project-id="${row.projectId}" data-jobs-id="${row.id}" data-toggle="modal" data-target="#SupervisorNotesCreateModal" title="Note">
                                     <i class="fas fa-pencil-alt"></i> Add Note
                                 </a>
                             </li>
@@ -190,8 +190,9 @@
     $(document).on('click', '.create-jobNote', function (e) {
         e.preventDefault();
         var jobsId = $(this).attr("data-jobs-id");
+        var ProjectId = $(this).attr("data-project-id");
         abp.ajax({
-            url: abp.appPath + `Jobs/SupervisorNotesCreateModal?JobId=${jobsId}`,
+            url: abp.appPath + `Jobs/SupervisorNotesCreateModal?JobId=${jobsId}${ProjectId}`,
             type: 'POST',
             dataType: 'html',
             success: function (content) {

@@ -21,9 +21,9 @@ namespace ProjectsManagement.Web.Controllers
             this.jobsRepository = jobsRepository;
         }
 
-        public async Task<IActionResult> Index(long JobsId)
+        public async Task<IActionResult> Index(long JobsId, long ProjectId)
         {
-            IndexSupervisorNotesModalViewModel model = new IndexSupervisorNotesModalViewModel() { JobId = JobsId };
+            IndexSupervisorNotesModalViewModel model = new IndexSupervisorNotesModalViewModel() { JobId = JobsId,ProjectId=ProjectId };
             return View(model);
         }
 
