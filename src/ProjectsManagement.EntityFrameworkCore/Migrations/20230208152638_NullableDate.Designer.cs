@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectsManagement.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using ProjectsManagement.EntityFrameworkCore;
 namespace ProjectsManagement.Migrations
 {
     [DbContext(typeof(ProjectsManagementDbContext))]
-    partial class ProjectsManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230208152638_NullableDate")]
+    partial class NullableDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2262,7 +2264,7 @@ namespace ProjectsManagement.Migrations
                     b.Property<DateTime>("LogInTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("LogOutTime")
+                    b.Property<DateTime>("LogOutTime")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("WorkerId")

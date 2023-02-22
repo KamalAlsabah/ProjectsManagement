@@ -9,6 +9,6 @@ namespace ProjectsManagement.Home.HomeStatistics.Dto
         public string Name { get; set; }
         public string Icon { get; set; }
         public EHomeStatistics Type { get; set; }
-        public List<int> UserTypes { get; set; }
+        public List<int> UserTypesId { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using ProjectsManagement.ProjectDatabase.Suggestion;
 using ProjectsManagement.ProjectDatabase.SupervisorNotes;
 using ProjectsManagement.ProjectDatabase.Home;
 using ProjectsManagement.ProjectDatabase.ProjectHistory;
+using ProjectsManagement.ProjectDatabase.WorkersHistory;
 
 namespace ProjectsManagement.EntityFrameworkCore
 {
@@ -36,5 +37,6 @@ namespace ProjectsManagement.EntityFrameworkCore
         public DbSet<HomeStatistics> HomeStatistics { get; set; }
         public DbSet<HomeStatisticsUserTypes> HomeStatisticsUserTypes { get; set; }
         public DbSet<ProjectHistory> ProjectHistory { get; set; }
+        public DbSet<WorkersHistory> WorkersHistory { get; set; }
     }
 }

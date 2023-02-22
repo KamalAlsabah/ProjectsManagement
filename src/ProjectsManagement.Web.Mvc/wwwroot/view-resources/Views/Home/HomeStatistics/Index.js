@@ -1,7 +1,7 @@
 ﻿$(function () {
-
-    'use strict';
-
+    var _workersHistoryService = abp.services.app.workersHistory,
+        l = abp.localization.getSource('ProjectsManagement') ;
+ 
     $(document).on('click', '.createHomeStatistics', function (e) {
         e.preventDefault();
         abp.ajax({

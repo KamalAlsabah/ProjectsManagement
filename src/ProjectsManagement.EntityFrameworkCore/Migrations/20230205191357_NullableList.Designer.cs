@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectsManagement.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using ProjectsManagement.EntityFrameworkCore;
 namespace ProjectsManagement.Migrations
 {
     [DbContext(typeof(ProjectsManagementDbContext))]
-    partial class ProjectsManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230205191357_NullableList")]
+    partial class NullableList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2230,51 +2232,6 @@ namespace ProjectsManagement.Migrations
                     b.ToTable("SupervisorNotes");
                 });
 
-            modelBuilder.Entity("ProjectsManagement.ProjectDatabase.WorkersHistory.WorkersHistory", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("LogInTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LogOutTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("WorkerId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WorkerId");
-
-                    b.ToTable("WorkersHistory");
-                });
-
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
                 {
                     b.HasBaseType("Abp.Application.Features.FeatureSetting");
@@ -2523,7 +2480,7 @@ namespace ProjectsManagement.Migrations
             modelBuilder.Entity("ProjectsManagement.ProjectDatabase.Home.HomeStatisticsUserTypes", b =>
                 {
                     b.HasOne("ProjectsManagement.ProjectDatabase.Home.HomeStatistics", "HomeStatistics")
-                        .WithMany("UserTypes")
+                        .WithMany()
                         .HasForeignKey("HomeStatisticsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2719,17 +2676,6 @@ namespace ProjectsManagement.Migrations
                     b.Navigation("Supervisor");
                 });
 
-            modelBuilder.Entity("ProjectsManagement.ProjectDatabase.WorkersHistory.WorkersHistory", b =>
-                {
-                    b.HasOne("ProjectsManagement.Authorization.Users.User", "Worker")
-                        .WithMany()
-                        .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Worker");
-                });
-
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
                 {
                     b.HasOne("Abp.Application.Editions.Edition", "Edition")
@@ -2799,11 +2745,6 @@ namespace ProjectsManagement.Migrations
                     b.Navigation("Settings");
 
                     b.Navigation("Tokens");
-                });
-
-            modelBuilder.Entity("ProjectsManagement.ProjectDatabase.Home.HomeStatistics", b =>
-                {
-                    b.Navigation("UserTypes");
                 });
 #pragma warning restore 612, 618
         }

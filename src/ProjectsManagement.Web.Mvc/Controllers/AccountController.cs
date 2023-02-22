@@ -30,6 +30,8 @@ using ProjectsManagement.MultiTenancy;
 using ProjectsManagement.Sessions;
 using ProjectsManagement.Web.Models.Account;
 using ProjectsManagement.Web.Views.Shared.Components.TenantChange;
+using ProjectsManagement.WorkersHistory.Dto;
+using ProjectsManagement.WorkersHistory;
 
 namespace ProjectsManagement.Web.Controllers
 {
@@ -46,6 +48,7 @@ namespace ProjectsManagement.Web.Controllers
         private readonly ISessionAppService _sessionAppService;
         private readonly ITenantCache _tenantCache;
         private readonly INotificationPublisher _notificationPublisher;
+        private readonly IWorkersHistoryAppService _WorkersHistoryAppService;
 
         public AccountController(
             UserManager userManager,
@@ -58,7 +61,8 @@ namespace ProjectsManagement.Web.Controllers
             UserRegistrationManager userRegistrationManager,
             ISessionAppService sessionAppService,
             ITenantCache tenantCache,
-            INotificationPublisher notificationPublisher)
+            INotificationPublisher notificationPublisher,
+            IWorkersHistoryAppService WorkersHistoryAppService)
         {
             _userManager = userManager;
             _multiTenancyConfig = multiTenancyConfig;
@@ -71,7 +75,9 @@ namespace ProjectsManagement.Web.Controllers
             _sessionAppService = sessionAppService;
             _tenantCache = tenantCache;
             _notificationPublisher = notificationPublisher;
+            _WorkersHistoryAppService=WorkersHistoryAppService;
         }
+        WorkersHistoryCreateDto workersHistoryCreate =new WorkersHistoryCreateDto();
 
         #region Login / Logout
 
@@ -100,17 +106,28 @@ namespace ProjectsManagement.Web.Controllers
             {
                 returnUrl = returnUrl + returnUrlHash;
             }
-
             var loginResult = await GetLoginResultAsync(loginModel.UsernameOrEmailAddress, loginModel.Password, GetTenancyNameOrNull());
-
             await _signInManager.SignInAsync(loginResult.Identity, loginModel.RememberMe);
             await UnitOfWorkManager.Current.SaveChangesAsync();
 
+                workersHistoryCreate.WorkerId = loginResult.User.Id;
+                workersHistoryCreate.LogInTime = DateTime.Now;
+                workersHistoryCreate.LogOutTime = DateTime.Now;
+                workersHistoryCreate.TotalHours = 0;
+               await _WorkersHistoryAppService.CreateAsync(workersHistoryCreate);
+   
+           
             return Json(new AjaxResponse { TargetUrl = returnUrl });
         }
 
         public async Task<ActionResult> Logout()
         {
+            var userid = (long)_userManager.AbpSession.UserId;
+            var exsitedUserHistroy = await _WorkersHistoryAppService.GetHistoryByUserId(userid);
+            var model = ObjectMapper.Map<UpdateInputDto>(exsitedUserHistroy);
+            model.LogOutTime = DateTime.Now;
+           await _WorkersHistoryAppService.UpdateAsync(model);
+
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }

@@ -47,7 +47,7 @@ namespace ProjectsManagement.Home.HomeStatistics
         {
             var model = await base.CreateAsync(input);
 
-            foreach (var item in input.UserTypes)
+            foreach (var item in input.UserTypesId)
             {
                 await _HomeStatisticsUserTypesrepository.InsertAsync(new ProjectDatabase.Home.HomeStatisticsUserTypes()
                 {
