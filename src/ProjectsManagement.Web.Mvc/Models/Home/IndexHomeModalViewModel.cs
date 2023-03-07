@@ -1,4 +1,5 @@
-﻿using ProjectsManagement.WorkersHistory.Dto;
+﻿using ProjectsManagement.Home.Dto;
+using ProjectsManagement.WorkersHistory.Dto;
 
 namespace ProjectsManagement.Web.Models.Home
 {
@@ -6,5 +7,6 @@ namespace ProjectsManagement.Web.Models.Home
     {
         public int UserTypeId { get; set; }
         public  WorkersHistoryDto WorkersHistoryDto { get; set; }
+        public HomeDto HomeDto { get; set; }
     }
 }

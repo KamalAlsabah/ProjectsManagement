@@ -42,7 +42,7 @@ namespace ProjectsManagement.EntityFrameworkCore.Seed.Host
                 supervisorRoleForHost = _context.Roles.Add(new Role(null, StaticRoleNames.Host.Supervisor, StaticRoleNames.Host.Supervisor) { }).Entity;
                 _context.SaveChanges();
             }
-            var workerRoleForHost = _context.Roles.IgnoreQueryFilters().FirstOrDefault(r => r.TenantId == null && r.Name == StaticRoleNames.Host.Admin);
+            var workerRoleForHost = _context.Roles.IgnoreQueryFilters().FirstOrDefault(r => r.TenantId == null && r.Name == StaticRoleNames.Host.Worker);
             if (workerRoleForHost == null)
             {
                 workerRoleForHost = _context.Roles.Add(new Role(null, StaticRoleNames.Host.Worker, StaticRoleNames.Host.Worker) {  }).Entity;

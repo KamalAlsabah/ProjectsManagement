@@ -11,5 +11,7 @@ namespace ProjectsManagement.Sprints.Dto
         public long ProjectId { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Now;
         public DateTime ExpectedEndDate { get; set; } = DateTime.Now;
+        public long WieghtOfHours { get; set; }
+
     }
 }

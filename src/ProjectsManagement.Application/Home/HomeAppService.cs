@@ -53,8 +53,23 @@ namespace ProjectsManagement.Home
                 model.ProjectsSupervisors = _projectsSupervisorRepositry.GetAll().Select(x => x.Id).Count();
                 model.Sprints = listsprints.Count();
                 model.Jobs = listjobs.Count();
-                model.JobTasks = listjobtasks.Count();
-            } 
+                model.JobTasks = listjobtasks.Count(); 
+                var  sprintsProjectIds = _sprintsRepositry.GetAll().Select(x=>x.ProjectId).Distinct().ToList();
+                var sprints = listsprints.Include(x => x.Project).ToList();
+                long Wieght = 0;
+                foreach (var projectId in sprintsProjectIds)
+                {
+                     foreach(var sprint in sprints)
+                     {
+                          if (sprint.ProjectId == projectId)
+                          {
+                             Wieght += sprint.WieghtOfHours;
+                          }
+                     }
+                    var projectsprint = new ProjectSprintDto() { WightOfSprints = Wieght, ProjectName= sprints.Where(x=>x.ProjectId==projectId).Select(x=>x.Project.Name).FirstOrDefault()};
+                    model.ProjectSprintDto.Add(projectsprint);
+                }
+            }
             else if (RolesForUser.FirstOrDefault()== "Worker")
             {
                 List<Projects> WorkerProjectList = new List<Projects>();

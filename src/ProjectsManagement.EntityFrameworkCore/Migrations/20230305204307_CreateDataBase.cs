@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectsManagement.Migrations
 {
-    public partial class CreateDatabase : Migration
+    public partial class CreateDataBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -359,6 +359,7 @@ namespace ProjectsManagement.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsOnine = table.Column<bool>(type: "bit", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -445,14 +446,14 @@ namespace ProjectsManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobTasks",
+                name: "HomeStatistics",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameF = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NameL = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -463,7 +464,7 @@ namespace ProjectsManagement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobTasks", x => x.Id);
+                    table.PrimaryKey("PK_HomeStatistics", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -788,6 +789,34 @@ namespace ProjectsManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WorkersHistory",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LogInTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LogOutTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    WorkerId = table.Column<long>(type: "bigint", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeleterUserId = table.Column<long>(type: "bigint", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkersHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkersHistory_AbpUsers_WorkerId",
+                        column: x => x.WorkerId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AbpWebhookSendAttempts",
                 columns: table => new
                 {
@@ -888,8 +917,9 @@ namespace ProjectsManagement.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ProjectId = table.Column<long>(type: "bigint", nullable: false),
+                    WieghtOfHours = table.Column<long>(type: "bigint", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpectedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExpectedEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
@@ -919,7 +949,6 @@ namespace ProjectsManagement.Migrations
                     ProjectId = table.Column<long>(type: "bigint", nullable: false),
                     SupervisorId = table.Column<long>(type: "bigint", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MyProperty = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
@@ -1051,6 +1080,39 @@ namespace ProjectsManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HomeStatisticsUserTypes",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HomeStatisticsId = table.Column<long>(type: "bigint", nullable: false),
+                    UserTypeId = table.Column<int>(type: "int", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeleterUserId = table.Column<long>(type: "bigint", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HomeStatisticsUserTypes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HomeStatisticsUserTypes_AbpRoles_UserTypeId",
+                        column: x => x.UserTypeId,
+                        principalTable: "AbpRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HomeStatisticsUserTypes_HomeStatistics_HomeStatisticsId",
+                        column: x => x.HomeStatisticsId,
+                        principalTable: "HomeStatistics",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Jobs",
                 columns: table => new
                 {
@@ -1059,7 +1121,9 @@ namespace ProjectsManagement.Migrations
                     NameF = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NameL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SprintId = table.Column<long>(type: "bigint", nullable: false),
+                    ProjectId = table.Column<long>(type: "bigint", nullable: false),
+                    SprintId = table.Column<long>(type: "bigint", nullable: true),
+                    WorkerId = table.Column<long>(type: "bigint", nullable: true),
                     ExpectedNoOfHours = table.Column<int>(type: "int", nullable: false),
                     ActualNumberOfHours = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -1077,11 +1141,49 @@ namespace ProjectsManagement.Migrations
                 {
                     table.PrimaryKey("PK_Jobs", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Jobs_AbpUsers_WorkerId",
+                        column: x => x.WorkerId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Jobs_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Jobs_Sprints_SprintId",
                         column: x => x.SprintId,
                         principalTable: "Sprints",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobTasks",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameF = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NameL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobId = table.Column<long>(type: "bigint", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeleterUserId = table.Column<long>(type: "bigint", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobTasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobTasks_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1091,6 +1193,8 @@ namespace ProjectsManagement.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    JobTasksId = table.Column<long>(type: "bigint", nullable: true),
                     JobId = table.Column<long>(type: "bigint", nullable: false),
                     SupervisorId = table.Column<long>(type: "bigint", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -1116,6 +1220,83 @@ namespace ProjectsManagement.Migrations
                         principalTable: "Jobs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SupervisorNotes_JobTasks_JobTasksId",
+                        column: x => x.JobTasksId,
+                        principalTable: "JobTasks",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectHistory",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    ProjectId = table.Column<long>(type: "bigint", nullable: false),
+                    SprintId = table.Column<long>(type: "bigint", nullable: true),
+                    JobId = table.Column<long>(type: "bigint", nullable: true),
+                    JobTasksId = table.Column<long>(type: "bigint", nullable: true),
+                    ProjectWorkersId = table.Column<long>(type: "bigint", nullable: true),
+                    ProjectSupervisorsId = table.Column<long>(type: "bigint", nullable: true),
+                    SupervisorNotesId = table.Column<long>(type: "bigint", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjectHistoryActions = table.Column<int>(type: "int", nullable: false),
+                    ProjectHistoryColumns = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeleterUserId = table.Column<long>(type: "bigint", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProjectHistory_AbpUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectHistory_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProjectHistory_JobTasks_JobTasksId",
+                        column: x => x.JobTasksId,
+                        principalTable: "JobTasks",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProjectHistory_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectHistory_ProjectSupervisors_ProjectSupervisorsId",
+                        column: x => x.ProjectSupervisorsId,
+                        principalTable: "ProjectSupervisors",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProjectHistory_ProjectWorkers_ProjectWorkersId",
+                        column: x => x.ProjectWorkersId,
+                        principalTable: "ProjectWorkers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProjectHistory_Sprints_SprintId",
+                        column: x => x.SprintId,
+                        principalTable: "Sprints",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProjectHistory_SupervisorNotes_SupervisorNotesId",
+                        column: x => x.SupervisorNotesId,
+                        principalTable: "SupervisorNotes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -1471,9 +1652,74 @@ namespace ProjectsManagement.Migrations
                 column: "WebhookEventId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HomeStatisticsUserTypes_HomeStatisticsId",
+                table: "HomeStatisticsUserTypes",
+                column: "HomeStatisticsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HomeStatisticsUserTypes_UserTypeId",
+                table: "HomeStatisticsUserTypes",
+                column: "UserTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Jobs_ProjectId",
+                table: "Jobs",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Jobs_SprintId",
                 table: "Jobs",
                 column: "SprintId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Jobs_WorkerId",
+                table: "Jobs",
+                column: "WorkerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobTasks_JobId",
+                table: "JobTasks",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectHistory_JobId",
+                table: "ProjectHistory",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectHistory_JobTasksId",
+                table: "ProjectHistory",
+                column: "JobTasksId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectHistory_ProjectId",
+                table: "ProjectHistory",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectHistory_ProjectSupervisorsId",
+                table: "ProjectHistory",
+                column: "ProjectSupervisorsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectHistory_ProjectWorkersId",
+                table: "ProjectHistory",
+                column: "ProjectWorkersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectHistory_SprintId",
+                table: "ProjectHistory",
+                column: "SprintId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectHistory_SupervisorNotesId",
+                table: "ProjectHistory",
+                column: "SupervisorNotesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectHistory_UserId",
+                table: "ProjectHistory",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectSupervisors_ProjectId",
@@ -1516,9 +1762,19 @@ namespace ProjectsManagement.Migrations
                 column: "JobId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SupervisorNotes_JobTasksId",
+                table: "SupervisorNotes",
+                column: "JobTasksId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SupervisorNotes_SupervisorId",
                 table: "SupervisorNotes",
                 column: "SupervisorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkersHistory_WorkerId",
+                table: "WorkersHistory",
+                column: "WorkerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1605,19 +1861,16 @@ namespace ProjectsManagement.Migrations
                 name: "AbpWebhookSubscriptions");
 
             migrationBuilder.DropTable(
-                name: "JobTasks");
+                name: "HomeStatisticsUserTypes");
 
             migrationBuilder.DropTable(
-                name: "ProjectSupervisors");
-
-            migrationBuilder.DropTable(
-                name: "ProjectWorkers");
+                name: "ProjectHistory");
 
             migrationBuilder.DropTable(
                 name: "Suggestions");
 
             migrationBuilder.DropTable(
-                name: "SupervisorNotes");
+                name: "WorkersHistory");
 
             migrationBuilder.DropTable(
                 name: "AbpDynamicEntityProperties");
@@ -1626,22 +1879,37 @@ namespace ProjectsManagement.Migrations
                 name: "AbpEntityChanges");
 
             migrationBuilder.DropTable(
-                name: "AbpRoles");
-
-            migrationBuilder.DropTable(
                 name: "AbpEditions");
 
             migrationBuilder.DropTable(
                 name: "AbpWebhookEvents");
 
             migrationBuilder.DropTable(
-                name: "Jobs");
+                name: "AbpRoles");
+
+            migrationBuilder.DropTable(
+                name: "HomeStatistics");
+
+            migrationBuilder.DropTable(
+                name: "ProjectSupervisors");
+
+            migrationBuilder.DropTable(
+                name: "ProjectWorkers");
+
+            migrationBuilder.DropTable(
+                name: "SupervisorNotes");
 
             migrationBuilder.DropTable(
                 name: "AbpDynamicProperties");
 
             migrationBuilder.DropTable(
                 name: "AbpEntityChangeSets");
+
+            migrationBuilder.DropTable(
+                name: "JobTasks");
+
+            migrationBuilder.DropTable(
+                name: "Jobs");
 
             migrationBuilder.DropTable(
                 name: "AbpUsers");

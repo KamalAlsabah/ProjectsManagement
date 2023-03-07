@@ -24,7 +24,26 @@
             abp.ui.clearBusy(_$form);
         });
     }
+    //$('#StartDate').on('change', function () { compareDates(); });
+    //$('#ExpectedEndDate').on('change', function () { compareDates(); });
+    //function compareDates() {
+    //    //Get the text in the elements
+    //    var from = document.getElementById('StartDate').textContent;
+    //    var to = document.getElementById('ExpectedEndDate').textContent;
 
+    //    //Generate an array where the first element is the year, second is month and third is day
+    //    var splitFrom = from.split('/');
+    //    var splitTo = to.split('/');
+
+    //    //Create a date object from the arrays
+    //    var fromDate = Date.parse(splitFrom[0], splitFrom[1] - 1, splitFrom[2]);
+    //    var toDate = Date.parse(splitTo[0], splitTo[1] - 1, splitTo[2]);
+    //    if (fromDate > toDate) {
+    //        $('#Message').textContent('err');
+    //    }
+    //    //Return the result of the comparison
+    //    return fromDate < toDate;
+    //}
     _$form.closest('div.modal-content').find(".save-button").click(function (e) {
         e.preventDefault();
         save();

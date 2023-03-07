@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using ProjectsManagement.Authorization.Users;
 using ProjectsManagement.WorkersHistory;
 using System;
+using ProjectsManagement.Home;
 
 namespace ProjectsManagement.Web.Controllers
 {
@@ -19,7 +20,8 @@ namespace ProjectsManagement.Web.Controllers
         private readonly IWorkersHistoryAppService _WorkersHistoryAppService;
         public HomeController(IHomeStatisticsAppService HomeStatisticsAppService,
             UserManager userManager,
-            IWorkersHistoryAppService WorkersHistoryAppService)
+            IWorkersHistoryAppService WorkersHistoryAppService
+            )
         {
             _HomeStatisticsAppService = HomeStatisticsAppService;
             _userManager= userManager;
@@ -28,11 +30,12 @@ namespace ProjectsManagement.Web.Controllers
         public async Task<ActionResult> Index()
         {
             IndexHomeModalViewModel model = new IndexHomeModalViewModel() { };
+           
             var userid = (long)_userManager.AbpSession.UserId;
-            var workerloginHistory=await _WorkersHistoryAppService.GetHistoryByUserId(userid);
-            workerloginHistory.TotalHours = (long)(DateTime.Now - workerloginHistory.LogInTime).TotalHours;
+            var workerloginHistory = await _WorkersHistoryAppService.GetHistoryByUserId(userid);
+         //   workerloginHistory.TotalHours = (long)(DateTime.Now - workerloginHistory.LogInTime).TotalHours;
             model.WorkersHistoryDto = workerloginHistory;
-
+            model.HomeDto =await _HomeStatisticsAppService.GetDetatilsForHome();
             return View(model);
         }
         public async Task<ActionResult> CreateModal()

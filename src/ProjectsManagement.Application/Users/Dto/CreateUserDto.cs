@@ -28,6 +28,8 @@ namespace ProjectsManagement.Users.Dto
         public string EmailAddress { get; set; }
 
         public bool IsActive { get; set; }
+        public bool IsOnline { get; set; }
+
 
         public string[] RoleNames { get; set; }
 

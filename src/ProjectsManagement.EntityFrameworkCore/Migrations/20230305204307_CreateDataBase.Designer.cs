@@ -12,8 +12,8 @@ using ProjectsManagement.EntityFrameworkCore;
 namespace ProjectsManagement.Migrations
 {
     [DbContext(typeof(ProjectsManagementDbContext))]
-    [Migration("20230208164221_Date")]
-    partial class Date
+    [Migration("20230305204307_CreateDataBase")]
+    partial class CreateDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1494,6 +1494,9 @@ namespace ProjectsManagement.Migrations
                     b.Property<bool>("IsLockoutEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsOnine")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsPhoneNumberConfirmed")
                         .HasColumnType("bit");
 
@@ -2119,6 +2122,9 @@ namespace ProjectsManagement.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<long>("WieghtOfHours")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

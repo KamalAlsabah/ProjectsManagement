@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProjectsManagement.Home.HomeStatistics.Dto;
+using ProjectsManagement.Home.Dto;
 
 namespace ProjectsManagement.Home.HomeStatistics
 {
@@ -13,5 +14,6 @@ namespace ProjectsManagement.Home.HomeStatistics
     {
         Task<EditHomeStatisticsDto> GetHomeStatisticsForEdit(EntityDto input);
         Task<List<NameValueDto<int>>> GetUserTypes();
+        Task<HomeDto> GetDetatilsForHome();
     }
 }

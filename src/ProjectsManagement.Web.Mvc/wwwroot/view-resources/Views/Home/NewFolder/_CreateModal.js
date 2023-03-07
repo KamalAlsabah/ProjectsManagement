@@ -5,7 +5,6 @@
         _$modal = $('#HomeStatisticsCreateModal'),
         _$form = _$modal.find('form');
 
-    console.log("kk");
 
     function save() {
         if (!_$form.valid()) {

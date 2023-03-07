@@ -1492,6 +1492,9 @@ namespace ProjectsManagement.Migrations
                     b.Property<bool>("IsLockoutEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsOnine")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsPhoneNumberConfirmed")
                         .HasColumnType("bit");
 
@@ -2117,6 +2120,9 @@ namespace ProjectsManagement.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<long>("WieghtOfHours")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 

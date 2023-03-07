@@ -13,6 +13,8 @@ namespace ProjectsManagement.Sprints.Dto
         public DateTime StartDate { get; set; }
         public DateTime ExpectedEndDate { get; set; }
         public DateTime EndDate { get; set; }
+        public long WieghtOfHours { get; set; }
+
 
     }
 }

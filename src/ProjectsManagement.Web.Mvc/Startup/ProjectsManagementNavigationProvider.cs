@@ -39,15 +39,7 @@ namespace ProjectsManagement.Web.Startup
                         requiresAuthentication: true
                     )
                 )
-               .AddItem(
-                    new MenuItemDefinition(
-                        PageNames.Tenants,
-                        L("Tenants"),
-                        url: "Tenants",
-                        icon: "fas fa-building",
-                        permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Tenants)
-                    )
-                ).AddItem(
+           .AddItem(
                     new MenuItemDefinition(
                         PageNames.Users,
                         L("Users"),
@@ -57,6 +49,15 @@ namespace ProjectsManagement.Web.Startup
                     )
 
                 )
+               //.AddItem(
+               //     new MenuItemDefinition(
+               //         PageNames.Tenants,
+               //         L("Tenants"),
+               //         url: "Tenants",
+               //         icon: "fas fa-building",
+               //         permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Tenants)
+               //     )
+               // )
                 //.AddItem(
                 //    new MenuItemDefinition(
                 //        PageNames.StatisticsHome,

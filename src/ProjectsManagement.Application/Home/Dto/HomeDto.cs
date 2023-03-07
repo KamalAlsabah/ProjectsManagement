@@ -15,8 +15,11 @@ namespace ProjectsManagement.Home.Dto
         public long? Jobs { get; set; }
         public long? JobTasks { get; set; }
         public List<ProjectDatabase.WorkersHistory.WorkersHistory> WorkersHistory { get; set; } = null;
+        public List<ProjectSprintDto> ProjectSprintDto { get; set; }
+        public List<ProjectWorkersHoursWieghtDto> ProjectWorkersHoursWieghtDto { get; set; }
 
 
 
     }
 }
+           

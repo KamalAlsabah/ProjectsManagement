@@ -32,6 +32,7 @@ namespace ProjectsManagement.ProjectDatabase.Sprint
         }
         public SprintStatus Status { get; set; }
         public long ProjectId { get; set; }
+        public long WieghtOfHours { get; set; }
         public Projects Project { get; set; }
         public DateTime StartDate { get; set; }=DateTime.Now;
         public DateTime ExpectedEndDate { get; set; } = DateTime.Now;

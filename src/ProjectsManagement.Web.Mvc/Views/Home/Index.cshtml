@@ -21,22 +21,40 @@
 <section class="content-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6">
+            @*  <div class="col-sm-6">
                 <h1>@L("Home")</h1>
-            </div>
-          
-            <div class="col-sm-6">
+                </div>
+            *@
+            @*    <div class="col-sm-6">
                 <button type="button" class="btn bg-blue float-sm-right createHomeStatistics" data-toggle="modal" data-target="#HomeStatisticsCreateModal">
-                    <i class="fa fa-plus-square"></i>
-                    @L("Create")
+                <i class="fa fa-plus-square"></i>
+                @L("Create")
                 </button>
-            </div>
+                </div>*@
         </div>
     </div>
 </section>
 <section class="content">
     <div class="container-fluid">
-        <span id="totalhours">@Model.WorkersHistoryDto.TotalHours</span>
+        <div class="container overflow-hidden text-center">
+            <div class="row gx-5">
+                @if (Model.HomeDto.ProjectWorkersHoursWieghtDto.Count > 0)
+                {
+                    @foreach (var item in Model.HomeDto.ProjectWorkersHoursWieghtDto)
+                   {
+                       <div class="col">
+                        <div class="p-3 border bg-light">
+                            @item.ProjectName > @item.WorkerName > @item.WightOfHours
+                        </div>
+                    </div>
+                   }
+                    
+                }
+
+
+            </div>
+        </div>
+        @*<span id="totalhours">@Model.WorkersHistoryDto.TotalHours</span>*@
         @*<div class="row">
             <div class="col-12">
             <div class="alert alert-info alert-dismissible">

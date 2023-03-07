@@ -87,7 +87,12 @@
                 
             },
             {
-                targets:8,
+                targets:8 ,
+                data: 'wieghtOfHours',
+                sortable: true,
+            },
+            {
+                targets:9,
                 data: null,
                 sortable: false,
                 autoWidth: false,

@@ -21,16 +21,22 @@ namespace ProjectsManagement.Project
         private readonly IRepository<Projects, long> _projectsrepository;
         private readonly IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> _projectWorkersrepository;
         private readonly IRepository<ProjectDatabase.ProjectSupervisor.ProjectSupervisors, long> _projectSupervisorsrepository;
+        private readonly IRepository<ProjectDatabase.Sprint.Sprints, long> _sprintsRepositry;
+        private readonly IRepository<ProjectDatabase.Job.Jobs, long> _jobsRepositry;
         private readonly UserManager _userManager;
         public ProjectsAppService(
             IRepository<Projects, long> repository,
             IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> projectWorkersrepository,
             IRepository<ProjectDatabase.ProjectSupervisor.ProjectSupervisors, long> projectSupervisorsrepository,
-              UserManager userManager) : base(repository)
+            IRepository<ProjectDatabase.Sprint.Sprints, long> sprintsRepositry,
+            IRepository<ProjectDatabase.Job.Jobs, long> jobsRepositry,
+        UserManager userManager) : base(repository)
         {
             _projectsrepository = repository;
             _projectWorkersrepository = projectWorkersrepository;
             _projectSupervisorsrepository = projectSupervisorsrepository;
+            _sprintsRepositry = sprintsRepositry;
+            _jobsRepositry = jobsRepositry; 
             _userManager = userManager;
         }
         [AbpAuthorize(PermissionNames.Pages_Projects)]
@@ -195,6 +201,24 @@ namespace ProjectsManagement.Project
         public override Task<ProjectsDto> UpdateAsync(ListProjectsDto input)
         {
             return base.UpdateAsync(input);
+        }
+        public override async Task DeleteAsync(EntityDto<long> input)
+        {
+           var jobs=  _jobsRepositry.GetAll().Where(x=>x.ProjectId==input.Id);
+            foreach(var job in jobs)
+                await _jobsRepositry.DeleteAsync(job); 
+            var sprints=  _sprintsRepositry.GetAll().Where(x=>x.ProjectId==input.Id);
+            foreach(var sprint in sprints)
+                await _sprintsRepositry.DeleteAsync(sprint); 
+            var workers=  _projectWorkersrepository.GetAll().Where(x=>x.ProjectId==input.Id);
+            foreach(var worker in workers)
+                await _projectWorkersrepository.DeleteAsync(worker); 
+            var supervisors=  _projectSupervisorsrepository.GetAll().Where(x=>x.ProjectId==input.Id);
+            foreach(var supervisor in supervisors)
+                await _projectSupervisorsrepository.DeleteAsync(supervisor);
+
+              await  base.DeleteAsync(input);
+          
         }
     }
 }
