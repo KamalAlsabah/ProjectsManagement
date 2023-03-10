@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Entities.Auditing;
+using ProjectsManagement.ProjectDatabase.Enums;
 using ProjectsManagement.ProjectDatabase.Job;
 
 namespace ProjectsManagement.ProjectDatabase.JobTask
@@ -24,6 +25,7 @@ namespace ProjectsManagement.ProjectDatabase.JobTask
             }
         }
         public string Description { get; set; }
+        public JobTaskStatus JobTaskStatus { get; set; } = ProjectDatabase.Enums.JobTaskStatus.ToDo;
         public long? JobId { get; set; }
         public Jobs Job { get; set; }
     }

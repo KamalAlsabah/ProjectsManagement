@@ -20,6 +20,13 @@
             <div class="col-md-9">
                 <input id="NameF" type="text" class="form-control" name="NameF" asp-for="EditJobTasksDto.NameF">
             </div>
+        </div> 
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="JobTaskStatus">@L("JobTaskStatus")</label>
+            <div class="col-md-9">
+                <select id="JobTaskStatus" type="text" class="form-control" name="JobTaskStatus"asp-items="Html.GetEnumSelectList<JobTaskStatus>()" asp-for="EditJobTasksDto.JobTaskStatus">
+                    </select>
+            </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 col-form-label" for="Description">@L("Description")</label>

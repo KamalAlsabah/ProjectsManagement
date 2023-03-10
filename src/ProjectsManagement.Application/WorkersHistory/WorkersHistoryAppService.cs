@@ -81,7 +81,6 @@ namespace ProjectsManagement.WorkersHistory
             var userId = long.Parse(_accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var user = _Usersrepository.GetAll().Where(x => x.Id == userId).FirstOrDefault();
 
-
             if (input== true)
             {
                 workersHistoryCreate.WorkerId = userId;

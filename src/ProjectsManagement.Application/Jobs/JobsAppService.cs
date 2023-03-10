@@ -20,12 +20,16 @@ namespace JobManagement.Jobs
     public class JobsAppService : AsyncCrudAppService<ProjectsManagement.ProjectDatabase.Job.Jobs, JobsDto, long, PagedJobResultRequestDto, CreateJobDto, UpdateInputDto>, IJobsAppService
     {
         private readonly IRepository<ProjectsManagement.ProjectDatabase.Job.Jobs, long> _Jobrepository;
+        private readonly IRepository<ProjectsManagement.ProjectDatabase.Sprint.Sprints, long> _Sprintrepository;
         private readonly IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo;
 
-        public JobsAppService(IRepository<ProjectsManagement.ProjectDatabase.Job.Jobs, long> repository, IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo) : base(repository)
+        public JobsAppService(IRepository<ProjectsManagement.ProjectDatabase.Job.Jobs, long> repository,
+            IRepository<ProjectsManagement.ProjectDatabase.Sprint.Sprints, long> Sprintrepository,
+            IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo) : base(repository)
         {
             _Jobrepository = repository;
             this.projectRepo = projectRepo;
+            _Sprintrepository = Sprintrepository;
         }
         [AbpAuthorize(PermissionNames.Pages_Jobs)]
 
@@ -58,6 +62,20 @@ namespace JobManagement.Jobs
             }
             if (input.WorkerId == 0) input.WorkerId = null;
             if (input.SprintId == 0) input.SprintId = null;
+
+            var Sprint = _Sprintrepository.GetAll().Where(x => x.Id == input.SprintId && x.ProjectId==input.ProjectId ).FirstOrDefault();
+            var jobsList = _Jobrepository.GetAll().Where(x => x.SprintId == input.SprintId);
+            var total = 0;
+             foreach(var job in jobsList)
+             {
+                total += job.ExpectedNoOfHours;
+             }
+            total += input.ExpectedNoOfHours;
+
+            if (total>Sprint.WieghtOfHours)
+            {
+                throw new UserFriendlyException($"the total hours of jobs in the sprint {Sprint.Name}  should be less than {Sprint.WieghtOfHours}");
+            }
             return await base.CreateAsync(input);
         }
 
@@ -80,6 +98,21 @@ namespace JobManagement.Jobs
             }
             if (input.WorkerId == 0) input.WorkerId = null;
             if (input.SprintId == 0) input.SprintId = null;
+            var job = _Jobrepository.GetAll().Where(x => x.Id == input.Id).FirstOrDefault();
+            var Sprint = _Sprintrepository.GetAll().Where(x => x.Id == input.SprintId && x.ProjectId==job.ProjectId).FirstOrDefault();
+            var jobsList = _Jobrepository.GetAll().Where(x => x.SprintId == input.SprintId);
+            var total = 0;
+            foreach (var item in jobsList)
+            {
+                total += item.ExpectedNoOfHours;
+            }
+            total += input.ExpectedNoOfHours;
+            total-=job.ExpectedNoOfHours;
+
+            if (total > Sprint.WieghtOfHours)
+            {
+                throw new UserFriendlyException($"the total hours of jobs in the sprint {Sprint.Name}  should be less than {Sprint.WieghtOfHours}");
+            }
             return await base.UpdateAsync(input);
         }
         [AbpAuthorize(PermissionNames.Pages_Jobs_DeleteJob)]

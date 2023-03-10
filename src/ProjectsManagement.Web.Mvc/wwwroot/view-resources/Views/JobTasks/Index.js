@@ -57,6 +57,12 @@
             },
             {
                 targets: 4,
+                data: 'jobTaskStatus',
+                sortable: true,
+                
+            },
+            {
+                targets: 5,
                 data: 'creationTime',
                 sortable: true,
                 render: (data, type, row, meta) => {
@@ -64,7 +70,7 @@
                 }
             },
             {
-                targets:5,
+                targets:6,
                 data: null,
                 sortable: false,
                 autoWidth: false,

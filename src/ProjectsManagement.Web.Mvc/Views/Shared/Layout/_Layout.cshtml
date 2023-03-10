@@ -13,6 +13,7 @@
     var pageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title + " / " : "";
     pageTitle += "ProjectsManagement";
 }
+
 <!DOCTYPE html>
 <html lang="@LanguageManager.CurrentLanguage.Name">
 <head>
@@ -39,5 +40,9 @@
     @await Html.PartialAsync("_Scripts.cshtml")
     @RenderSection("scripts", required: false)
     @WebResourceManager.RenderScripts()
+    <script src="~/view-resources/Views/Account/WorkerHours/WorkerHours.js" asp-append-version="true"></script>
+
 </body>
 </html>
+
+

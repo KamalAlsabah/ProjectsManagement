@@ -1,16 +1,21 @@
 ﻿(function ($) {
-    var _HomeStatisticsService = abp.services.app.homeStatistics,
+    var _workersHistoryService = abp.services.app.workersHistory,
         l = abp.localization.getSource('ProjectsManagement');
-    alert("gg");
 
-    if ($('#flexSwitchCheckDefault').prop('checked')) {
-        alert("gg");
-    }
+    _workersHistoryService.isUserOnline().done(function (result) {
+        if (result == true)
+            $(".form-check-input").attr('checked', true);
+
+        else
+            $(".form-check-input").attr('checked', false);
+    });
     $("#flexSwitchCheckDefault").on('change', function () {
         if ($('#flexSwitchCheckDefault').prop('checked')) {
-            alert("gg");
+            _workersHistoryService.createHistory(true).done(function () { });
+
+        } else {
+            _workersHistoryService.createHistory(false).done(function () { });
         }
-        
     });
 
 })(jQuery);

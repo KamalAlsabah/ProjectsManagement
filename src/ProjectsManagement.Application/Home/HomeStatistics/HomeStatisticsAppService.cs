@@ -72,45 +72,49 @@ namespace ProjectsManagement.Home.HomeStatistics
                 model.JobTasks = listjobtasks.Count();
                 model.ProjectSprintDto = new List<ProjectSprintDto>();
                 model.ProjectWorkersHoursWieghtDto = new List<ProjectWorkersHoursWieghtDto>();
-                var sprintsProjectIds = _sprintsRepositry.GetAll().Select(x => x.ProjectId).Distinct().ToList();
-                var jobsProjectIds = _jobsRepositry.GetAll().Include(x=>x.Project).Where(x=>x.Project.Status ==ProjectDatabase.Enums.ProjectStatus.Open).Where(x=>x.Status==ProjectDatabase.Enums.JobStatus.Done).Select(x => x.ProjectId).Distinct().ToList();
-                var jobsWorkersIds = _jobsRepositry.GetAll().Include(x => x.Project).Where(x => x.Project.Status == ProjectDatabase.Enums.ProjectStatus.Open).Where(x => x.Status == ProjectDatabase.Enums.JobStatus.Done).Select(x => x.WorkerId).Distinct().ToList();
-              //  var sprints = listsprints.Include(x => x.Project).ToList();
-                long Wieght = 0;
 
-                //foreach (var projectId in sprintsProjectIds)
-                //{
-                //    foreach (var sprint in listsprints)
-                //    {
-                //        if (sprint.ProjectId == projectId)
-                //        {
-                //            Wieght += sprint.WieghtOfHours;
-                //        }
-                //    }
-                //    var projectname = listsprints.Where(x => x.ProjectId == projectId).Select(x => x.Project.Name).FirstOrDefault();
-                //    var projectsprint = new ProjectSprintDto() { WightOfSprints = Wieght, ProjectName = projectname };
-
-                //    model.ProjectSprintDto.Add(projectsprint);
-                //}
+                var jobsProjectIds = _jobsRepositry.GetAll().Include(x=>x.Project).Where(x=>x.Project.Status ==ProjectDatabase.Enums.ProjectStatus.Open).Where(x=>x.Status==ProjectDatabase.Enums.JobStatus.Done).Select(x => x.ProjectId).ToList();
+                var DoneJobs = _jobsRepositry.GetAll().Include(x => x.Project).Include(x=>x.Worker).Where(x => x.Project.Status == ProjectDatabase.Enums.ProjectStatus.Open).Where(x => x.Status == ProjectDatabase.Enums.JobStatus.Done).ToList();
 
                 foreach (var projectId in jobsProjectIds)
                 {
-                    foreach(var workerId in jobsWorkersIds)
+                 var ProjectWorkers= _projectsWorkerRepositry.GetAll().Include(x=>x.Project).Include(x=>x.Worker).Where(x => x.ProjectId == projectId).ToList();
+                    foreach(var projectWorker in ProjectWorkers)
                     {
-                        foreach (var job in listjobs)
+                       var Joblist= DoneJobs.Where(x => x.WorkerId == projectWorker.Id && x.ProjectId== projectId).ToList();
+                        var wight = 0;
+                        if(Joblist != null && Joblist.Count()>0)
                         {
-                            if (job.ProjectId == projectId)
+                            foreach (var job in Joblist)
                             {
-                                Wieght += job.ExpectedNoOfHours;
+                                wight += job.ExpectedNoOfHours;
                             }
+                            var projectJobs = new ProjectWorkersHoursWieghtDto() { WorkerName = projectWorker.Worker.Name, WightOfHours = wight, ProjectName = projectWorker.Project.Name };
+                            model.ProjectWorkersHoursWieghtDto.Add(projectJobs);
                         }
-                        var projectname = listjobs.Where(x => x.ProjectId == projectId).Select(x => x.Project.Name).FirstOrDefault();
-                        var workername = listjobs.Where(x => x.WorkerId == workerId).Select(x => x.Worker.Name).FirstOrDefault();
-                        var projectsprint = new ProjectWorkersHoursWieghtDto() {WorkerName=workername, WightOfHours = Wieght, ProjectName = projectname };
-                        model.ProjectWorkersHoursWieghtDto.Add(projectsprint);
                     }
-                }
 
+                    //foreach (var workerid in jobsWorkersIds.Where(x=>x.ProjectId==projectId).Select(x=>x.WorkerId))
+                    //{
+                    //    long Wieght = 0;
+
+                    //    var DoneJobs = listjobs.Where(x => x.Status == ProjectDatabase.Enums.JobStatus.Done && x.ProjectId==projectId ) ;
+
+                    //    foreach (var job in DoneJobs)
+                    //    {
+                    //        if (workerid == job.WorkerId)
+                    //        {
+                    //            Wieght += job.ExpectedNoOfHours;
+                    //        }
+                    //        else
+                    //            Wieght += job.ExpectedNoOfHours;
+
+                    //        var projectJobs = new ProjectWorkersHoursWieghtDto() { WorkerName = job.Worker.Name, WightOfHours = Wieght, ProjectName = job.Project.Name };
+                    //        model.ProjectWorkersHoursWieghtDto.Add(projectJobs);
+                    //    }
+                    //}
+
+                }
             }
             else if (RolesForUser.FirstOrDefault() == "Worker")
             {

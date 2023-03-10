@@ -12,10 +12,10 @@ namespace ProjectsManagement.ProjectDatabase.WorkersHistory
     public class WorkersHistory : FullAuditedEntity<long>
     {
         public DateTime LogInTime { get; set; } = DateTime.Now;
-        public DateTime? LogOutTime { get; set; }=DateTime.Now;
+        public DateTime LogOutTime { get; set; }=DateTime.Now;
         public long TotalHours { 
             get {
-                return (long)(DateTime.Now - LogInTime).TotalHours;
+                return (long)(LogOutTime - LogInTime).TotalHours;
             } 
         }
         public long WorkerId { get; set; }
