@@ -72,6 +72,12 @@
             },
             {
                 targets: 7,
+                data: 'wieghtOfHours',
+                sortable: true,
+
+            },
+            {
+                targets: 8,
                 data: 'startDate',
                 sortable: true,
                 render: (data, type, row, meta) => {
@@ -79,13 +85,13 @@
                 }
             },
             {
-                targets: 8,
+                targets: 9,
                 data: 'status',
                 sortable: true,
 
             },
             {
-                targets: 9,
+                targets: 10,
                 data: 'endDate',
                 sortable: true,
                 render: (data, type, row, meta) => {
@@ -93,7 +99,7 @@
                 }
             },
             {
-                targets: 10,
+                targets: 11,
                 data: null,
                 sortable: false,
                 autoWidth: false,

@@ -13,6 +13,8 @@ namespace ProjectsManagement.Jobs.Dto
         public string SprintName { get; set; }
         public int ExpectedNoOfHours { get; set; }
         public int ActualNumberOfHours { get; set; }
+        public int WieghtOfHours { get; set; }
+        public DateTime CreationTime { get; set; } = DateTime.Now;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Status { get; set; }

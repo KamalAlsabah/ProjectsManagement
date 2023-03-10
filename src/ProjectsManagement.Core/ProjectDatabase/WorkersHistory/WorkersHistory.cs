@@ -12,7 +12,8 @@ namespace ProjectsManagement.ProjectDatabase.WorkersHistory
     public class WorkersHistory : FullAuditedEntity<long>
     {
         public DateTime LogInTime { get; set; } = DateTime.Now;
-        public DateTime LogOutTime { get; set; }=DateTime.Now;
+        public DateTime LogOutTime { get; set; } = DateTime.Now;
+        public DateTime CreationTime { get; set; }=DateTime.Now;
         public long TotalHours { 
             get {
                 return (long)(LogOutTime - LogInTime).TotalHours;

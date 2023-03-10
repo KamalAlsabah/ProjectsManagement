@@ -118,7 +118,12 @@
                             </li>
                             <li>
                                 <a href="/ProjectHistory?projrctId=${row.id}" class="dropdown-item" title="History">
-                                  <i class="fas fa-users"></i> ProjectHistory
+                                  <i class="fas fa-users"></i> Project History
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/WorkersDashboard/Index/projrctId=${row.id}" class="dropdown-item" title="WorkersDashboard">
+                                  <i class="fas fa-users"></i> Workers Dashboard
                                 </a>
                             </li>
                           </ul>

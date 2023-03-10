@@ -94,26 +94,6 @@ namespace ProjectsManagement.Home.HomeStatistics
                         }
                     }
 
-                    //foreach (var workerid in jobsWorkersIds.Where(x=>x.ProjectId==projectId).Select(x=>x.WorkerId))
-                    //{
-                    //    long Wieght = 0;
-
-                    //    var DoneJobs = listjobs.Where(x => x.Status == ProjectDatabase.Enums.JobStatus.Done && x.ProjectId==projectId ) ;
-
-                    //    foreach (var job in DoneJobs)
-                    //    {
-                    //        if (workerid == job.WorkerId)
-                    //        {
-                    //            Wieght += job.ExpectedNoOfHours;
-                    //        }
-                    //        else
-                    //            Wieght += job.ExpectedNoOfHours;
-
-                    //        var projectJobs = new ProjectWorkersHoursWieghtDto() { WorkerName = job.Worker.Name, WightOfHours = Wieght, ProjectName = job.Project.Name };
-                    //        model.ProjectWorkersHoursWieghtDto.Add(projectJobs);
-                    //    }
-                    //}
-
                 }
             }
             else if (RolesForUser.FirstOrDefault() == "Worker")
@@ -169,7 +149,6 @@ namespace ProjectsManagement.Home.HomeStatistics
                 }
                 model.JobTasks = WorkerJobTasksList.Count();
             }
-
 
             return model;
         }

@@ -71,7 +71,7 @@ namespace ProjectsManagement.WorkersHistory
 
         public async Task<WorkersHistoryDto> GetHistoryByUserId(long UserId)
         {
-             var History=await _WorkersHistoryrepository.GetAll().Where(x=>x.WorkerId==UserId).OrderBy(x=>x.Id).LastOrDefaultAsync();
+             var History=await _WorkersHistoryrepository.GetAll().Where(x=>x.WorkerId==UserId).OrderByDescending(x=>x.Id).FirstOrDefaultAsync();
             return ObjectMapper.Map<WorkersHistoryDto>(History);
         }
         WorkersHistoryCreateDto workersHistoryCreate = new WorkersHistoryCreateDto();
@@ -87,7 +87,7 @@ namespace ProjectsManagement.WorkersHistory
                 workersHistoryCreate.LogInTime = DateTime.Now;
                 workersHistoryCreate.TotalHours = 0;
                 await CreateAsync(workersHistoryCreate) ;
-                user.IsOnine = true;
+                user.IsOnline = true;
                 _Usersrepository.Update(user);
 
             }
@@ -97,7 +97,7 @@ namespace ProjectsManagement.WorkersHistory
                 var model = ObjectMapper.Map<UpdateInputDto>(exsitedUserHistroy);
                 model.LogOutTime = DateTime.Now;
                 await UpdateAsync(model);
-                user.IsOnine = false;
+                user.IsOnline = false;
                 _Usersrepository.Update(user);
             }
         }
@@ -106,7 +106,7 @@ namespace ProjectsManagement.WorkersHistory
         {
             var userId = long.Parse(_accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var user = _Usersrepository.GetAll().Where(x => x.Id == userId).FirstOrDefault();
-            return user.IsOnine;
+            return user.IsOnline;
         }
     }
 }

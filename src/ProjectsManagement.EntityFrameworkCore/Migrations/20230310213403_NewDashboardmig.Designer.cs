@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectsManagement.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using ProjectsManagement.EntityFrameworkCore;
 namespace ProjectsManagement.Migrations
 {
     [DbContext(typeof(ProjectsManagementDbContext))]
-    partial class ProjectsManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230310213403_NewDashboardmig")]
+    partial class NewDashboardmig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2357,7 +2359,7 @@ namespace ProjectsManagement.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<long?>("JobId")
+                    b.Property<long>("JobId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime?>("LastModificationTime")
@@ -2366,7 +2368,7 @@ namespace ProjectsManagement.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("WorkerId")
+                    b.Property<long>("WorkerId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -2856,11 +2858,15 @@ namespace ProjectsManagement.Migrations
                 {
                     b.HasOne("ProjectsManagement.ProjectDatabase.Job.Jobs", "Job")
                         .WithMany()
-                        .HasForeignKey("JobId");
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjectsManagement.Authorization.Users.User", "Worker")
                         .WithMany()
-                        .HasForeignKey("WorkerId");
+                        .HasForeignKey("WorkerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Job");
 

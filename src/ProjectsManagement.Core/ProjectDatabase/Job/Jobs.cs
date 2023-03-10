@@ -36,11 +36,13 @@ namespace ProjectsManagement.ProjectDatabase.Job
         public Projects Project { get; set; }
         public long? SprintId { get; set; }
         public Sprints Sprint { get; set; }
-
+        public int WieghtOfHours  { get; set; }
         public long? WorkerId { get; set; }
         public User Worker { get; set; }
         public int ExpectedNoOfHours { get; set; }
         public int ActualNumberOfHours  { get; set; }
+        public DateTime CreationTime { get; set; } = DateTime.Now;
+
         public DateTime StartDate { get; set; }=DateTime.Now;
         public DateTime EndDate { get; set; } = DateTime.Now;
         public JobStatus Status { get; set; }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectsManagement.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using ProjectsManagement.EntityFrameworkCore;
 namespace ProjectsManagement.Migrations
 {
     [DbContext(typeof(ProjectsManagementDbContext))]
-    partial class ProjectsManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230310182558_AddHoursWieghtToJobs")]
+    partial class AddHoursWieghtToJobs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1492,7 +1494,7 @@ namespace ProjectsManagement.Migrations
                     b.Property<bool>("IsLockoutEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsOnline")
+                    b.Property<bool>("IsOnine")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsPhoneNumberConfirmed")
@@ -2242,53 +2244,6 @@ namespace ProjectsManagement.Migrations
                     b.ToTable("SupervisorNotes");
                 });
 
-            modelBuilder.Entity("ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProjectId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("WorkerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("WorkerJobsCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("WorkerId");
-
-                    b.ToTable("WorkersDashboard");
-                });
-
             modelBuilder.Entity("ProjectsManagement.ProjectDatabase.WorkersHistory.WorkersHistory", b =>
                 {
                     b.Property<long>("Id")
@@ -2332,50 +2287,6 @@ namespace ProjectsManagement.Migrations
                     b.HasIndex("WorkerId");
 
                     b.ToTable("WorkersHistory");
-                });
-
-            modelBuilder.Entity("ProjectsManagement.ProjectDatabase.WorkersJobs.WorkersJobs", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<long?>("JobId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("WorkerId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("JobId");
-
-                    b.HasIndex("WorkerId");
-
-                    b.ToTable("WorkersJobs");
                 });
 
             modelBuilder.Entity("Abp.Application.Features.EditionFeatureSetting", b =>
@@ -2822,25 +2733,6 @@ namespace ProjectsManagement.Migrations
                     b.Navigation("Supervisor");
                 });
 
-            modelBuilder.Entity("ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard", b =>
-                {
-                    b.HasOne("ProjectsManagement.ProjectDatabase.Project.Projects", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjectsManagement.Authorization.Users.User", "Worker")
-                        .WithMany()
-                        .HasForeignKey("WorkerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("Worker");
-                });
-
             modelBuilder.Entity("ProjectsManagement.ProjectDatabase.WorkersHistory.WorkersHistory", b =>
                 {
                     b.HasOne("ProjectsManagement.Authorization.Users.User", "Worker")
@@ -2848,21 +2740,6 @@ namespace ProjectsManagement.Migrations
                         .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Worker");
-                });
-
-            modelBuilder.Entity("ProjectsManagement.ProjectDatabase.WorkersJobs.WorkersJobs", b =>
-                {
-                    b.HasOne("ProjectsManagement.ProjectDatabase.Job.Jobs", "Job")
-                        .WithMany()
-                        .HasForeignKey("JobId");
-
-                    b.HasOne("ProjectsManagement.Authorization.Users.User", "Worker")
-                        .WithMany()
-                        .HasForeignKey("WorkerId");
-
-                    b.Navigation("Job");
 
                     b.Navigation("Worker");
                 });

@@ -8,7 +8,7 @@
 @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("CreateJobs")))
 <form name="HomeStatisticsCreateForm" role="form" class="form-horizontal">
     <div class="modal-body">
-          <div class="form-group row required">
+        <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="Name">@L("Name")</label>
             <div class="col-md-9">
                 <input id="Name" class="form-control" type="text" name="Name" asp-for="createHomeStatisticsDto.Name">
@@ -29,17 +29,18 @@
             </div>
         </div>
 
-         <div class="form-group row required">
+        <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="UserTypes">@L("UserTypes")</label>
             <div class="col-md-9">
-                 <select id="MultiSelect2" class="multipleSelectExample form-control" multiple="multiple" name="UserTypes">
-                    @foreach(var item in Model.userType){
-                    <option value="@item.Value">@item.Name</option>
+                <select id="MultiSelect2" class="multipleSelectExample form-control" multiple="multiple" name="UserTypes">
+                    @foreach (var item in Model.userType)
+                    {
+                        <option value="@item.Value">@item.Name</option>
                     }
-                 </select>
-            </div> 
+                </select>
+            </div>
         </div>
-      
+
     </div>
     @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
 </form>

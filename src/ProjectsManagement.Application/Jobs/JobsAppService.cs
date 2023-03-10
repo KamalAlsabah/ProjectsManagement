@@ -108,11 +108,17 @@ namespace JobManagement.Jobs
             }
             total += input.ExpectedNoOfHours;
             total-=job.ExpectedNoOfHours;
-
             if (total > Sprint.WieghtOfHours)
-            {
                 throw new UserFriendlyException($"the total hours of jobs in the sprint {Sprint.Name}  should be less than {Sprint.WieghtOfHours}");
+            if (input.Status == ProjectsManagement.ProjectDatabase.Enums.JobStatus.InProgress)
+                input.StartDate = System.DateTime.Now;
+            else if(input.Status == ProjectsManagement.ProjectDatabase.Enums.JobStatus.Done)
+            {
+                input.EndDate = System.DateTime.Now;
+                input.ActualNumberOfHours = (int)(input.EndDate - input.StartDate).TotalHours;
             }
+                
+
             return await base.UpdateAsync(input);
         }
         [AbpAuthorize(PermissionNames.Pages_Jobs_DeleteJob)]

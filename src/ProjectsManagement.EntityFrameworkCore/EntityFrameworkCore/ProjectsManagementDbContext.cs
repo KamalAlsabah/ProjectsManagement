@@ -14,6 +14,8 @@ using ProjectsManagement.ProjectDatabase.SupervisorNotes;
 using ProjectsManagement.ProjectDatabase.Home;
 using ProjectsManagement.ProjectDatabase.ProjectHistory;
 using ProjectsManagement.ProjectDatabase.WorkersHistory;
+using ProjectsManagement.ProjectDatabase.WorkersJobs;
+using ProjectsManagement.ProjectDatabase.WorkersDashboard;
 
 namespace ProjectsManagement.EntityFrameworkCore
 {
@@ -38,5 +40,7 @@ namespace ProjectsManagement.EntityFrameworkCore
         public DbSet<HomeStatisticsUserTypes> HomeStatisticsUserTypes { get; set; }
         public DbSet<ProjectHistory> ProjectHistory { get; set; }
         public DbSet<WorkersHistory> WorkersHistory { get; set; }
+        public DbSet<WorkersJobs> WorkersJobs { get; set; }
+        public DbSet<WorkersDashboard> WorkersDashboard { get; set; }
     }
 }
