@@ -65,35 +65,18 @@ namespace ProjectsManagement.WorkersJobs
             await base.DeleteAsync(input);
         }
 
-        public async Task CreateJobWorkers(long JobId, int[] Arr)
+        public async Task CreateJobWorkers(long JobId, long[] Arr)
         {
-            var OldJobWorkers = _WorkersJobsrepository.GetAll().Include(x => x.Job).Include(x => x.Worker).Where(x => x.JobId == JobId).ToList();
-             if(OldJobWorkers.Count()>0)
+            await  Repository.HardDeleteAsync(x=>x.JobId==JobId);
+            foreach (var item in Arr)
             {
-                foreach(var OldJobWorker in OldJobWorkers)
+                CreateWorkersJobsDto workersJobsDto = new CreateWorkersJobsDto
                 {
-                    foreach (var item in Arr)
-                    {
-                        UpdateInputDto workersJobs = new UpdateInputDto();
-                        workersJobs.Id =OldJobWorker.Id;
-                        workersJobs.JobId = JobId;
-                        workersJobs.WorkerId = item;
-                        await UpdateAsync(workersJobs);
-                    }
-                }
-               
+                    JobId = JobId,
+                    WorkerId = item
+                };
+                await CreateAsync(workersJobsDto);
             }
-            else
-            {
-                CreateWorkersJobsDto workersJobsDto = new CreateWorkersJobsDto();
-                foreach (var item in Arr)
-                {
-                    workersJobsDto.JobId = JobId;
-                    workersJobsDto.WorkerId = item;
-                    CreateAsync(workersJobsDto);
-                }
-            }
-           
         }
     }
 }

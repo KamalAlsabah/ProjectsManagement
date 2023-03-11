@@ -12,7 +12,7 @@ namespace ProjectsManagement.WorkersJobs
     public interface IWorkersJobsAppService : IAsyncCrudAppService<WorkersJobsDto, long, PagedWorkersJobsResultRequestDto, CreateWorkersJobsDto, UpdateInputDto>
     {
         Task<EditWorkersJobsDto> GetWorkersJobsForEdit(EntityDto input);
-        Task CreateJobWorkers(long JobId, int[] Arr);
+        Task CreateJobWorkers(long JobId, long[] Arr);
 
 
     }
