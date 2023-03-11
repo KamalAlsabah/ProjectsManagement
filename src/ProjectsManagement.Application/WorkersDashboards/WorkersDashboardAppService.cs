@@ -18,11 +18,16 @@ namespace ProjectsManagement.WorkersDashboards
     {
         private readonly IRepository<ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard, long> _WorkersDashboardrepository;
         private readonly IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo;
+        private readonly IRepository<ProjectsManagement.ProjectDatabase.Job.Jobs, long> _jobsRepo;
 
-        public WorkersDashboardAppService(IRepository<ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard, long> repository, IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo) : base(repository)
+        public WorkersDashboardAppService(IRepository<ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard, long> repository,
+            IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo,
+            IRepository<ProjectsManagement.ProjectDatabase.Job.Jobs, long> jobsRepo) : base(repository)
         {
             _WorkersDashboardrepository = repository;
             this.projectRepo = projectRepo;
+            _jobsRepo = jobsRepo;   
+
         }
         public override async Task<PagedResultDto<WorkersDashboardDto>> GetAllAsync(PagedWorkersDashboardResultRequestDto input)
         {
@@ -43,11 +48,11 @@ namespace ProjectsManagement.WorkersDashboards
         }
         public override async Task<WorkersDashboardDto> CreateAsync(CreateWorkersDashboardDto input)
         {
-            var projectClosed = await projectRepo.GetAll().Where(x => x.Id == input.ProjectId).Select(x => x.Status).FirstOrDefaultAsync();
-            if (projectClosed == ProjectStatus.Closed)
-            {
-                throw new UserFriendlyException("The Project Was Cloesd");
-            }
+            //var projectClosed = await projectRepo.GetAll().Where(x => x.Id == input.ProjectId).Select(x => x.Status).FirstOrDefaultAsync();
+            //if (projectClosed == ProjectStatus.Closed)
+            //{
+            //    throw new UserFriendlyException("The Project Was Cloesd");
+            //}
             return await base.CreateAsync(input);
         }
         public async Task<EditWorkersDashboardDto> GetWorkersDashboardForEdit(EntityDto input)

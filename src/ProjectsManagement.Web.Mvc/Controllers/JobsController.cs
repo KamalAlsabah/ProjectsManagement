@@ -52,6 +52,7 @@ namespace ProjectsManagement.Web.Controllers
                 .Where(x => x.ProjectId == ProjectId)
                 .Select(x => new NameValue<long> { Name = x.Name, Value = x.Id })
                 .ToListAsync();
+           
             return PartialView("_CreateModal", model);
         }
         public async Task<ActionResult> EditModal(int jobsId)
@@ -67,6 +68,7 @@ namespace ProjectsManagement.Web.Controllers
             model.Sprints = await repositorySprints.GetAll()
                 .Where(x => x.ProjectId == output.ProjectId)
                 .Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
+            model.Workers =await _jobsAppService.GetJobWorkersOptions(jobsId);
             return PartialView("_EditModal", model);
         }
 

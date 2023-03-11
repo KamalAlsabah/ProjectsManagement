@@ -8,7 +8,7 @@
 @await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditJobs")))
 <form name="JobsEditForm" role="form" class="form-horizontal">
     <input type="hidden" name="Id" asp-for="EditJobDto.Id" />
-    
+
     <div class="modal-body">
         <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="NameL">@L("NameL")</label>
@@ -27,7 +27,7 @@
             <div class="col-md-9">
                 <input id="ExpectedNoOfHours" type="number" class="form-control" name="ExpectedNoOfHours" asp-for="EditJobDto.ExpectedNoOfHours">
             </div>
-        </div>     
+        </div>
         <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="WieghtOfHours">@L("WieghtOfHours")</label>
             <div class="col-md-9">
@@ -44,8 +44,19 @@
         <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="UserId">@L("Users")</label>
             <div class="col-md-9">
-                <select id="WorkerId" class="form-control" name="WorkerId" asp-for="EditJobDto.WorkerId" asp-items='new SelectList(Model.Users,"Value","Name")'>
-                    <option  value="">@L("WithoutUser")</option>
+                <select id="WorkerId" class="multipleSelectExample form-control" multiple="multiple" data-live-search="true" id="WorkerId">
+                    <option value="">@L("WithoutUser")</option>
+                    @foreach (var item in Model.Workers)
+                    {
+                        @if (item.IsSelected)
+                        {
+                            <option value="@item.Id" selected>@item.Name </option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.Name </option>
+                        }
+                    }
                 </select>
             </div>
         </div>

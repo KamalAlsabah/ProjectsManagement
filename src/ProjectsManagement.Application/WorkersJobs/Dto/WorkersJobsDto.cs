@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectsManagement.WorkersDashboards.Dto
+namespace ProjectsManagement.WorkersJobs.Dto
 {
-    public class WorkersDashboardDto : EntityDto<long>
+    public class WorkersJobsDto : EntityDto<long>
     {
+
+        public string JobName { get; set; }
         public string WorkerName { get; set; }
-        public int WorkerJobsCount { get; set; }
     }
 }

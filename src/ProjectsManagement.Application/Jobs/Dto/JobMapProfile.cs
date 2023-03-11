@@ -18,6 +18,7 @@ namespace ProjectsManagement.Jobs.Dto
 
             CreateMap<ListJobDto, ProjectDatabase.Job.Jobs>().ReverseMap();
             CreateMap<UpdateInputDto, ProjectDatabase.Job.Jobs>().ReverseMap();
+            CreateMap<JobWorkersOptionsDto,Authorization.Users.User>().ReverseMap();
             
 
 

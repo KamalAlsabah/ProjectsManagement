@@ -37,24 +37,18 @@
             },
             {
                 targets: 1,
-                data: 'projectName',
-                sortable: true,
-
-            },
-            {
-                targets: 2,
                 data: 'workerName',
                 sortable: true,
 
             },
             {
-                targets: 3,
+                targets: 2,
                 data: 'workerJobsCount',
                 sortable: true,
 
             },
             {
-                targets: 4,
+                targets: 3,
                 data: null,
                 sortable: false,
                 autoWidth: false,

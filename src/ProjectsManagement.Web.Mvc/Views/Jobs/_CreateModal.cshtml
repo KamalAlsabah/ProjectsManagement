@@ -37,8 +37,13 @@
         <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="UserId">@L("Users")</label>
             <div class="col-md-9">
-                <select id="WorkerId" class="form-control" name="WorkerId" asp-for="CreateJobDto.WorkerId" asp-items='new SelectList(Model.Users,"Value","Name")'>
+                @*asp-for="CreateJobDto.WorkerId" asp-items='new SelectList(Model.Users,"Value","Name")'*@
+                <select  class="multipleSelectExample form-control" multiple="multiple" data-live-search="true"name="WorkerId" id="WorkerId"  >
                     <option disabled value="">@L("WithoutUser")</option>
+                    @foreach (var item in Model.Users)
+                    {
+                    <option  value="@item.Value">@item.Name</option>
+                    }
 
                 </select>
             </div>
