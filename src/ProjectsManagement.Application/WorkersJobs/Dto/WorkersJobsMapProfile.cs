@@ -15,7 +15,7 @@ namespace ProjectsManagement.WorkersJobs.Dto
             CreateMap<WorkersJobsDto, ProjectDatabase.WorkersJobs.WorkersJobs>().ReverseMap();
             CreateMap<EditWorkersJobsDto, ProjectDatabase.WorkersJobs.WorkersJobs>().ReverseMap();
             CreateMap<ListWorkersJobsDto, ProjectDatabase.WorkersJobs.WorkersJobs>().ReverseMap();
-            CreateMap<UpdateInputDto, ProjectDatabase.WorkersDashboard.WorkersDashboard>().ReverseMap();
+            CreateMap<UpdateInputDto, ProjectDatabase.WorkersJobs.WorkersJobs>().ReverseMap();
         }
     }
 }
