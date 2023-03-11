@@ -41,7 +41,7 @@ namespace ProjectsManagement.Web.Controllers
             var model = new EditSupervisorNotesModalViewModel();
             model.EditSupervisorNotesDto = output;
             model.Jobs = await jobsRepository.GetAll().Where(x => x.Id == output.JobId)
-                .Include(x => x.Worker).Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
+                .Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
             return PartialView("_EditModal", model);
         }
     }

@@ -42,42 +42,36 @@
             },
             {
                 targets: 2,
-                data: 'workerFullName',
-                sortable: true,
-
-            },
-            {
-                targets: 3,
                 data: 'description',
                 sortable: true,
 
             },
             {
-                targets: 4,
+                targets: 3,
                 data: 'sprintName',
                 sortable: true,
 
             },
             {
-                targets: 5,
+                targets: 4,
                 data: 'expectedNoOfHours',
                 sortable: true,
 
             },
             {
-                targets: 6,
+                targets: 5,
                 data: 'actualNumberOfHours',
                 sortable: true,
 
             },
             {
-                targets: 7,
+                targets: 6,
                 data: 'wieghtOfHours',
                 sortable: true,
 
             },
             {
-                targets: 8,
+                targets: 7,
                 data: 'startDate',
                 sortable: true,
                 render: (data, type, row, meta) => {
@@ -85,13 +79,13 @@
                 }
             },
             {
-                targets: 9,
+                targets: 8,
                 data: 'status',
                 sortable: true,
 
             },
             {
-                targets: 10,
+                targets: 9,
                 data: 'endDate',
                 sortable: true,
                 render: (data, type, row, meta) => {
@@ -99,7 +93,7 @@
                 }
             },
             {
-                targets: 11,
+                targets: 10,
                 data: null,
                 sortable: false,
                 autoWidth: false,

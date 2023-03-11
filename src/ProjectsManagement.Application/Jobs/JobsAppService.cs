@@ -50,7 +50,7 @@ namespace JobManagement.Jobs
                 .OrderBy(x=>x.Sprint.EndDate)
                     .ThenBy(x=>x.EndDate)
                     .ThenBy(x=>x.Status)
-                .Include(x => x.Sprint).Include(X=>X.Worker)
+                .Include(x => x.Sprint)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.Keyword) ,x =>x.Name.Contains(input.Keyword));
             return new PagedResultDto<JobsDto>()
             {
@@ -70,7 +70,6 @@ namespace JobManagement.Jobs
             {
                 throw new UserFriendlyException("The Project Was Cloesd");
             }
-            if (input.WorkerId == 0) input.WorkerId = null;
             if (input.SprintId == 0) input.SprintId = null;
 
             var Sprint = _Sprintrepository.GetAll().Where(x => x.Id == input.SprintId && x.ProjectId==input.ProjectId ).FirstOrDefault();
@@ -106,7 +105,6 @@ namespace JobManagement.Jobs
             {
                 throw new UserFriendlyException("The Project Was Cloesd");
             }
-            if (input.WorkerId == 0) input.WorkerId = null;
             if (input.SprintId == 0) input.SprintId = null;
 
             var job = _Jobrepository.GetAll().Where(x => x.Id == input.Id).FirstOrDefault();
@@ -127,6 +125,8 @@ namespace JobManagement.Jobs
             {
                 input.EndDate = System.DateTime.Now;
                 input.ActualNumberOfHours = (int)(input.EndDate.Date.Subtract(input.StartDate.Date)).TotalHours;
+
+
             }
                 
 

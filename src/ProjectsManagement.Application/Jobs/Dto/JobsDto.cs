@@ -8,7 +8,7 @@ namespace ProjectsManagement.Jobs.Dto
     public class JobsDto : EntityDto<long>
     {
         public string Name { get; set; }
-        public string WorkerFullName { get; set; }
+        //public string WorkerFullName { get; set; }
         public string Description { get; set; }
         public string SprintName { get; set; }
         public int ExpectedNoOfHours { get; set; }

@@ -48,11 +48,6 @@ namespace ProjectsManagement.WorkersDashboards
         }
         public override async Task<WorkersDashboardDto> CreateAsync(CreateWorkersDashboardDto input)
         {
-            //var projectClosed = await projectRepo.GetAll().Where(x => x.Id == input.ProjectId).Select(x => x.Status).FirstOrDefaultAsync();
-            //if (projectClosed == ProjectStatus.Closed)
-            //{
-            //    throw new UserFriendlyException("The Project Was Cloesd");
-            //}
             return await base.CreateAsync(input);
         }
         public async Task<EditWorkersDashboardDto> GetWorkersDashboardForEdit(EntityDto input)

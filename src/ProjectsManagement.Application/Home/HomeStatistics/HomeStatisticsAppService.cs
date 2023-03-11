@@ -59,7 +59,7 @@ namespace ProjectsManagement.Home.HomeStatistics
             HomeDto model = new HomeDto();
             var listprojects = _projectsRepositry.GetAll();
             var listsprints = _sprintsRepositry.GetAll().Include(x=>x.Project);
-            var listjobs = _jobsRepositry.GetAll().Include(x => x.Project).Include(x=>x.Worker);
+            var listjobs = _jobsRepositry.GetAll().Include(x => x.Project);
             var listjobtasks = _jobTasksRepositry.GetAll();
             var listWorkersHistory = _workersHistoryRepositry.GetAll().Include(x => x.Worker);
             if (RolesForUser.FirstOrDefault() == "Admin")
@@ -74,27 +74,27 @@ namespace ProjectsManagement.Home.HomeStatistics
                 model.ProjectWorkersHoursWieghtDto = new List<ProjectWorkersHoursWieghtDto>();
 
                 var jobsProjectIds = _jobsRepositry.GetAll().Include(x=>x.Project).Where(x=>x.Project.Status ==ProjectDatabase.Enums.ProjectStatus.Open).Where(x=>x.Status==ProjectDatabase.Enums.JobStatus.Done).Select(x => x.ProjectId).ToList();
-                var DoneJobs = _jobsRepositry.GetAll().Include(x => x.Project).Include(x=>x.Worker).Where(x => x.Project.Status == ProjectDatabase.Enums.ProjectStatus.Open).Where(x => x.Status == ProjectDatabase.Enums.JobStatus.Done).ToList();
+                var DoneJobs = _jobsRepositry.GetAll().Include(x => x.Project).Where(x => x.Project.Status == ProjectDatabase.Enums.ProjectStatus.Open).Where(x => x.Status == ProjectDatabase.Enums.JobStatus.Done).ToList();
 
-                foreach (var projectId in jobsProjectIds)
-                {
-                 var ProjectWorkers= _projectsWorkerRepositry.GetAll().Include(x=>x.Project).Include(x=>x.Worker).Where(x => x.ProjectId == projectId).ToList();
-                    foreach(var projectWorker in ProjectWorkers)
-                    {
-                       var Joblist= DoneJobs.Where(x => x.WorkerId == projectWorker.Id && x.ProjectId== projectId).ToList();
-                        var wight = 0;
-                        if(Joblist != null && Joblist.Count()>0)
-                        {
-                            foreach (var job in Joblist)
-                            {
-                                wight += job.ExpectedNoOfHours;
-                            }
-                            var projectJobs = new ProjectWorkersHoursWieghtDto() { WorkerName = projectWorker.Worker.Name, WightOfHours = wight, ProjectName = projectWorker.Project.Name };
-                            model.ProjectWorkersHoursWieghtDto.Add(projectJobs);
-                        }
-                    }
+                //foreach (var projectId in jobsProjectIds)
+                //{
+                // var ProjectWorkers= _projectsWorkerRepositry.GetAll().Include(x=>x.Project).Include(x=>x.Worker).Where(x => x.ProjectId == projectId).ToList();
+                //    foreach(var projectWorker in ProjectWorkers)
+                //    {
+                //       var Joblist= DoneJobs.Where(x => x.WorkerId == projectWorker.Id && x.ProjectId== projectId).ToList();
+                //        var wight = 0;
+                //        if(Joblist != null && Joblist.Count()>0)
+                //        {
+                //            foreach (var job in Joblist)
+                //            {
+                //                wight += job.ExpectedNoOfHours;
+                //            }
+                //            var projectJobs = new ProjectWorkersHoursWieghtDto() { WorkerName = projectWorker.Worker.Name, WightOfHours = wight, ProjectName = projectWorker.Project.Name };
+                //            model.ProjectWorkersHoursWieghtDto.Add(projectJobs);
+                //        }
+                //    }
 
-                }
+                //}
             }
             else if (RolesForUser.FirstOrDefault() == "Worker")
             {
