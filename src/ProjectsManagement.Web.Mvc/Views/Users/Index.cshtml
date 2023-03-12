@@ -1,12 +1,18 @@
-﻿@using ProjectsManagement.Web.Startup
+﻿@using ProjectsManagement.Authorization.Roles
+@using ProjectsManagement.Web.Startup
 @using ProjectsManagement.Web.Models.Users
 @model UserListViewModel
 @{
     ViewBag.Title = L("Users");
     ViewBag.CurrentPageName = PageNames.Users;
 }
+
 @section scripts
 {
+     <script>
+        var IsWorker="@User.IsInRole(StaticRoleNames.Host.Worker)".toLowerCase()=="true";
+    </script>
+
     <environment names="Development">
         <script src="~/view-resources/Views/Users/Index.js" asp-append-version="true"></script>
     </environment>

@@ -10,6 +10,6 @@ namespace ProjectsManagement.WorkersDashboards.Dto
     public class WorkersDashboardDto : EntityDto<long>
     {
         public string WorkerName { get; set; }
-        public int WorkerJobsCount { get; set; }
+        public double WorkerJobsCount { get; set; }
     }
 }

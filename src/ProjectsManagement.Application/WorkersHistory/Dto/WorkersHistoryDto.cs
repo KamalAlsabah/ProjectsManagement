@@ -12,9 +12,7 @@ namespace ProjectsManagement.WorkersHistory.Dto
         public DateTime LogInTime { get; set; }
         public DateTime LogOutTime { get; set; }
         public string WorkerName { get; set; }
-
         public long TotalHours { get; set; }
-        public long WorkerId { get; set; }
-
+ 
     }
 }

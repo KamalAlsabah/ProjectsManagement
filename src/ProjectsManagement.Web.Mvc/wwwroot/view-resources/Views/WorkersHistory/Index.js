@@ -1,18 +1,17 @@
 ﻿(function ($) {
-    var _workersDashboardService = abp.services.app.workersDashboard,
+    var _workersHistorysService = abp.services.app.workersHistory,
         _projectHistoryService = abp.services.app.projectHistory,
-
         l = abp.localization.getSource('ProjectsManagement'),
-        _$modal = $('#WorkersDashboardsCreateModal'),
+        _$modal = $('#WorkersHistoryCreateModal'),
         _$form = _$modal.find('form'),
-        _$searchForm = $('#WorkersDashboardSearchForm'),
-        _$table = $('#WorkersDashboardsTable');
+        _$searchForm = $('#WorkersHistorySearchForm'),
+        _$table = $('#WorkersHistoryTable');
 
-    var _$workersDashboardTable = _$table.DataTable({
+    var _$workersHistorysTable = _$table.DataTable({
         paging: true,
         serverSide: true,
         listAction: {
-            ajaxFunction: _workersDashboardService.getAll,
+            ajaxFunction: _workersHistorysService.getAll,
             inputFilter: function () {
                 return _$searchForm.serializeFormToObject(true);
             }
@@ -21,7 +20,7 @@
             {
                 name: 'refresh',
                 text: '<i class="fas fa-redo-alt"></i>',
-                action: () => _$workersDashboardTable.draw(false)
+                action: () => _$workersHistorysTable.draw(false)
             }
         ],
         responsive: {
@@ -43,7 +42,7 @@
             },
             {
                 targets: 2,
-                data: 'workerJobsCount',
+                data: 'totalHours',
                 sortable: true,
 
             },
@@ -52,89 +51,86 @@
                 data: null,
                 sortable: false,
                 autoWidth: false,
+                width: "200px",
+                className: "text-center",
                 defaultContent: '',
                 render: (data, type, row, meta) => {
-                    return `
+                        return `
                         <div class="dropdown">
                           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-cog"></i>
                           </button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li>
-                                <a type="button" class="dropdown-item edit-workersDashboard"  data-workersDashboard-id="${row.id}" data-toggle="modal" data-target="#WorkersDashboardsEditModal" title="Edit">
-                                    <i class="fas fa-pencil-alt"></i> Edit
-                                </a>
-                            </li>
-                             <li>
-                                <a type="button" class="dropdown-item delete-workersDashboard" data-workersDashboard-id="${row.id}" data-workersDashboard-name="${row.name}" title="Delete">
-                                    <i class="fas fa-trash"></i> Delete
-                                </a>
-                            </li>
+                           
+                          
                           </ul>
                         </div>
-                  `
-                }
+                    `
+                    }
+                
             }
         ]
     });
 
-    $(document).on('click', '.delete-workersDashboard', function () {
-        var workersDashboardId = $(this).attr("data-workersDashboard-id");
-        var workersDashboardName = $(this).attr('data-workersDashboard-name');
-        deleteWorkersDashboards(workersDashboardId, workersDashboardName);
+    $(document).on('click', '.delete-workersHistorys', function () {
+        var workersHistorysId = $(this).attr("data-workersHistorys-id");
+        var workersHistorysName = $(this).attr('data-workersHistorys-name');
+        deleteWorkersHistory(workersHistorysId, workersHistorysName);
     });
 
-    $(document).on('click', '.edit-workersDashboard', function (e) {
-        var workersDashboardId = $(this).attr("data-workersDashboard-id");
+    $(document).on('click', '.edit-workersHistorys', function (e) {
+        var workersHistorysId = $(this).attr("data-workersHistorys-id");
         e.preventDefault();
         abp.ajax({
-            url: abp.appPath + 'WorkersDashboards/EditModal?workersDashboardId=' + workersDashboardId,
+            url: abp.appPath + 'WorkersHistory/EditModal?workersHistorysId=' + workersHistorysId,
             type: 'POST',
             dataType: 'html',
             success: function (content) {
-                $('#WorkersDashboardsEditModal div.modal-content').html(content);
+                $('#WorkersHistoryEditModal div.modal-content').html(content);
             },
             error: function (e) {
             }
         })
     });
-    $(document).on('click', '.create-workersDashboard', function (e) {
+    $(document).on('click', '.create-workersHistorys', function (e) {
         e.preventDefault();
         abp.ajax({
-            url: abp.appPath + 'WorkersDashboards/CreateModal?ProjectId=' + _$searchForm.find("input[name='ProjectId']").val(),
+            url: abp.appPath + 'WorkersHistory/CreateModal?ProjectId=' + _$searchForm.find("input[name='ProjectId']").val(),
             type: 'POST',
             dataType: 'html',
             success: function (content) {
-                $('#WorkersDashboardsCreateModal div.modal-content').html(content);
+                $('#WorkersHistoryCreateModal div.modal-content').html(content);
             },
             error: function (e) {
             }
         })
     });
 
-    abp.event.on('workersDashboard.edited', (data) => {
-        _$workersDashboardTable.ajax.reload();
+  
+
+    abp.event.on('workersHistorys.edited', (data) => {
+        _$workersHistorysTable.ajax.reload();
     });
-    abp.event.on('workersDashboard.created', (data) => {
-        _$workersDashboardTable.ajax.reload();
+    abp.event.on('workersHistorys.created', (data) => {
+        _$workersHistorysTable.ajax.reload();
     });
 
-    function deleteWorkersDashboards(workersDashboardId, workersDashboardName) {
+    function deleteWorkersHistory(workersHistorysId, workersHistorysName) {
         abp.message.confirm(
             abp.utils.formatString(
                 l('AreYouSureWantToDelete'),
-                workersDashboardName),
+                workersHistorysName),
             null,
             (isConfirmed) => {
                 if (isConfirmed) {
-                    _workersDashboardService.delete({
-                        id: workersDashboardId
+                    _workersHistorysService.delete({
+                        id: workersHistorysId
                     }).done(() => {
                         abp.notify.info(l('SuccessfullyDeleted'));
-                        _$workersDashboardTable.ajax.reload();
-                        //Add To History 
+                        _$workersHistorysTable.ajax.reload();
                         var projectId = $("#ProjectId").val();
-                        let history = { ProjectId: projectId, ProjectHistoryActions: 2, ProjectHistoryColumns: 1, WorkersDashboardId: workersDashboardId };
+                        //Add To History 
+                        let history = { ProjectId: projectId, ProjectHistoryActions: 2, ProjectHistoryColumns: 2, WorkersHistoryId: workersHistorysId };
                         _projectHistoryService.create(history).done(function () { });
 
                     });
@@ -150,12 +146,12 @@
     });
 
     $('.btn-search').on('click', (e) => {
-        _$workersDashboardTable.ajax.reload();
+        _$workersHistorysTable.ajax.reload();
     });
 
     $('.txt-search').on('keypress', (e) => {
         if (e.which == 13) {
-            _$workersDashboardTable.ajax.reload();
+            _$workersHistorysTable.ajax.reload();
             return false;
         }
     });

@@ -15,6 +15,6 @@ namespace ProjectsManagement.ProjectDatabase.WorkersDashboard
         public Projects Project { get; set; }  
         public long WorkerId { get; set; }
         public User Worker { get; set; }
-        public int WorkerJobsCount { get; set; }
+        public double WorkerJobsCount { get; set; }
     }
 }

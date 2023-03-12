@@ -18,6 +18,7 @@
         public const string StatisticsHome = "StatisticsHome";
         public const string ProjectHistory = "ProjectHistory";
         public const string WorkersDashboard = "WorkersDashboard";
+        public const string WorkersHistory = "WorkersHistory";
 
     }
 }

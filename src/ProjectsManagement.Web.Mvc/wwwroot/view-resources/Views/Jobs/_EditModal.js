@@ -2,6 +2,7 @@
     var _jobsService = abp.services.app.jobs,
         _projectHistoryService = abp.services.app.projectHistory,
         _workeraJobService = abp.services.app.workersJobs,
+        _workersDashboardService = abp.services.app.workersDashboard,
 
         l = abp.localization.getSource('ProjectsManagement'),
         _$modal = $('#JobsEditModal'),
@@ -21,9 +22,12 @@
             abp.notify.info(l('SavedSuccessfully'));
             abp.event.trigger('jobs.edited', jobs);
             SaveWorkerJob();
-            _workeraJobService.createJobWorkers(jobs.id, intArray);
+            _workeraJobService.createJobWorkers(jobs.id, intArray).done(function () {
 
+            });
+            _workersDashboardService.createWorkerDashboard(jobs.id);
             var projectId = $("#ProjectId").val();
+
             //Add To History 
             let history = { ProjectId: projectId, ProjectHistoryActions: 1, ProjectHistoryColumns: 2, JobId: jobs.id  };
             _projectHistoryService.create(history).done(function () { });

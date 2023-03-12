@@ -14,19 +14,19 @@ using System.Threading.Tasks;
 
 namespace ProjectsManagement.WorkersDashboards
 {
-    public class WorkersDashboardAppService : AsyncCrudAppService<ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard, WorkersDashboardDto, long, PagedWorkersDashboardResultRequestDto, CreateWorkersDashboardDto, UpdateInputDto>, IWorkersDashboardAppService
+    public class WorkersDashboardAppService : AsyncCrudAppService<ProjectDatabase.WorkersDashboard.WorkersDashboard, WorkersDashboardDto, long, PagedWorkersDashboardResultRequestDto, CreateWorkersDashboardDto, UpdateInputDto>, IWorkersDashboardAppService
     {
-        private readonly IRepository<ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard, long> _WorkersDashboardrepository;
-        private readonly IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo;
-        private readonly IRepository<ProjectsManagement.ProjectDatabase.Job.Jobs, long> _jobsRepo;
+        private readonly IRepository<ProjectDatabase.WorkersDashboard.WorkersDashboard, long> _WorkersDashboardrepository;
+        private readonly IRepository<ProjectDatabase.Job.Jobs, long> _jobsRepo;
+        private readonly IRepository<ProjectDatabase.WorkersJobs.WorkersJobs, long> _WorkersJobsrepository;
 
-        public WorkersDashboardAppService(IRepository<ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard, long> repository,
-            IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo,
-            IRepository<ProjectsManagement.ProjectDatabase.Job.Jobs, long> jobsRepo) : base(repository)
+        public WorkersDashboardAppService(IRepository<ProjectDatabase.WorkersDashboard.WorkersDashboard, long> repository,
+            IRepository<ProjectDatabase.Job.Jobs, long> jobsRepo,
+            IRepository<ProjectDatabase.WorkersJobs.WorkersJobs, long> WorkersJobsrepository) : base(repository)
         {
             _WorkersDashboardrepository = repository;
-            this.projectRepo = projectRepo;
             _jobsRepo = jobsRepo;   
+            _WorkersJobsrepository = WorkersJobsrepository;
 
         }
         public override async Task<PagedResultDto<WorkersDashboardDto>> GetAllAsync(PagedWorkersDashboardResultRequestDto input)
@@ -74,6 +74,36 @@ namespace ProjectsManagement.WorkersDashboards
                 throw new UserFriendlyException("The Project Was Cloesd");
             }
             await base.DeleteAsync(input);
+        }
+        public async Task CreateWorkerDashboard(long JobId)
+        {
+            var job =await _jobsRepo.GetAll().Where(x => x.Id == JobId).FirstOrDefaultAsync();
+            if (job.Status ==JobStatus.Done)
+            {
+                var jobWorkers = _WorkersJobsrepository.GetAll().Where(x => x.JobId == JobId).ToList();
+                var workersDashboards = Repository.GetAll().Where(x => x.ProjectId == job.ProjectId).ToList();
+
+                foreach (var worker in jobWorkers)
+                {
+                    var listProjectWorkers = workersDashboards.Where(x => x.WorkerId == worker.WorkerId).FirstOrDefault();
+                    if (listProjectWorkers==null)
+                    {
+                        CreateWorkersDashboardDto workersDashboard = new CreateWorkersDashboardDto() { ProjectId = job.ProjectId, WorkerId = (long)worker.WorkerId, WorkerJobsCount = job.WieghtOfHours/jobWorkers.Count };
+                        await CreateAsync(workersDashboard);
+                    }
+                    else
+                    {
+                        UpdateInputDto updatedWorkerDash = new UpdateInputDto() {Id=listProjectWorkers.Id, ProjectId = job.ProjectId, WorkerId = (long)worker.WorkerId };
+                        updatedWorkerDash.WorkerJobsCount =listProjectWorkers.WorkerJobsCount+job.WieghtOfHours / jobWorkers.Count();
+                        await UpdateAsync(updatedWorkerDash);
+                    }
+                   
+                 }
+               
+            }
+           
+
+
         }
     }
 }

@@ -11,6 +11,6 @@ namespace ProjectsManagement.WorkersDashboards.Dto
     {
         public long ProjectId { get; set; }
         public long WorkerId { get; set; }
-        public int WorkerJobsCount { get; set; }
+        public double WorkerJobsCount { get; set; }
     }
 }

@@ -122,7 +122,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/WorkersDashboard/Index/projrctId=${row.id}" class="dropdown-item" title="WorkersDashboard">
+                                <a href="/WorkersDashboard/Index?projrctId=${row.id}" class="dropdown-item" title="WorkersDashboard">
                                   <i class="fas fa-users"></i> Workers Dashboard
                                 </a>
                             </li>

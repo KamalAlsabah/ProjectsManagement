@@ -12,6 +12,7 @@ namespace ProjectsManagement.WorkersDashboards
     public interface IWorkersDashboardAppService : IAsyncCrudAppService<WorkersDashboardDto, long, PagedWorkersDashboardResultRequestDto, CreateWorkersDashboardDto, UpdateInputDto>
     {
         Task<EditWorkersDashboardDto> GetWorkersDashboardForEdit(EntityDto input);
+        Task CreateWorkerDashboard(long JobId);
 
     }
 }

@@ -22,23 +22,20 @@ namespace JobManagement.Jobs
     {
         private readonly IRepository<ProjectsManagement.ProjectDatabase.Job.Jobs, long> _Jobrepository;
         private readonly IRepository<ProjectsManagement.ProjectDatabase.WorkersJobs.WorkersJobs, long> _WorkersJobsrepository;
-        private readonly IRepository<ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard, long> _WorkersDashboardrepository;
         private readonly IRepository<ProjectsManagement.ProjectDatabase.Sprint.Sprints, long> _Sprintrepository;
         private readonly IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo;
         private readonly IRepository<ProjectsManagement.ProjectDatabase.ProjectWorker.ProjectWorkers, long> _projectWorkersRepo;
- 
+
         public JobsAppService(IRepository<ProjectsManagement.ProjectDatabase.Job.Jobs, long> repository,
             IRepository<ProjectsManagement.ProjectDatabase.Sprint.Sprints, long> Sprintrepository,
             IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectRepo,
             IRepository<ProjectsManagement.ProjectDatabase.WorkersJobs.WorkersJobs, long> WorkersJobsrepository,
-            IRepository<ProjectsManagement.ProjectDatabase.ProjectWorker.ProjectWorkers, long> projectWorkersRepo,
-            IRepository<ProjectsManagement.ProjectDatabase.WorkersDashboard.WorkersDashboard, long> WorkersDashboardrepository) : base(repository)
+            IRepository<ProjectsManagement.ProjectDatabase.ProjectWorker.ProjectWorkers, long> projectWorkersRepo) : base(repository)
         {
             _Jobrepository = repository;
             this.projectRepo = projectRepo;
             _Sprintrepository = Sprintrepository;
             _WorkersJobsrepository = WorkersJobsrepository;
-            _WorkersDashboardrepository = WorkersDashboardrepository;
             _projectWorkersRepo = projectWorkersRepo;
         }
         [AbpAuthorize(PermissionNames.Pages_Jobs)]
@@ -105,8 +102,8 @@ namespace JobManagement.Jobs
                 throw new UserFriendlyException("The Project Was Cloesd");
             }
             if (input.SprintId == 0) input.SprintId = null;
-            var job = _Jobrepository.GetAll().Where(x => x.Id == input.Id).FirstOrDefault();
-            var Sprint = _Sprintrepository.GetAll().Where(x => x.Id == input.SprintId && x.ProjectId == job.ProjectId).FirstOrDefault();
+            var job = _Jobrepository.GetAll().Include(x=>x.Sprint).Where(x => x.Id == input.Id).FirstOrDefault();
+           // var Sprint = _Sprintrepository.GetAll().Where(x => x.Id == input.SprintId && x.ProjectId == job.ProjectId).FirstOrDefault();
             var jobsList = _Jobrepository.GetAll().Where(x => x.SprintId == input.SprintId);
             var total = 0;
             foreach (var item in jobsList)
@@ -115,8 +112,8 @@ namespace JobManagement.Jobs
             }
             total += input.WieghtOfHours;
             total -= job.WieghtOfHours;
-            if (total > Sprint.WieghtOfHours)
-                throw new UserFriendlyException($"the total hours of jobs in the sprint {Sprint.Name}  should be less than {Sprint.WieghtOfHours}");
+            if (total > job.Sprint.WieghtOfHours)
+                throw new UserFriendlyException($"the total hours of jobs in the sprint {job.Sprint.Name}  should be less than {job.Sprint.WieghtOfHours}");
 
             if (input.Status ==JobStatus.InProgress)
                 input.StartDate = System.DateTime.Now;
@@ -125,13 +122,6 @@ namespace JobManagement.Jobs
             {
                 input.EndDate = System.DateTime.Now;
                 input.ActualNumberOfHours = (int)(input.EndDate.Date.Subtract(input.StartDate.Date)).TotalHours;
-                var JobWorkersList = _WorkersJobsrepository.GetAll().Include(x => x.Worker).Include(x => x.Job).Where(x => x.Job.Id == input.Id).ToList();
-                var workerDash = _WorkersDashboardrepository.GetAll().Where(x => x.ProjectId == project.Id);
-                foreach (var JobWorker in JobWorkersList)
-                {
-                    var listWorkerDash = workerDash.Where(x => x.WorkerId == JobWorker.WorkerId).FirstOrDefault();
-
-                }
 
             }
                 
@@ -178,10 +168,6 @@ namespace JobManagement.Jobs
             }
             return JobWorkersOptionsList;
         }
-        public async Task GetTotalJobsWightOfHours(UpdateInputDto input)
-        {
-
-           
-        }
+         
     }
 }

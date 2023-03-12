@@ -11,6 +11,6 @@ namespace ProjectsManagement.WorkersDashboards.Dto
     {
         public string ProjectName { get; set; }
         public string WorkerName { get; set; }
-        public int WorkerJobsCount { get; set; }
+        public double WorkerJobsCount { get; set; }
     }
 }
