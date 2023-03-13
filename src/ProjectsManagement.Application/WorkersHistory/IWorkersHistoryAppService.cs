@@ -10,6 +10,7 @@ namespace ProjectsManagement.WorkersHistory
     {
         Task<WorkersHistoryEditDto> GetWorkersHistoryForEdit(EntityDto input);
         Task<WorkersHistoryDto> GetHistoryByUserId(long UserId);
+        Task<double> GetTodayTotalHours(long userId);
         Task CreateHistory(bool input);
         Task<bool> IsUserOnline();
     }

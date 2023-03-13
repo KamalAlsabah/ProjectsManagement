@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectsManagement.Migrations
 {
-    public partial class CreateDataBase : Migration
+    public partial class CreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -359,7 +359,7 @@ namespace ProjectsManagement.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsOnine = table.Column<bool>(type: "bit", nullable: false),
+                    IsOnline = table.Column<bool>(type: "bit", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -795,9 +795,9 @@ namespace ProjectsManagement.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LogInTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LogOutTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    WorkerId = table.Column<long>(type: "bigint", nullable: false),
+                    LogOutTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WorkerId = table.Column<long>(type: "bigint", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastModifierUserId = table.Column<long>(type: "bigint", nullable: true),
@@ -976,6 +976,40 @@ namespace ProjectsManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WorkersDashboard",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjectId = table.Column<long>(type: "bigint", nullable: false),
+                    WorkerId = table.Column<long>(type: "bigint", nullable: false),
+                    WorkerJobsCount = table.Column<double>(type: "float", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeleterUserId = table.Column<long>(type: "bigint", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkersDashboard", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkersDashboard_AbpUsers_WorkerId",
+                        column: x => x.WorkerId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WorkersDashboard_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AbpDynamicEntityPropertyValues",
                 columns: table => new
                 {
@@ -1123,13 +1157,13 @@ namespace ProjectsManagement.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProjectId = table.Column<long>(type: "bigint", nullable: false),
                     SprintId = table.Column<long>(type: "bigint", nullable: true),
-                    WorkerId = table.Column<long>(type: "bigint", nullable: true),
+                    WieghtOfHours = table.Column<int>(type: "int", nullable: false),
                     ExpectedNoOfHours = table.Column<int>(type: "int", nullable: false),
                     ActualNumberOfHours = table.Column<int>(type: "int", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LastModifierUserId = table.Column<long>(type: "bigint", nullable: true),
@@ -1140,11 +1174,6 @@ namespace ProjectsManagement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Jobs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Jobs_AbpUsers_WorkerId",
-                        column: x => x.WorkerId,
-                        principalTable: "AbpUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Jobs_Projects_ProjectId",
                         column: x => x.ProjectId,
@@ -1167,6 +1196,7 @@ namespace ProjectsManagement.Migrations
                     NameF = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NameL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobTaskStatus = table.Column<int>(type: "int", nullable: false),
                     JobId = table.Column<long>(type: "bigint", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
@@ -1181,6 +1211,37 @@ namespace ProjectsManagement.Migrations
                     table.PrimaryKey("PK_JobTasks", x => x.Id);
                     table.ForeignKey(
                         name: "FK_JobTasks_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkersJobs",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WorkerId = table.Column<long>(type: "bigint", nullable: true),
+                    JobId = table.Column<long>(type: "bigint", nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeleterUserId = table.Column<long>(type: "bigint", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkersJobs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkersJobs_AbpUsers_WorkerId",
+                        column: x => x.WorkerId,
+                        principalTable: "AbpUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_WorkersJobs_Jobs_JobId",
                         column: x => x.JobId,
                         principalTable: "Jobs",
                         principalColumn: "Id");
@@ -1672,11 +1733,6 @@ namespace ProjectsManagement.Migrations
                 column: "SprintId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_WorkerId",
-                table: "Jobs",
-                column: "WorkerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_JobTasks_JobId",
                 table: "JobTasks",
                 column: "JobId");
@@ -1772,8 +1828,28 @@ namespace ProjectsManagement.Migrations
                 column: "SupervisorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_WorkersDashboard_ProjectId",
+                table: "WorkersDashboard",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkersDashboard_WorkerId",
+                table: "WorkersDashboard",
+                column: "WorkerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WorkersHistory_WorkerId",
                 table: "WorkersHistory",
+                column: "WorkerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkersJobs_JobId",
+                table: "WorkersJobs",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkersJobs_WorkerId",
+                table: "WorkersJobs",
                 column: "WorkerId");
         }
 
@@ -1870,7 +1946,13 @@ namespace ProjectsManagement.Migrations
                 name: "Suggestions");
 
             migrationBuilder.DropTable(
+                name: "WorkersDashboard");
+
+            migrationBuilder.DropTable(
                 name: "WorkersHistory");
+
+            migrationBuilder.DropTable(
+                name: "WorkersJobs");
 
             migrationBuilder.DropTable(
                 name: "AbpDynamicEntityProperties");
@@ -1906,13 +1988,13 @@ namespace ProjectsManagement.Migrations
                 name: "AbpEntityChangeSets");
 
             migrationBuilder.DropTable(
+                name: "AbpUsers");
+
+            migrationBuilder.DropTable(
                 name: "JobTasks");
 
             migrationBuilder.DropTable(
                 name: "Jobs");
-
-            migrationBuilder.DropTable(
-                name: "AbpUsers");
 
             migrationBuilder.DropTable(
                 name: "Sprints");

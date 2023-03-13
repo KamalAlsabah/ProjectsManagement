@@ -30,11 +30,6 @@ namespace ProjectsManagement.Web.Controllers
         public async Task<ActionResult> Index()
         {
             IndexHomeModalViewModel model = new IndexHomeModalViewModel() { };
-           
-            var userid = (long)_userManager.AbpSession.UserId;
-            var workerloginHistory = await _WorkersHistoryAppService.GetHistoryByUserId(userid);
-         //   workerloginHistory.TotalHours = (long)(DateTime.Now - workerloginHistory.LogInTime).TotalHours;
-            model.WorkersHistoryDto = workerloginHistory;
             model.HomeDto =await _HomeStatisticsAppService.GetDetatilsForHome();
             return View(model);
         }

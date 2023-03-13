@@ -81,7 +81,6 @@ namespace ProjectsManagement.WorkersHistory
         {
             var userId = long.Parse(_accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var user = _Usersrepository.GetAll().Where(x => x.Id == userId).FirstOrDefault();
-
             if (input== true)
             {
                 workersHistoryCreate.WorkerId = userId;
@@ -108,6 +107,22 @@ namespace ProjectsManagement.WorkersHistory
             var userId = long.Parse(_accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var user = _Usersrepository.GetAll().Where(x => x.Id == userId).FirstOrDefault();
             return user.IsOnline;
+        }
+        public async Task<double> GetTodayTotalHours(long userId)
+        {
+            var WorkerHistory= await GetHistoryByUserId(userId);
+            if(WorkerHistory == null)
+                return 0;
+            var WorkerLoginDate = WorkerHistory.LogInTime;
+            var TodayloginDate = DateTime.Now;
+            if (WorkerLoginDate.Day == TodayloginDate.Day)
+            {
+                var spaner = TodayloginDate - WorkerLoginDate;
+                return spaner.Hours/60;
+            }
+            else 
+                return 0;
+            
         }
     }
 }
