@@ -10,5 +10,6 @@ namespace ProjectsManagement.WorkersHistory.Dto
     public class WorkersHistoryPagedDto : PagedResultRequestDto
     {
         public string Keyword { get; set; }
+        public long WorkerId  { get; set; }
     }
 }

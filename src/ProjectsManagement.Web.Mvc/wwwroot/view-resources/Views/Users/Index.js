@@ -60,14 +60,31 @@
                 autoWidth: false,
                 defaultContent: '',
                 render: (data, type, row, meta) => {
-                    return [
-                        `   <button type="button" class="btn btn-sm bg-secondary edit-user" data-user-id="${row.id}" data-toggle="modal" data-target="#UserEditModal">`,
-                        `       <i class="fas fa-pencil-alt"></i> ${l('Edit')}`,
-                        '   </button>',
-                        `   <button type="button" class="btn btn-sm bg-danger delete-user" data-user-id="${row.id}" data-user-name="${row.name}">`,
-                        `       <i class="fas fa-trash"></i> ${l('Delete')}`,
-                        '   </button>'
-                    ].join('');
+                    console.log(data);
+                    if (data.roleNames[0] == "WORKER") {
+                        return [
+                            `   <button type="button" class="btn btn-sm bg-secondary edit-user" data-user-id="${row.id}" data-toggle="modal" data-target="#UserEditModal">`,
+                            `       <i class="fas fa-pencil-alt"></i> ${l('Edit')}`,
+                            '   </button>',
+                            `   <button type="button" class="btn btn-sm bg-danger delete-user" data-user-id="${row.id}" data-user-name="${row.name}">`,
+                            `       <i class="fas fa-trash"></i> ${l('Delete')}`,
+                            '   </button>',
+
+                            `   <a href="/WorkersHistory/Index?WorkerId=${row.id}" class="btn btn-sm bg-warning">`,
+                            `      <i class="fa fa-history" aria-hidden="true"></i> ${l('History')}`,
+                            '   </a>'
+                        ].join('');
+                    } else {
+                        return [
+                            `   <button type="button" class="btn btn-sm bg-secondary edit-user" data-user-id="${row.id}" data-toggle="modal" data-target="#UserEditModal">`,
+                            `       <i class="fas fa-pencil-alt"></i> ${l('Edit')}`,
+                            '   </button>',
+                            `   <button type="button" class="btn btn-sm bg-danger delete-user" data-user-id="${row.id}" data-user-name="${row.name}">`,
+                            `       <i class="fas fa-trash"></i> ${l('Delete')}`,
+                            '   </button>'
+                        ].join('');
+                    }
+                 
                 }
             }
         ]

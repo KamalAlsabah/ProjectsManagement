@@ -36,8 +36,9 @@ namespace ProjectsManagement.WorkersHistory
         {
 
             var listWorkersHistory = _WorkersHistoryrepository.GetAll()
-                .Include(x => x.Worker)
+                .Include(x => x.Worker).Where(x=>x.WorkerId==input.WorkerId)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), x => x.Worker.Name.Contains(input.Keyword));
+            
             var items = ObjectMapper.Map<List<WorkersHistoryDto>>(listWorkersHistory
                 .Skip(input.SkipCount)
                 .Take(input.MaxResultCount));

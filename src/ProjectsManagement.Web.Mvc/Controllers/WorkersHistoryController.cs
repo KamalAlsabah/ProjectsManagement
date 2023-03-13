@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectsManagement.Controllers;
+using ProjectsManagement.Web.Models.WorkersHistory;
 
 namespace ProjectsManagement.Web.Controllers
 {
     public class WorkersHistoryController : ProjectsManagementControllerBase
     {
-        public IActionResult Index()
+        public IActionResult Index(long WorkerId)
         {
-            return View();
+            IndexWorkersHistoryModalViewModel model = new IndexWorkersHistoryModalViewModel() {WorkerId=WorkerId };
+            return View(model);
         }
     }
 }
