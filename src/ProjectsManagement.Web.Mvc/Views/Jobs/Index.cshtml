@@ -11,9 +11,7 @@
     <script>
              var IsSupervisor="@User.IsInRole(StaticRoleNames.Host.Supervisor)".toLowerCase()=="true";
     </script>
-    <environment names="Development">
         <script src="~/view-resources/Views/Jobs/Index.js" asp-append-version="true"></script>
-    </environment>
 
 }
 <section class="content-header">
@@ -59,9 +57,10 @@
                                             <th>@L("Name")</th>
                                              <th>@L("Description")</th>
                                             <th>@L("SprintName")</th>
+                                            <th>@L("Workers")</th>
                                             <th>@L("ExpectedNoOfHours")</th>
                                             <th>@L("ActualNumberOfHours")</th>
-                                            <th>@L("WieghtOfHours")</th>
+                                            <th>@L("Points")</th>
                                             <th>@L("StartDate")</th>
                                             <th>@L("Status")</th>
 

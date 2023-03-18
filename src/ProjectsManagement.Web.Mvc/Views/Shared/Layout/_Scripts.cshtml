@@ -5,13 +5,13 @@
 @inject ICachedUniqueKeyPerUser CachedUniqueKeyPerUser
 @inject IGetScriptsResponsePerUserConfiguration GetScriptsResponsePerUserConfiguration
 
-<environment names="Development">
     @*core scripts start*@
     <script src="~/libs/jquery/jquery.js" asp-append-version="true"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-<script src="~/select2/js/select2.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="~/select2/js/select2.js" asp-append-version="true"></script>
 <script src="~/select2/js/select2.min.js" asp-append-version="true"></script>
+ 
+
 
     @*core scripts end*@
 
@@ -29,6 +29,7 @@
     <script src="~/libs/datatables/js/buttons.bootstrap4.js" asp-append-version="true"></script>
     <script src="~/libs/admin-lte/dist/js/adminlte.js" asp-append-version="true"></script>
     @*admin-lte scripts end*@
+
 
     @*abp scripts start*@
     <script src="~/libs/block-ui/jquery.blockUI.js" asp-append-version="true"></script>
@@ -69,19 +70,9 @@
 
 
 
-</environment>
+ 
 
-<environment names="Staging,Production">
-    <script src="~/view-resources/Views/_Bundles/shared-layout.min.js" asp-append-version="true"></script>
-    <script src="~/view-resources/Views/Account/WorkerHours/WorkerHours.js" asp-append-version="true"></script>
-
-    <script type="text/javascript">
-        // This is used to get the application's root path from javascript.
-        // It's useful if you're running application in a virtual directory under IIS.
-        var abp = abp || {};
-        abp.appPath = '@ApplicationPath';
-    </script>
-</environment>
+ 
 
 @if (CultureInfo.CurrentUICulture.Name != "en")
 {

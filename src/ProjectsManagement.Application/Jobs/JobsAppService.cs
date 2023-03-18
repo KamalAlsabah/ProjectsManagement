@@ -47,16 +47,28 @@ namespace JobManagement.Jobs
                 .OrderBy(x=>x.Sprint.EndDate)
                     .ThenBy(x=>x.EndDate)
                     .ThenBy(x=>x.Status)
-                .Include(x => x.Sprint)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.Keyword) ,x =>x.Name.Contains(input.Keyword));
-
-            var workersJob = _WorkersJobsrepository.GetAll().Include(x => x.Worker).Select(x => x.Worker.Name);
-
+                .Where(x => !string.IsNullOrWhiteSpace(input.Keyword)? x.Name.Contains(input.Keyword):true).Select(x=>new JobsDto
+                {
+                    ActualNumberOfHours = x.ActualNumberOfHours,
+                    Description = x.Description,    
+                    Id = x.Id,
+                    Name= x.Name,
+                    ProjectId   = x.ProjectId,
+                    Status  =  x.Status.ToString(),
+                    CreationTime = x.CreationTime,
+                    ExpectedNoOfHours   =  x.ExpectedNoOfHours,
+                    EndDate = x.EndDate,
+                    SprintName=x.Sprint.Name,
+                    StartDate=x.StartDate,
+                    WieghtOfHours=x.WieghtOfHours,
+                    JobWorkers= _WorkersJobsrepository.GetAll().Where(w=>w.JobId==x.Id).Select(x => x.Worker.Name).ToList()
+        });
+            var list = ObjectMapper.Map<List<JobsDto>>(listJobs
+                .Skip(input.SkipCount)
+                .Take(input.MaxResultCount));
             return new PagedResultDto<JobsDto>()
             {
-                Items = ObjectMapper.Map<List<JobsDto>>(listJobs
-                .Skip(input.SkipCount)
-                .Take(input.MaxResultCount)),
+                Items = list,
                 TotalCount = listJobs.Count()
             };
         }

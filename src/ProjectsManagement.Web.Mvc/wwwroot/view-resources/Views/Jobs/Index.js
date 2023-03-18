@@ -54,24 +54,36 @@
             },
             {
                 targets: 4,
+                data: 'jobWorkers',
+                sortable: true,
+                render: (data, type, row, meta) => {
+                    
+                    let temp = ""
+
+                    data.map(x => temp += `${x},`)
+                    return temp;
+                }
+            },
+            {
+                targets: 5,
                 data: 'expectedNoOfHours',
                 sortable: true,
 
             },
             {
-                targets: 5,
+                targets: 6,
                 data: 'actualNumberOfHours',
                 sortable: true,
 
             },
             {
-                targets: 6,
+                targets: 7,
                 data: 'wieghtOfHours',
                 sortable: true,
 
             },
             {
-                targets: 7,
+                targets: 8,
                 data: 'startDate',
                 sortable: true,
                 render: (data, type, row, meta) => {
@@ -79,13 +91,13 @@
                 }
             },
             {
-                targets: 8,
+                targets: 9,
                 data: 'status',
                 sortable: true,
 
             },
             {
-                targets: 9,
+                targets: 10,
                 data: 'endDate',
                 sortable: true,
                 render: (data, type, row, meta) => {
@@ -93,7 +105,7 @@
                 }
             },
             {
-                targets: 10,
+                targets: 11,
                 data: null,
                 sortable: false,
                 autoWidth: false,
@@ -151,7 +163,7 @@
             }
         ]
     });
-
+    console.log(_$jobsTable);
     $(document).on('click', '.delete-jobs', function () {
         var jobsId = $(this).attr("data-jobs-id");
         var jobsName = $(this).attr('data-jobs-name');
