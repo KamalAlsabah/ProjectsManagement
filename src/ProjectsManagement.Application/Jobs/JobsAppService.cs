@@ -49,6 +49,9 @@ namespace JobManagement.Jobs
                     .ThenBy(x=>x.Status)
                 .Include(x => x.Sprint)
                 .WhereIf(!string.IsNullOrWhiteSpace(input.Keyword) ,x =>x.Name.Contains(input.Keyword));
+
+            var workersJob = _WorkersJobsrepository.GetAll().Include(x => x.Worker).Select(x => x.Worker.Name);
+
             return new PagedResultDto<JobsDto>()
             {
                 Items = ObjectMapper.Map<List<JobsDto>>(listJobs

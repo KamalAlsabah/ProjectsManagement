@@ -2,6 +2,7 @@
 using ProjectsManagement.ProjectDatabase.Enums;
 using ProjectsManagement.ProjectDatabase.Sprint;
 using System;
+using System.Collections.Generic;
 
 namespace ProjectsManagement.Jobs.Dto
 {
@@ -19,6 +20,7 @@ namespace ProjectsManagement.Jobs.Dto
         public DateTime EndDate { get; set; }
         public string Status { get; set; }
         public long? ProjectId { get; set; }
+        public List<string> JobWorkers { get; set; }
 
 
     }
