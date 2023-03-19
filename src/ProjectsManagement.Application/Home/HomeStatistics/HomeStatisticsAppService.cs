@@ -38,7 +38,7 @@ namespace ProjectsManagement.Home.HomeStatistics
 
         public HomeStatisticsAppService(IRepository<ProjectDatabase.Home.HomeStatistics, long> repository, 
             RoleManager roleManager, IRepository<ProjectDatabase.Home.HomeStatisticsUserTypes, long> homeStatisticsUserTypesrepository,
-            UserManager userManager, IRepository<Projects, long> projectsRepositry, IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> projectsWorkerRepositry, IRepository<ProjectSupervisors, long> projectsSupervisorRepositry, IRepository<ProjectDatabase.Sprint.Sprints, long> sprintsRepositry, IRepository<ProjectDatabase.Job.Jobs, long> jobsRepositry, IRepository<ProjectDatabase.JobTask.JobTasks, long> jobTasksRepositry, IRepository<ProjectDatabase.WorkersHistory.WorkersHistory, long> workersHistoryRepositry) : base(repository)
+            UserManager userManager, IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectsRepositry, IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> projectsWorkerRepositry, IRepository<ProjectSupervisors, long> projectsSupervisorRepositry, IRepository<ProjectDatabase.Sprint.Sprints, long> sprintsRepositry, IRepository<ProjectDatabase.Job.Jobs, long> jobsRepositry, IRepository<ProjectDatabase.JobTask.JobTasks, long> jobTasksRepositry, IRepository<ProjectDatabase.WorkersHistory.WorkersHistory, long> workersHistoryRepositry) : base(repository)
         {
             _HomeStatisticsrepository = repository;
             _roleManager = roleManager;
@@ -78,7 +78,7 @@ namespace ProjectsManagement.Home.HomeStatistics
             }
             else if (RolesForUser.FirstOrDefault() == "Worker")
             {
-                List<Projects> WorkerProjectList = new List<Projects>();
+                List<ProjectsManagement.ProjectDatabase.Project.Projects> WorkerProjectList = new List<ProjectsManagement.ProjectDatabase.Project.Projects>();
                 List<ProjectDatabase.Sprint.Sprints> WorkerSprintsList = new List<ProjectDatabase.Sprint.Sprints>();
                 List<ProjectDatabase.Job.Jobs> WorkerJobsList = new List<ProjectDatabase.Job.Jobs>();
                 List<ProjectDatabase.JobTask.JobTasks> WorkerJobTasksList = new List<ProjectDatabase.JobTask.JobTasks>();

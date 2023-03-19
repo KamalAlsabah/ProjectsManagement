@@ -9,6 +9,7 @@ using ProjectsManagement.Authorization;
 using ProjectsManagement.Authorization.Users;
 using ProjectsManagement.Project.Dto;
 using ProjectsManagement.ProjectDatabase.Project;
+using ProjectsManagement.Projects.Dto;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,16 +17,16 @@ using System.Threading.Tasks;
 namespace ProjectsManagement.Project
 {
 
-    public class ProjectsAppService : AsyncCrudAppService<Projects, ProjectsDto, long, PagedProjectsResultRequestDto, CreateProjectsDto, ListProjectsDto>, IProjectsAppService
+    public class ProjectsAppService : AsyncCrudAppService<ProjectsManagement.ProjectDatabase.Project.Projects, ProjectsDto, long, PagedProjectsResultRequestDto, CreateProjectsDto, UpdateInputDto>, IProjectsAppService
     {
-        private readonly IRepository<Projects, long> _projectsrepository;
+        private readonly IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> _projectsrepository;
         private readonly IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> _projectWorkersrepository;
         private readonly IRepository<ProjectDatabase.ProjectSupervisor.ProjectSupervisors, long> _projectSupervisorsrepository;
         private readonly IRepository<ProjectDatabase.Sprint.Sprints, long> _sprintsRepositry;
         private readonly IRepository<ProjectDatabase.Job.Jobs, long> _jobsRepositry;
         private readonly UserManager _userManager;
         public ProjectsAppService(
-            IRepository<Projects, long> repository,
+            IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> repository,
             IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> projectWorkersrepository,
             IRepository<ProjectDatabase.ProjectSupervisor.ProjectSupervisors, long> projectSupervisorsrepository,
             IRepository<ProjectDatabase.Sprint.Sprints, long> sprintsRepositry,
@@ -62,7 +63,7 @@ namespace ProjectsManagement.Project
                 }
                 else if (roles.FirstOrDefault() == "Worker")
                 {
-                    List<Projects> WorkerProjectList = new List<Projects>();
+                    List<ProjectsManagement.ProjectDatabase.Project.Projects> WorkerProjectList = new List<ProjectsManagement.ProjectDatabase.Project.Projects>();
                     var WorkersProject = await _projectWorkersrepository.GetAll().Where(x => x.WorkerId == user.Id).Select(x => x.ProjectId).ToListAsync();
 
                     foreach (var projectId in WorkersProject)
@@ -88,7 +89,7 @@ namespace ProjectsManagement.Project
                 }
                 else
                 {
-                    List<Projects> SupervisorProjectList = new List<Projects>();
+                    List<ProjectsManagement.ProjectDatabase.Project.Projects> SupervisorProjectList = new List<ProjectsManagement.ProjectDatabase.Project.Projects>();
                     var WorkersProject =await _projectSupervisorsrepository.GetAll().Where(x => x.SupervisorId == user.Id).Select(x => x.ProjectId).ToListAsync();
 
                     foreach (var projectId in WorkersProject)
@@ -134,7 +135,7 @@ namespace ProjectsManagement.Project
                 }
                 if((roles[1]=="Worker" && roles[0]== "Supervisor") || (roles[0] == "Worker" && roles[1] == "Supervisor"))
                 {
-                    List<Projects> SupervisorProjectList = new List<Projects>();
+                    List<ProjectsManagement.ProjectDatabase.Project.Projects> SupervisorProjectList = new List<ProjectsManagement.ProjectDatabase.Project.Projects>();
                     var SupervisorsProject = await _projectSupervisorsrepository.GetAll().Where(x => x.SupervisorId == user.Id).Select(x => x.ProjectId).ToListAsync();
                     var WorkersProject = await _projectWorkersrepository.GetAll().Where(x => x.WorkerId == user.Id).Select(x => x.ProjectId).ToListAsync();
 
@@ -198,10 +199,11 @@ namespace ProjectsManagement.Project
         }
 
         [AbpAuthorize(PermissionNames.Pages_Projects_EditProject)]
-        public override Task<ProjectsDto> UpdateAsync(ListProjectsDto input)
+        public override async Task<ProjectsDto> UpdateAsync(UpdateInputDto input)
         {
-            return base.UpdateAsync(input);
+            return  await base.UpdateAsync(input);
         }
+
         public override async Task DeleteAsync(EntityDto<long> input)
         {
            var jobs=  _jobsRepositry.GetAll().Where(x=>x.ProjectId==input.Id);

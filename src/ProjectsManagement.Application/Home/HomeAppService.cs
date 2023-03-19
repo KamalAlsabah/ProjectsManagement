@@ -23,7 +23,7 @@ namespace ProjectsManagement.Home
         private readonly IRepository<ProjectDatabase.JobTask.JobTasks,long> _jobTasksRepositry;
         private readonly IRepository<ProjectDatabase.WorkersHistory.WorkersHistory,long> _workersHistoryRepositry;
 
-        public HomeAppService(UserManager userManager,IRepository<Projects, long> projectsRepositry,IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> projectsWorkerRepositry,IRepository<ProjectSupervisors, long> projectsSupervisorRepositry,IRepository<ProjectDatabase.Sprint.Sprints, long> sprintsRepositry,IRepository<ProjectDatabase.Job.Jobs, long> jobsRepositry,IRepository<ProjectDatabase.JobTask.JobTasks, long> jobTasksRepositry,IRepository<ProjectDatabase.WorkersHistory.WorkersHistory, long> workersHistoryRepositry)
+        public HomeAppService(UserManager userManager,IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectsRepositry,IRepository<ProjectDatabase.ProjectWorker.ProjectWorkers, long> projectsWorkerRepositry,IRepository<ProjectSupervisors, long> projectsSupervisorRepositry,IRepository<ProjectDatabase.Sprint.Sprints, long> sprintsRepositry,IRepository<ProjectDatabase.Job.Jobs, long> jobsRepositry,IRepository<ProjectDatabase.JobTask.JobTasks, long> jobTasksRepositry,IRepository<ProjectDatabase.WorkersHistory.WorkersHistory, long> workersHistoryRepositry)
         {
             _userManager = userManager;
             _projectsRepositry = projectsRepositry;
@@ -72,7 +72,7 @@ namespace ProjectsManagement.Home
             }
             else if (RolesForUser.FirstOrDefault()== "Worker")
             {
-                List<Projects> WorkerProjectList = new List<Projects>();
+                List<ProjectsManagement.ProjectDatabase.Project.Projects> WorkerProjectList = new List<ProjectsManagement.ProjectDatabase.Project.Projects>();
                 List<ProjectDatabase.Sprint.Sprints> WorkerSprintsList = new List<ProjectDatabase.Sprint.Sprints>();
                 List<ProjectDatabase.Job.Jobs> WorkerJobsList = new List<ProjectDatabase.Job.Jobs>();
                 List<ProjectDatabase.JobTask.JobTasks> WorkerJobTasksList = new List<ProjectDatabase.JobTask.JobTasks>();

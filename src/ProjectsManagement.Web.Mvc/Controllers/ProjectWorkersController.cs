@@ -21,9 +21,9 @@ namespace ProjectsManagement.Web.Controllers
     {
         private readonly IProjectWorkersAppService _projectWorkersAppService;
         private readonly UserManager userManager;
-        private readonly IRepository<Projects, long> projectsRepository;
+        private readonly IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectsRepository;
 
-        public ProjectWorkersController(IProjectWorkersAppService projectWorkersAppService,UserManager userManager,IRepository<Projects,long> projectsRepository)
+        public ProjectWorkersController(IProjectWorkersAppService projectWorkersAppService,UserManager userManager,IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> projectsRepository)
         {
             _projectWorkersAppService = projectWorkersAppService;
             this.userManager = userManager;

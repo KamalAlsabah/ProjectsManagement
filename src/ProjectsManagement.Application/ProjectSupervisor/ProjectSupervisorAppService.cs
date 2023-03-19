@@ -23,15 +23,13 @@ namespace ProjectsManagement.ProjectSupervisor
     public class ProjectSupervisorAppService:AsyncCrudAppService<ProjectSupervisors, ProjectSupervisorListDto, long, ProjectSupervisorPagedDto, ProjectSupervisorCreateDto, UpDateInputProjectSupervisorDto>, IProjectSupervisorAppService
     {
         private readonly IRepository<ProjectSupervisors,long> repository;
-        private readonly IRepository<Projects,long> repositoryProjects;
-        private readonly IRepository<Projects, long> prepository;
-        private readonly UserManager user;
+        private readonly IRepository<ProjectsManagement.ProjectDatabase.Project.Projects,long> repositoryProjects;
+         private readonly UserManager user;
 
-        public ProjectSupervisorAppService(IRepository<ProjectSupervisors, long> repository, IRepository<Projects, long> Prepository, UserManager user, IRepository<Projects, long> repositoryProjects) : base(repository)
+        public ProjectSupervisorAppService(IRepository<ProjectSupervisors, long> repository,UserManager user, IRepository<ProjectsManagement.ProjectDatabase.Project.Projects, long> repositoryProjects) : base(repository)
         {
             this.repository = repository;
-            prepository = Prepository;
-            this.user = user;
+             this.user = user;
             this.repositoryProjects = repositoryProjects;
         }
         public async Task<ListResultDto<ComboboxItemDto>> GetSupervisors(EntityDto<long> input)
@@ -45,7 +43,7 @@ namespace ProjectsManagement.ProjectSupervisor
         }
         public async Task<ListResultDto<ComboboxItemDto>> GetProjects()
         {
-            var Projects = await prepository.GetAllListAsync();
+            var Projects = await repositoryProjects.GetAllListAsync();
             return new ListResultDto<ComboboxItemDto>(
                 Projects.Select(p => new ComboboxItemDto(p.Id.ToString("D"), p.Name)).ToList()
             );
