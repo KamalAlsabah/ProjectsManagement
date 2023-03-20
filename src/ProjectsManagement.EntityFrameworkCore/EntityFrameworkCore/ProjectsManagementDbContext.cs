@@ -16,6 +16,7 @@ using ProjectsManagement.ProjectDatabase.ProjectHistory;
 using ProjectsManagement.ProjectDatabase.WorkersHistory;
 using ProjectsManagement.ProjectDatabase.WorkersJobs;
 using ProjectsManagement.ProjectDatabase.WorkersDashboard;
+using ProjectsManagement.ProjectDatabase.ProjectDetails;
 
 namespace ProjectsManagement.EntityFrameworkCore
 {
@@ -42,5 +43,6 @@ namespace ProjectsManagement.EntityFrameworkCore
         public DbSet<WorkersHistory> WorkersHistory { get; set; }
         public DbSet<WorkersJobs> WorkersJobs { get; set; }
         public DbSet<WorkersDashboard> WorkersDashboard { get; set; }
+        public DbSet<ProjectDetails> ProjectDetails { get; set; }
     }
 }
