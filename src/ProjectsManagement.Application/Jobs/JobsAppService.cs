@@ -10,6 +10,7 @@ using ProjectsManagement.Jobs.Dto;
 using ProjectsManagement.ProjectDatabase.Enums;
 using ProjectsManagement.ProjectDatabase.Sprint;
 using ProjectsManagement.WorkersDashboards;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -83,7 +84,6 @@ namespace JobManagement.Jobs
                 throw new UserFriendlyException("The Project Was Cloesd");
             }
             if (input.SprintId == 0) input.SprintId = null;
-
             var Sprint = _Sprintrepository.GetAll().Where(x => x.Id == input.SprintId && x.ProjectId==input.ProjectId ).FirstOrDefault();
             var jobsList = _Jobrepository.GetAll().Where(x => x.SprintId == input.SprintId);
             var total = 0;
@@ -92,10 +92,7 @@ namespace JobManagement.Jobs
                 total += job.WieghtOfHours;
              }
             total += input.WieghtOfHours;
-            if (total > Sprint.WieghtOfHours)
-            {
-                throw new UserFriendlyException($"the total hours of jobs in the sprint {Sprint.Name}  should be less than {Sprint.WieghtOfHours}");
-            }
+            if (total > Sprint.WieghtOfHours) throw new UserFriendlyException($"the total hours of jobs in the sprint {Sprint.Name}  should be less than {Sprint.WieghtOfHours}");
             return await base.CreateAsync(input);
         }
 
@@ -118,7 +115,6 @@ namespace JobManagement.Jobs
             }
             if (input.SprintId == 0) input.SprintId = null;
             var job = _Jobrepository.GetAll().Include(x=>x.Sprint).Where(x => x.Id == input.Id).FirstOrDefault();
-           // var Sprint = _Sprintrepository.GetAll().Where(x => x.Id == input.SprintId && x.ProjectId == job.ProjectId).FirstOrDefault();
             var jobsList = _Jobrepository.GetAll().Where(x => x.SprintId == input.SprintId);
             var total = 0;
             foreach (var item in jobsList)
@@ -127,30 +123,21 @@ namespace JobManagement.Jobs
             }
             total += input.WieghtOfHours;
             total -= job.WieghtOfHours;
-            if (total > job.Sprint.WieghtOfHours)
-                throw new UserFriendlyException($"the total hours of jobs in the sprint {job.Sprint.Name}  should be less than {job.Sprint.WieghtOfHours}");
-
-            if (input.Status ==JobStatus.InProgress)
-                input.StartDate = System.DateTime.Now;
-
+            if (total > job.Sprint.WieghtOfHours) throw new UserFriendlyException($"the total hours of jobs in the sprint {job.Sprint.Name}  should be less than {job.Sprint.WieghtOfHours}");
+            if (input.Status ==JobStatus.InProgress) input.StartDate = DateTime.Now;
             else if(input.Status == JobStatus.Done)
             {
-                input.EndDate = System.DateTime.Now;
-                input.ActualNumberOfHours = (int)(input.EndDate.Date.Subtract(input.StartDate.Date)).TotalHours;
-
+                input.EndDate = DateTime.Now;
+                var Span = (int)(input.EndDate - input.StartDate).TotalHours;
+                input.ActualNumberOfHours = Span;
             }
-                
-
             return await base.UpdateAsync(input);
         }
         [AbpAuthorize(PermissionNames.Pages_Jobs_DeleteJob)]
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _Jobrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();
-            if (projectClosed == ProjectStatus.Closed)
-            {
-                throw new UserFriendlyException("The Project Was Cloesd");
-            }
+            if (projectClosed == ProjectStatus.Closed) throw new UserFriendlyException("The Project Was Cloesd");
             var jobworkerkist = _WorkersJobsrepository.GetAll().Where(x => x.JobId == input.Id);
             foreach(var item in jobworkerkist)
             {

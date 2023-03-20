@@ -20,7 +20,6 @@ namespace ProjectsManagement.Jobs.Dto
         [Range(0, 500)]
         public int ExpectedNoOfHours { get; set; }
         public int ActualNumberOfHours { get; set; }
-
         public JobStatus Status { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

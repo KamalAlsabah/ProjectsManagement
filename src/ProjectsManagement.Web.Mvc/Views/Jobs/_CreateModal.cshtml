@@ -29,7 +29,7 @@
             </div>
         </div>  
         <div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="WieghtOfHours">@L("WieghtOfHours")</label>
+            <label class="col-md-3 col-form-label" for="WieghtOfHours">@L("Points")</label>
             <div class="col-md-9">
                 <input id="WieghtOfHours" type="number" class="form-control" name="WieghtOfHours" asp-for="CreateJobDto.WieghtOfHours">
             </div>
@@ -37,7 +37,6 @@
         <div class="form-group row required">
             <label class="col-md-3 col-form-label" for="UserId">@L("Users")</label>
             <div class="col-md-9">
-                @*asp-for="CreateJobDto.WorkerId" asp-items='new SelectList(Model.Users,"Value","Name")'*@
                 <select  class="multipleSelectExample form-control" multiple="multiple" data-live-search="true" id="WorkerId"  >
                     <option disabled value="">@L("WithoutUser")</option>
                     @foreach (var item in Model.Users)

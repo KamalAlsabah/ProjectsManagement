@@ -13,9 +13,8 @@ namespace ProjectsManagement.Jobs.Dto
         public string Description { get; set; }
         public long? SprintId { get; set; }
         public int WieghtOfHours { get; set; }
-
+        public DateTime StartDate { get; set; }
         public long ProjectId { get; set; }
-        //public long? WorkerId { get; set; }
         [Range(0,500)]
         public int ExpectedNoOfHours { get; set; }
         public JobStatus Status { get; set; }

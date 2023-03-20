@@ -42,9 +42,9 @@
             </div>
         </div>
           <div class="form-group row">
-            <label class="col-md-3 col-form-label" for="WieghtOfHours">@L("WieghtOfHours")</label>
+            <label class="col-md-3 col-form-label" for="WieghtOfHours">@L("Points")</label>
             <div class="col-md-9">
-                <input id="WieghtOfHours" type="number" class="form-control" name="WieghtOfHours" asp-for="EditSprintDto.WieghtOfHours" />
+                <input id="WieghtOfHours" type="number" class="form-control"min="0" name="WieghtOfHours" asp-for="EditSprintDto.WieghtOfHours" />
             </div>
         </div>
         <div class="form-group row">

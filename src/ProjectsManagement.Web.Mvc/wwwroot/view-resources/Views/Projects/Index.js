@@ -68,7 +68,14 @@
             {
                 targets: 6,
                 data: 'testUrl',
-                sortable: false
+                sortable: false,
+                render: (data, type, row, meta) => {
+                    if (data != null)
+                        return ` <span>${data}</span> <a href="${data}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>`
+                    else
+                        return `<span style="color:red">No link has been added yet</span> <i class="fa fa-external-link" aria-hidden="true"></i>`
+
+                }
             },
             {
                 targets: 7,
