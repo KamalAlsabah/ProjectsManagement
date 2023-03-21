@@ -39,7 +39,7 @@ namespace ProjectsManagement.SupervisorNotes
                     .OrderByDescending(s => s.CreationTime)
                 .Include(x => x.Job)
                 .Include(x=>x.Supervisor)
-                .WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), x => x.Note.Contains(input.Keyword));
+                .Where(x=>!string.IsNullOrWhiteSpace(input.Keyword)? x.Note.Contains(input.Keyword):true);
                 return new PagedResultDto<SupervisorNotesDto>()
                 {
                     Items = ObjectMapper.Map<List<SupervisorNotesDto>>(listNotes

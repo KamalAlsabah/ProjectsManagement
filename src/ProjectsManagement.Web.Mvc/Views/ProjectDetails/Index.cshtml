@@ -1,0 +1,73 @@
+﻿@using ProjectsManagement.Web.Models.ProjectDetails
+@using ProjectsManagement.Web.Startup
+@model IndexProjectDetailsModalViewModel
+@{
+    ViewBag.Title = L("ProjectDetails");
+    ViewBag.CurrentPageName = PageNames.ProjectDetails;
+}
+@section scripts
+{
+        <script src="~/view-resources/Views/ProjectDetails/Index.js" asp-append-version="true"></script>
+  
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("ProjectDetails")</h1>
+            </div>
+            <div class="col-sm-6">
+                <button type="button" class="btn bg-blue float-sm-right create-projectDetails" data-toggle="modal" data-target="#ProjectDetailsCreateModal">
+                    <i class="fa fa-plus-square"></i>
+                    @L("Create")
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Use for bulk actions-->
+                            </div>
+                            <div class="col-md-6">
+                                @await Html.PartialAsync("~/Views/ProjectDetails/Index.AdvancedSearch.cshtml")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="ProjectDetailsTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@L("ProjectName")</th>
+                                        <th>@L("Details")</th>
+                                        <th style="width: 150px">@L("Actions")</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="ProjectDetailsEditModal" tabindex="-1" projectDetails="dialog" aria-labelledby="ProjectDetailsEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" projectDetails="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ProjectDetailsCreateModal" tabindex="-1" projectDetails="dialog" aria-labelledby="ProjectDetailsCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" projectDetails="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

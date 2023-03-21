@@ -12,7 +12,6 @@ namespace ProjectsManagement.Jobs.Dto
         public int WieghtOfHours { get; set; }
 
         public long? SprintId { get; set; }
-        //public long? WorkerId { get; set; }
         public int ExpectedNoOfHours { get; set; }
 
     }

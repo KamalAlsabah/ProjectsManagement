@@ -32,8 +32,6 @@ namespace ProjectsManagement.Web.Controllers
         {
             var model = new CreateJobTasksModalViewModel();
             model.CreateJobTasksDto = new() { JobId = JobsId };
-            //model.Jobs = await jobsRepository.GetAll().Where(x => x.Id == JobsId)
-            //    .Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
             return PartialView("_CreateModal", model);
         }
         public async Task<ActionResult> EditModal(int jobTasksId)
@@ -41,8 +39,6 @@ namespace ProjectsManagement.Web.Controllers
             var output = await _jobTasksAppService.GetJobTasksForEdit(new EntityDto<long>(jobTasksId));
             var model = new EditJobTasksModalViewModel();
             model.EditJobTasksDto = output;
-            //model.Jobs = await jobsRepository.GetAll().Where(x => x.Id == output.JobId)
-            //    .Include(x => x.Worker).Select(x => new NameValue<long> { Name = x.Name, Value = x.Id }).ToListAsync();
             return PartialView("_EditModal", model);
         }
         public async Task<ActionResult> SupervisorNotesCreateModal(long JobTaskId,long JobId)

@@ -124,6 +124,11 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="/ProjectDetails/Index?ProjectId=${row.id}" class="dropdown-item" title="Details">
+                                  <i class="fas fa-users"></i> Project Details
+                                </a>
+                            </li>
+                            <li>
                                 <a href="/ProjectHistory?projrctId=${row.id}" class="dropdown-item" title="History">
                                   <i class="fas fa-users"></i> Project History
                                 </a>

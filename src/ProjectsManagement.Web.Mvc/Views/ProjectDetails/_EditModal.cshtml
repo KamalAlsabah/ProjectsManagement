@@ -1,0 +1,27 @@
+﻿@using ProjectsManagement.ProjectDatabase.Enums
+@using ProjectsManagement.Web.Models.Common.Modals
+@using ProjectsManagement.Web.Models.ProjectDetails
+@model EditProjectDetailsModalViewModel
+@{
+    Layout = null;
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditProjectDetails")))
+<form name="ProjectDetailsEditForm" projectDetails="form" class="form-horizontal">
+    <input type="hidden" name="Id" asp-for="editProjectDetailsDto.Id" />
+    <input type="hidden" name="ProjectId"value="@Model.editProjectDetailsDto.ProjectId" asp-for="editProjectDetailsDto.ProjectId" />
+    
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label" for="Details">@L("Details")</label>
+            <div class="col-md-9">
+                <textarea id="Details" class="form-control summernote" name="Details" asp-for="editProjectDetailsDto.Details">
+                </textarea>
+
+            </div>
+        </div>
+        
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/ProjectDetails/_EditModal.js" asp-append-version="true"></script>
