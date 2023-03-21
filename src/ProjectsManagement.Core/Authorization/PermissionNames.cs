@@ -6,11 +6,13 @@
         public const string Pages_Users = "Pages.Users";
         public const string Pages_Users_Activation = "Pages.Users.Activation";
         public const string Pages_Roles = "Pages.Roles";
+
         //Project (Show & CUD)
         public const string Pages_Projects = "Pages.Projects";
         public const string Pages_Projects_CreateProject = "Pages.Projects.CreateProject";
         public const string Pages_Projects_EditProject = "Pages.Projects.EditProject";
         public const string Pages_Projects_DeleteProject = "Pages.Projects.DeleteProject";
+
         //ProjectsWorkers (Show & CUD)
         public const string Pages_ProjectsWorkers = "Pages.ProjectsWorkers";
         public const string Pages_ProjectsWorkers_CreateProjectsWorkers = "Pages.ProjectsWorkers.CreateProjectsWorkers";
@@ -22,6 +24,12 @@
         public const string Pages_ProjectsSupervisors_CreateProjectSupervisors = "Pages.ProjectsSupervisors.CreateProjectSupervisors";
         public const string Pages_ProjectsSupervisors_EditProjectSupervisors = "Pages.ProjectsSupervisors.EditProjectSupervisors";
         public const string Pages_ProjectsSupervisors_DeleteProjectSupervisors = "Pages.ProjectsSupervisors.DeleteProjectSupervisors";
+
+        //ProjectHistory (Show & CUD)
+        public const string Pages_ProjectHistory = "Pages.ProjectHistory";
+        public const string Pages_ProjectHistory_CreateProjectHistory = "Pages.Projects.CreateProjectHistory";
+        public const string Pages_ProjectHistory_EditProjectHistory = "Pages.Projects.EditProjectHistory";
+        public const string Pages_ProjectHistory_DeleteProjectHistory = "Pages.Projects.DeleteProjectHistory";
 
         //Jobs (Show & CUD)
         public const string Pages_Jobs = "Pages.Jobs";
@@ -53,6 +61,24 @@
         public const string Pages_Suggestions_CreateSuggestions = "Pages.Suggestions.CreateSuggestions";
         public const string Pages_Suggestions_EditSuggestions = "Pages.Suggestions.EditJobSuggestions";
         public const string Pages_Suggestions_DeleteSuggestions = "Pages.Suggestions.DeleteSuggestions";
+
+        //ProjectDetails (Show & CUD)
+        public const string Pages_ProjectDetails = "Pages.ProjectDetails";
+        public const string Pages_ProjectDetails_CreateProjectDetails = "Pages.ProjectDetails.CreateProjectDetails";
+        public const string Pages_ProjectDetails_EditProjectDetails = "Pages.ProjectDetails.EditProjectDetails";
+        public const string Pages_ProjectDetails_DeleteProjectDetails = "Pages.ProjectDetails.DeleteProjectDetails";
+
+        //WorkersDashboard (Show & CUD)
+        public const string Pages_WorkersDashboard = "Pages.WorkersDashboard";
+        public const string Pages_WorkersDashboard_CreateWorkersDashboard = "Pages.WorkersDashboard.CreateWorkersDashboard";
+        public const string Pages_WorkersDashboard_EditWorkersDashboard = "Pages.WorkersDashboard.EditWorkersDashboard";
+        public const string Pages_WorkersDashboard_DeleteWorkersDashboard = "Pages.WorkersDashboard.DeleteWorkersDashboard";
+
+        //WorkersHistory (Show & CUD)
+        public const string Pages_WorkersHistory = "Pages.WorkersHistory";
+        public const string Pages_WorkersHistory_CreateWorkersHistory = "Pages.WorkersHistory.CreateWorkersHistory";
+        public const string Pages_WorkersHistory_EditWorkersHistory = "Pages.WorkersHistory.EditWorkersHistory";
+        public const string Pages_WorkersHistory_DeleteWorkersHistory = "Pages.WorkersHistory.DeleteWorkersHistory";
 
     }
 }

@@ -1,9 +1,11 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using ProjectsManagement.Authorization;
 using ProjectsManagement.ProjectHistory.Dto;
 using System;
 using System.Collections.Generic;
@@ -48,6 +50,7 @@ namespace ProjectsManagement.ProjectHistory
             _Sprintsrepository= Sprintsrepository;
             _Projectrepository= Projectrepository;
         }
+        [AbpAuthorize(PermissionNames.Pages_ProjectHistory)]
 
         public override async Task<PagedResultDto<ProjectHistoryDto>> GetAllAsync(PagedProjectHistoryResultRequestDto input)
         {
@@ -68,7 +71,7 @@ namespace ProjectsManagement.ProjectHistory
                 TotalCount = listProjectHistorys.Count()
             };
         }
-        public override async Task<ProjectHistoryDto> CreateAsync(CreateProjectHistoryDto input)
+         public override async Task<ProjectHistoryDto> CreateAsync(CreateProjectHistoryDto input)
         {
             input.UserId= long.Parse(_accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
             var ProjectName = _Projectrepository.GetAll().Where(x => x.Id == input.ProjectId).Select(x=>x.Name).FirstOrDefault();
@@ -117,11 +120,14 @@ namespace ProjectsManagement.ProjectHistory
             var model = ObjectMapper.Map<EditProjectHistoryDto>(ProjectHistory);
             return model;
         }
+
         public override async Task<ProjectHistoryDto> UpdateAsync(UpdateInputDto input)
         {
             var projectClosed = await _ProjectHistoryrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();
             return await base.UpdateAsync(input);
         }
+        
+
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _ProjectHistoryrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();

@@ -1,9 +1,11 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.UI;
 using Microsoft.EntityFrameworkCore;
+using ProjectsManagement.Authorization;
 using ProjectsManagement.ProjectDatabase.Enums;
 using ProjectsManagement.WorkersDashboards.Dto;
 using System;
@@ -46,6 +48,7 @@ namespace ProjectsManagement.WorkersDashboards
                 TotalCount = listWorkersDashboard.Count()
             };
         }
+ 
         public override async Task<WorkersDashboardDto> CreateAsync(CreateWorkersDashboardDto input)
         {
             return await base.CreateAsync(input);
@@ -57,6 +60,7 @@ namespace ProjectsManagement.WorkersDashboards
 
             return model;
         }
+ 
         public override async Task<WorkersDashboardDto> UpdateAsync(UpdateInputDto input)
         {
             var projectClosed = await _WorkersDashboardrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();
@@ -66,6 +70,7 @@ namespace ProjectsManagement.WorkersDashboards
             }
             return await base.UpdateAsync(input);
         }
+ 
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _WorkersDashboardrepository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();

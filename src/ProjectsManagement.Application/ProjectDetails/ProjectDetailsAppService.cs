@@ -1,8 +1,10 @@
 ﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.UI;
 using Microsoft.EntityFrameworkCore;
+using ProjectsManagement.Authorization;
 using ProjectsManagement.ProjectDatabase.Enums;
 using ProjectsManagement.ProjectDetails.Dto;
 using System;
@@ -20,6 +22,8 @@ namespace ProjectsManagement.ProjectDetails
         {
             _repository = repository;
         }
+        [AbpAuthorize(PermissionNames.Pages_ProjectDetails)]
+
         public override async Task<PagedResultDto<ProjectDetailsDto>> GetAllAsync(PagedProjectDetailsResultRequestDto input)
         {
             try
@@ -47,6 +51,8 @@ namespace ProjectsManagement.ProjectDetails
             var model = ObjectMapper.Map<EditProjectDetailsDto>(ProjectDetails);
             return model;
         }
+        [AbpAuthorize(PermissionNames.Pages_ProjectDetails_CreateProjectDetails)]
+
         public override async Task<ProjectDetailsDto> CreateAsync(CreateProjectDetailsDto input)
         {
             var projectClosed = await _repository.GetAll().Where(x => x.ProjectId == input.ProjectId).Select(x => x.Project.Status).FirstOrDefaultAsync();
@@ -56,6 +62,8 @@ namespace ProjectsManagement.ProjectDetails
             }
             return await base.CreateAsync(input);
         }
+        [AbpAuthorize(PermissionNames.Pages_ProjectDetails_EditProjectDetails)]
+
         public override async Task<ProjectDetailsDto> UpdateAsync(UpdateInputDto input)
         {
             var projectClosed = await _repository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();
@@ -65,7 +73,8 @@ namespace ProjectsManagement.ProjectDetails
             }
             return await base.UpdateAsync(input);
         }
- 
+        [AbpAuthorize(PermissionNames.Pages_ProjectDetails_DeleteProjectDetails)]
+
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var projectClosed = await _repository.GetAll().Where(x => x.Id == input.Id).Select(x => x.Project.Status).FirstOrDefaultAsync();

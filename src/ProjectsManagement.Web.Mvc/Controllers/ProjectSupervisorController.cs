@@ -3,6 +3,8 @@
 
 using Abp;
 using Abp.Application.Services.Dto;
+using Abp.AspNetCore.Mvc.Authorization;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.UI;
 using JobManagement.Jobs;
@@ -33,30 +35,35 @@ namespace ProjectsManagement.Web.Controllers
 
 
         }
+        [AbpMvcAuthorize]
         public async Task<IActionResult> Index(long ProjectId)
         {
+            if (!PermissionChecker.IsGranted("Pages.ProjectsSupervisors"))
+                throw new AbpAuthorizationException("You are not authorized !");
             IndexProjectSupervisorModalViewModel model= new IndexProjectSupervisorModalViewModel() { ProjectId = ProjectId };
              return View(model);
         }
+        [AbpMvcAuthorize]
 
         public async Task<ActionResult> CreateModal(long ProjectId)
         {
+            if (!PermissionChecker.IsGranted("Pages.ProjectsSupervisors.CreateProjectSupervisors"))
+                throw new AbpAuthorizationException("You are not authorized to Create Project Supervisors!");
             var model = new CreateProjectSupervisorModalViewModel();
             model.projectSupervisorCreateDto = new () { ProjectId = ProjectId }; 
-            model.Supervisors = (await _AppService.GetSupervisors(new EntityDto<long> { Id=ProjectId })).Items
-             .Select(p => p.ToSelectListItem())
-             .ToList();
-            
+            model.Supervisors = (await _AppService.GetSupervisors(new EntityDto<long> { Id=ProjectId })).Items.Select(p => p.ToSelectListItem()).ToList();
             return PartialView("_CreateModal", model);
         }
+        [AbpMvcAuthorize]
+
         public async Task<ActionResult> EditModal(long ProjectSupervisorid,long ProjectId)
         {
+            if (!PermissionChecker.IsGranted("Pages.ProjectsSupervisors.EditProjectSupervisors"))
+                throw new AbpAuthorizationException("You are not authorized to Edit Project Supervisors!");
             var output = await _AppService.GetProjectSupervisorForEdit(new EntityDto<long>(ProjectSupervisorid));
             var model = new EditProjectSupervisorModalViewModel();
             model.projectSupervisorEditDto = output;
-            model.Supervisors = (await _AppService.GetSupervisors(new EntityDto<long> { Id = ProjectId })).Items
-                         .Select(p => p.ToSelectListItem())
-                         .ToList();
+            model.Supervisors = (await _AppService.GetSupervisors(new EntityDto<long> { Id = ProjectId })).Items.Select(p => p.ToSelectListItem()).ToList();
             return PartialView("_EditModal", model);
         }
     }

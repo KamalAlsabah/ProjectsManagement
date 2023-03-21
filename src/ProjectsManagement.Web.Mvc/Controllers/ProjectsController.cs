@@ -1,4 +1,6 @@
 using Abp.Application.Services.Dto;
+using Abp.AspNetCore.Mvc.Authorization;
+using Abp.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectsManagement.Controllers;
 using ProjectsManagement.Project;
@@ -15,15 +17,18 @@ namespace ProjectsManagement.Web.Controllers
         {
             _projectsAppService = projectsAppService;
         }
-
+        [AbpMvcAuthorize]
         public async Task<IActionResult> Index()
         {
-            ViewData["UserId"] = 0;
+            if (!PermissionChecker.IsGranted("Pages.Projects"))
+                throw new AbpAuthorizationException("You are not authorized !");
             return View();
         }
-
+        [AbpMvcAuthorize]
         public async Task<ActionResult> EditModal(long projectsId)
         {
+            if (!PermissionChecker.IsGranted("Pages.Projects.EditProject"))
+                throw new AbpAuthorizationException("You are not authorized to Edit Project!");
             var output = await _projectsAppService.GetProjectsForEdit(new EntityDto<long> { Id = projectsId });
             var model = ObjectMapper.Map<EditProjectsModalViewModel>(output);
 

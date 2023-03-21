@@ -70,11 +70,13 @@
                 data: 'testUrl',
                 sortable: false,
                 render: (data, type, row, meta) => {
-                    if (data != null)
-                        return ` <span>${data}</span> <a href="${data}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>`
-                    else
+                    if (data == null)
                         return `<span style="color:red">No link has been added yet</span> <i class="fa fa-external-link" aria-hidden="true"></i>`
+                    else {
+                        console.log(data);
+                        return ` <span>${data}</span> <a href="${data}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>`
 
+                    }
                 }
             },
             {

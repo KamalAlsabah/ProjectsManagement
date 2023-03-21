@@ -18,6 +18,7 @@ namespace ProjectsManagement.Web.Controllers
         {
             _roleAppService = roleAppService;
         }
+        [AbpMvcAuthorize]
 
         public async Task<IActionResult> Index()
         {
